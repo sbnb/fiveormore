@@ -1,0 +1,16 @@
+{
+  "name": "Five or More",
+  "description": "A fun and addictive puzzle game. Align stones in lines of the same color to score points.",
+  "version": "1.4",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "app": {
+    "urls": [
+      "http://www.webplay.in/fiveormore/"
+    ],
+    "launch": {
+      "web_url": "http://www.webplay.in/fiveormore/"
+    }
+  }
+}

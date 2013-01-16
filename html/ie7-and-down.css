@@ -1,0 +1,11 @@
+table#fiveormore {
+    *border-collapse: expression('separate', cellSpacing = '10px');
+}
+
+/* Give selected some stronger appearance */
+table#fiveormore td.selected, table#fiveormore td.selected:hover {
+	border-style: inset;
+	border-color: #FFF;
+}
+
+/* Highscores layout fix */
