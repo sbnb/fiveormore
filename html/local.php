@@ -6,8 +6,8 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <title>Five or More Game</title>
   <meta name="description" content="A fun and addictive puzzle game: align stones in lines of the same color to score points. Compete for your place in the high scores!">
-  <link rel="stylesheet" type="text/css" media="screen" href="resetdw.css">
-  <link rel="stylesheet" type="text/css" media="screen" href="fiveormore.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/resetdw.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
   <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
@@ -33,7 +33,7 @@
   <!--combined_js_insert-->
 
   <!--[if lte IE 7]>
-    <link rel="stylesheet" type="text/css" href="ie7-and-down.css">
+    <link rel="stylesheet" type="text/css" href="css/ie7-and-down.css">
   <![endif]-->
 
   <script type="text/javascript">

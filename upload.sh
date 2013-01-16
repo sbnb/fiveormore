@@ -25,9 +25,10 @@ rsync -r -v --copy-links \
     --include="js/" \
     --include="${minifiedJsFile}" \
     --include="fiveormore.php" \
-    --include="fiveormore.css" \
-    --include="ie7-and-down.css" \
-    --include="resetdw.css" \
+    --include="css/" \
+    --include="css/fiveormore.css" \
+    --include="css/ie7-and-down.css" \
+    --include="css/resetdw.css" \
     --include="server.php" \
     --include="loading.gif" \
     --include="imgs/" \
