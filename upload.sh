@@ -5,8 +5,8 @@ local_dir=html
 echo "*******************************************************"
 echo "* $0 running"
 epochDate=$(date +"%s")
-combinedJsFile=combined-${epochDate}.js
-minifiedJsFile=combined-min-${epochDate}.js
+combinedJsFile=js/combined-${epochDate}.js
+minifiedJsFile=js/combined-min-${epochDate}.js
 
 ./mergejs.sh $combinedJsFile $minifiedJsFile
 ./turnOffAsserts.sh $combinedJsFile
@@ -14,7 +14,7 @@ minifiedJsFile=combined-min-${epochDate}.js
 
 cd $local_dir
 
-#target=~/tmp/upload.$$
+#~ target=~/www/tmp/fiveormore.$$
 target=sbn_ggm@ssh.phx.nearlyfreespeech.net:fiveormore/
 
 echo "*******************************************************"
@@ -22,6 +22,7 @@ echo "back to $0"
 echo "* copying relevant files to $target"
 
 rsync -r -v --copy-links \
+    --include="js/" \
     --include="${minifiedJsFile}" \
     --include="fiveormore.php" \
     --include="fiveormore.css" \
@@ -36,13 +37,13 @@ rsync -r -v --copy-links \
     . $target
 
 echo "* removing old .uploaded files"
-rm *.uploaded
+rm js/*.uploaded
 
 echo "* moving $combinedJsFile to ${combinedJsFile}.uploaded"
 mv $combinedJsFile ${combinedJsFile}.uploaded
 
 echo "* moving $minifiedJsFile to $minifiedJsFile.uploaded"
-mv $minifiedJsFile $minifiedJsFile.js.uploaded
+mv $minifiedJsFile $minifiedJsFile.uploaded
 
 echo "* moving fiveormore.php to fiveormore.php.uploaded"
 mv fiveormore.php fiveormore.php.uploaded

@@ -28,9 +28,9 @@ cat $htmlFile |
     perl -ne 'print if /replace_start/../replace_end/' |
     perl -ne '!/replace_/ && print' |
     perl -ne 'print "$1\n" if /src=\"(.*)\"/' |
-    while 
-        read jsfile; 
-        do 
+    while
+        read jsfile;
+        do
             #echo $jsfile;
             cat $jsfile
             echo

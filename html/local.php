@@ -12,23 +12,23 @@
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
   <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
 <!--replace_start-->
-  <script type="text/javascript" src="jquery.horizontalNav.js"></script>
-  <script type="text/javascript" src="json2.js"></script>
-  <script type="text/javascript" src="jquery.cookie.js"></script>
-  <script type="text/javascript" src="constants.js"></script>
-  <script type="text/javascript" src="CookieHandler.js"></script>
-  <script type="text/javascript" src="PopupController.js"></script>
-  <script type="text/javascript" src="Score.js"></script>
-  <script type="text/javascript" src="BoardIndex.js"></script>
-  <script type="text/javascript" src="Node.js"></script>
-  <script type="text/javascript" src="StoneMatcher.js"></script>
-  <script type="text/javascript" src="StoneMaker.js"></script>
-  <script type="text/javascript" src="PathAnimator.js"></script>
-  <script type="text/javascript" src="PathFinder.js"></script>
-  <script type="text/javascript" src="ClickHandlers.js"></script>
-  <script type="text/javascript" src="BoardGame.js"></script>
-  <script type="text/javascript" src="HighScores.js"></script>
-  <script type="text/javascript" src="fiveormore.js"></script>
+  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
+  <script type="text/javascript" src="js/json2.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/constants.js"></script>
+  <script type="text/javascript" src="js/CookieHandler.js"></script>
+  <script type="text/javascript" src="js/PopupController.js"></script>
+  <script type="text/javascript" src="js/Score.js"></script>
+  <script type="text/javascript" src="js/BoardIndex.js"></script>
+  <script type="text/javascript" src="js/Node.js"></script>
+  <script type="text/javascript" src="js/StoneMatcher.js"></script>
+  <script type="text/javascript" src="js/StoneMaker.js"></script>
+  <script type="text/javascript" src="js/PathAnimator.js"></script>
+  <script type="text/javascript" src="js/PathFinder.js"></script>
+  <script type="text/javascript" src="js/ClickHandlers.js"></script>
+  <script type="text/javascript" src="js/BoardGame.js"></script>
+  <script type="text/javascript" src="js/HighScores.js"></script>
+  <script type="text/javascript" src="js/fiveormore.js"></script>
 <!--replace_end-->
   <!--combined_js_insert-->
 

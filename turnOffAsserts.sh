@@ -10,12 +10,6 @@ combinedBackup=${combined}.bak
 echo "* moving to dir $htmlDir"
 cd $htmlDir
 
-echo "* removing old .bak files"
-rm *.bak
-
-echo "* copying $combined to $combinedBackup"
-cp $combined $combinedBackup
-
 echo "* commenting out all console lines"
 perl -pi -e 's:(.*)(console.*):$1//$2:' $combined
 
