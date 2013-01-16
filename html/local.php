@@ -5,7 +5,7 @@
   <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   <title>Five or More Game</title>
-  <meta name="description" content="A fun and addictive puzzle game: align stones in lines of the same color to score points. Compete for your place in the high scores!">
+  <meta name="description" content="Five or More is a fun and addictive puzzle game: align stones in lines of the same color to score points. Compete for your place in the high scores!">
   <link rel="stylesheet" type="text/css" media="screen" href="css/resetdw.css">
   <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
@@ -125,24 +125,7 @@
         <li id="showPreferences">Preferences</li>
         <li id="showAbout">About</li>
       </ul>
-
-        <!--
-      <div id="sharePanel">
-        <!- AddThis Button BEGIN ->
-        <div class="addthis_toolbox addthis_default_style" id="addThisButtons">
-          <a class="addthis_button_google_plusone" g:plusone:size="medium" g:plusone:annotation="bubble" g:plusone:count="true"></a>
-          <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-          <a class="addthis_button_stumbleupon_badge" su:bdg:style="2" su:bdg:url="http://www.webplay.in/fiveormore"></a>
-          <a class="addthis_button_email"></a>
-        </div>
-        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f29578a1a9d2d05"></script>
-        <!- AddThis Button END ->
-      </div>
-      <p class="pageText">Enjoy the game? Please help spread the word by liking it, or sharing with your friends.</p>
-        -->
     </div>
-
-    <!--<p id="finish">Finish</p>-->
 
     <div id="gameOverPopup">
       <div class="closeWindowX"><span>X</span></div>
@@ -242,7 +225,7 @@
     </div>
 
     <div id="loading">
-      <p><img src="loading.gif" /></p>
+      <p><img src="imgs/loading.gif" /></p>
       <p>Please Wait</p>
     </div>
 

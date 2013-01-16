@@ -30,8 +30,8 @@ rsync -r -v --copy-links \
     --include="css/ie7-and-down.css" \
     --include="css/resetdw.css" \
     --include="server.php" \
-    --include="loading.gif" \
     --include="imgs/" \
+    --include="imgs/loading.gif" \
     --include="imgs/*.png" \
     --include="imgs/mountains.jpg" \
     --exclude="*" \
