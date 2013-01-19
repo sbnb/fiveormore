@@ -5,6 +5,10 @@ var HOW_TO_PLAY_PU = '#howToPlay';
 var STONE_COLORS = ["green", "red", "blue", "orange", "purple", "yellow"];
 var STONE_SHAPES = {green: "circle.png", red: "star.png", blue: "triangle.png", orange: "square.png", purple: "splat.png", yellow: "diamond.png"};
 var SHAPES_ON = true;
+var ROWS = 1;
+var COLUMNS = 2;
+var DIAGONAL_RIGHT = 3; // slopes down to right of board
+var DIAGONAL_LEFT = 4;  // slopes down to left of board
 var EMPTY = 'empty';
 var EMPTY_TD = 'td.' + EMPTY;
 var CELL_CONTENT = "";
@@ -36,8 +40,8 @@ var SMALL_BOARD_CUTOFF = 550;    // height of viewport in pixels, below this use
 var MEDIUM_BOARD_CUTOFF = 750;
 var SIZE = {SMALL: 'small', MEDIUM: 'medium', LARGE: 'large'};
 var MESSAGE_ID = {
-    NEW_GAME: 1, GAME_FINISHED: 2, PAGE_REFRESHED: 3, 
-    VIEW_HIGH_SCORES: 4, ENTERED_HIGH_SCORE: 5, VIEW_RULES: 6, VIEW_ABOUT: 7, 
+    NEW_GAME: 1, GAME_FINISHED: 2, PAGE_REFRESHED: 3,
+    VIEW_HIGH_SCORES: 4, ENTERED_HIGH_SCORE: 5, VIEW_RULES: 6, VIEW_ABOUT: 7,
     PLAY_AGAIN: 8, VIEW_PREFERENCES: 9, BOARD_SIZE_CHANGE: 10
 };
 var MSG_TXT = ['hitNewGame','gameFinished','pageRefreshed','viewedHighScores',
@@ -45,6 +49,22 @@ var MSG_TXT = ['hitNewGame','gameFinished','pageRefreshed','viewedHighScores',
     'viewedPreferences','changedBoardSize'];
 
 // shared routines
+
+function changePointsPopupTextSize(size) {
+    switch(size) {
+        case SIZE.SMALL:
+            $('#pointsPopup p').css('fontSize', '2em');
+            break;
+        case SIZE.MEDIUM:
+            $('#pointsPopup p').css('fontSize', '3em');
+            break;
+        case SIZE.LARGE:
+            $('#pointsPopup p').css('fontSize', '4em');
+            break;
+        default:
+            assert(false, 'constants.changePointsPopupTextSize: unknown size ' + size);
+    }
+}
 
 // return random number from 0..n-1
 function rand(n) {

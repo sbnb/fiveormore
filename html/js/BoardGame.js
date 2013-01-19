@@ -111,24 +111,33 @@ function BoardGame() {
     }
 
     function setBoardSize() {
+        var preferences, viewportHeightInPx, size;
+
         // first check if a board size preference has been set
-        var preferences = cookieHandler.readPreferences();
+        preferences = cookieHandler.readPreferences();
         if (preferences.boardSize !== PREFS_DEFAULT.boardSize) {
-            $(TABLE).removeClass().addClass(preferences.boardSize);
+            updateToNewBoardSize(preferences.boardSize);
             return;
         }
 
         // no board size preference, so use best fit size
-        var viewportHeightInPx = $(window).height();
+        viewportHeightInPx = $(window).height();
+
         if (viewportHeightInPx < SMALL_BOARD_CUTOFF) {
-            $(TABLE).removeClass().addClass(SIZE.SMALL);
+            size = SIZE.SMALL;
         }
         else if (viewportHeightInPx < MEDIUM_BOARD_CUTOFF) {
-            $(TABLE).removeClass().addClass(SIZE.MEDIUM);
+            size = SIZE.MEDIUM;
         }
         else {
-            $(TABLE).removeClass().addClass(SIZE.LARGE);
+            size = SIZE.LARGE;
         }
+        updateToNewBoardSize(size);
+    }
+
+    function updateToNewBoardSize(size) {
+        $(TABLE).removeClass().addClass(size);
+        changePointsPopupTextSize(size);
     }
 
     function positionPopupWindows() {
