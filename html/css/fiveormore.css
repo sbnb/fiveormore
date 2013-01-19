@@ -543,6 +543,23 @@ div#gameOverPopup, div.popup {
 	margin: 1em;
 }
 
+#pointsPopup {
+	position: absolute;
+}
+
+#pointsPopup p {
+	padding: 0;
+	margin: 0;
+	font-size: 4em;
+	font-weight: bold;
+    color: #FFFF33;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
 td, ul#preview li {
 	text-align: center;
 }

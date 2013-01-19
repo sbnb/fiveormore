@@ -229,6 +229,10 @@
       <p>Please Wait</p>
     </div>
 
+    <div id="pointsPopup">
+      <p id="points"></p>
+    </div>
+
   </div>
 
   <script type="text/javascript">
