@@ -14,7 +14,6 @@ jqueryLocal=/lib/jq/jquery
 combinedJsFile=$1
 minifiedJsFile=$2
 combinedJsMarker="<!--combined_js_insert-->"
-#combinedJsInclude='<script type="text/javascript" src="combined-min.js"></script>'
 combinedJsInclude='<script type="text/javascript" src="'$minifiedJsFile'"></script>'
 
 echo "* moving to dir $htmlDir"
@@ -31,19 +30,29 @@ cat $htmlFile |
     while
         read jsfile;
         do
-            #echo $jsfile;
             cat $jsfile
             echo
         done > $combinedJsFile
+
+# test $combinedJsFile exists and is non-zero size
+if [ ! -s $combinedJsFile ]; then
+    echo "ABORT: $combinedJsFile is empty or does not exist!"
+    exit 1
+fi
 
 echo "* removing local js include statements"
 echo "* inserting combined js include statement"
 echo "* changing local jquery include to google jquery include"
 echo "* saving to $outHtmlFile"
+
 # remove local js include statements while copying to outHtmlFile file
 cat $htmlFile |
     perl -ne 'print unless /replace_start/../replace_end/' |
     perl -pe "s:${combinedJsMarker}:${combinedJsInclude}:" |
     perl -pe "s:.*${jqueryLocal}.*:${jqueryGoogle}:" > $outHtmlFile
 
-echo "* $0 done"
+# test $outHtmlFile exists and is non-zero size
+if [ ! -s $outHtmlFile ]; then
+    echo "ABORT: $outHtmlFile is empty or does not exist!"
+    exit 1
+fi

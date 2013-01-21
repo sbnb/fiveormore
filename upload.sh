@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 local_dir=html
 
@@ -12,10 +13,12 @@ minifiedJsFile=js/combined-min-${epochDate}.js
 ./turnOffAsserts.sh $combinedJsFile
 ./minifyCombinedJs.sh $combinedJsFile $minifiedJsFile
 
+# check exit status from minifyCombinedJs.sh
+
 cd $local_dir
 
-#~ target=~/www/tmp/fiveormore.$$
-target=sbn_ggm@ssh.phx.nearlyfreespeech.net:fiveormore/
+target=~/www/tmp/fiveormore.$$
+#~ target=sbn_ggm@ssh.phx.nearlyfreespeech.net:fiveormore/
 
 echo "*******************************************************"
 echo "back to $0"
@@ -49,4 +52,4 @@ mv $minifiedJsFile $minifiedJsFile.uploaded
 echo "* moving fiveormore.php to fiveormore.php.uploaded"
 mv fiveormore.php fiveormore.php.uploaded
 
-echo "* $0 done"
+echo "COMPLETE: everything seems OK"

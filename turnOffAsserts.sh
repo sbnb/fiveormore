@@ -21,3 +21,9 @@ perl -pi -e 's:(.*)LOGGING_ON = true(.*):$1LOGGING_ON = false$2:' $combined
 
 echo "* setting TEST_FULL_BOARD to false"
 perl -pi -e 's:(.*)TEST_FULL_BOARD = true(.*):$1TEST_FULL_BOARD = false$2:' $combined
+
+# test $combined exists and is non-zero size
+if [ ! -s $combined ]; then
+    echo "ABORT: $combined is empty or does not exist!"
+    exit 1
+fi
