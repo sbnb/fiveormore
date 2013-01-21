@@ -17,8 +17,8 @@ minifiedJsFile=js/combined-min-${epochDate}.js
 
 cd $local_dir
 
-target=~/www/tmp/fiveormore.$$
-#~ target=sbn_ggm@ssh.phx.nearlyfreespeech.net:fiveormore/
+#~ target=~/www/tmp/fiveormore.$$
+target=sbn_ggm@ssh.phx.nearlyfreespeech.net:fiveormore/
 
 echo "*******************************************************"
 echo "back to $0"
