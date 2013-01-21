@@ -30,13 +30,13 @@ function Score() {
         $('#pointsPopup').css({
                 top: position.top + 'px',
                 left: position.left + 'px',
-                opacity: 1.0,
+                opacity: 1.0
             });
         $('#pointsPopup').show();
 
         $('#pointsPopup').animate({
                 opacity: 0.4,
-                top: '-=30',
+                top: '-=30'
                 }, 500, function() {
                 $('#pointsPopup').hide();
             });
