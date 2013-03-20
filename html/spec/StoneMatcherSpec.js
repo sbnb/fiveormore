@@ -3,11 +3,10 @@ describe("StoneMatcher", function() {
     var stoneMatcher;
 
     beforeEach(function() {
-        var score = {};
-        score.clearedChainOfLength = function() {
-            //NOP
-        };
+        // insert fixtures into DOM
 
+        var score = {};
+        score.clearedChainOfLength = function() {};
         stoneMatcher = new StoneMatcher(score);
     });
 
