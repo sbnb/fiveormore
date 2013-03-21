@@ -44,7 +44,6 @@ describe('LogicalBoard', function() {
         expect(runs.length).toEqual(5);
     });
 
-
     it('should clear a list of runs when asked', function() {
         var runs = [[0, 13, 26], [0, 14, 28], [2, 15, 28]],
             clearCells = [ {x: 0, y: 0}, {x: 0, y: 1}, {x: 0, y: 2},
@@ -62,6 +61,64 @@ describe('LogicalBoard', function() {
         expect(board.get(filledCells[1])).toBe(offColor);
     });
 
+    it('should return four neighbours in the general case', function() {
+        var cell = {x: 1 , y: 1},
+            neighbourCells = [{x: 1 , y: 0}, {x: 0 , y: 1}, {x: 2 , y: 1},
+                {x: 1 , y: 2}],
+            neighbours;
+
+        neighbours = board.getNeighbours(cell);
+        expect(neighbours.length).toBe(4);
+        for (var idx = 0; idx < neighbourCells.length; idx += 1) {
+            expect(contains(neighbours, neighbourCells[idx])).toBe(true);
+        }
+    });
+
+    it('should return two neighbours for top left cell', function() {
+        var cell = {x: 0 , y: 0},
+            neighbourCells = [{x: 1 , y: 0}, {x: 0 , y: 1}],
+            neighbours;
+
+        neighbours = board.getNeighbours(cell);
+        expect(neighbours.length).toBe(2);
+        for (var idx = 0; idx < neighbourCells.length; idx += 1) {
+            expect(contains(neighbours, neighbourCells[idx])).toBe(true);
+        }
+    });
+
+
+    it('should return two neighbours for bottom right cell', function() {
+        var cell = {x: 12 , y: 12},
+            neighbourCells = [{x: 11 , y: 12}, {x: 12 , y: 11}],
+            neighbours;
+
+        neighbours = board.getNeighbours(cell);
+        expect(neighbours.length).toBe(2);
+        for (var idx = 0; idx < neighbourCells.length; idx += 1) {
+            expect(contains(neighbours, neighbourCells[idx])).toBe(true);
+        }
+    });
+
+    // check can get only empty neighbours
+    it('should return only empty neighbours if asked', function() {
+        var cell = {x: 1 , y: 1},
+            neighbourCells = [{x: 0 , y: 1}, {x: 2 , y: 1}, {x: 1 , y: 2}],
+            neighbours;
+
+        addListOfCellsToBoard(board, neighbourCells, 'blue');
+        neighbours = board.getNeighbours(cell, true);
+        expect(neighbours.length).toBe(1);
+        expect(neighbours[0]).toEqual({x: 1, y: 0});
+    });
+
+    function contains(neighbours, cell) {
+        for (var idx = 0; idx < neighbours.length; idx += 1) {
+            if (neighbours[idx].x === cell.x && neighbours[idx].y === cell.y) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     function fillBoard() {
         var color = 'blue';
