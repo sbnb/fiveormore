@@ -111,15 +111,6 @@ describe('LogicalBoard', function() {
         expect(neighbours[0]).toEqual({x: 1, y: 0});
     });
 
-    function contains(neighbours, cell) {
-        for (var idx = 0; idx < neighbours.length; idx += 1) {
-            if (neighbours[idx].x === cell.x && neighbours[idx].y === cell.y) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     function fillBoard() {
         var color = 'blue';
         for (var x = 0; x < width; x += 1) {

@@ -34,3 +34,13 @@ function addListOfCellsToBoard(board, cells, color) {
         board.add(cells[idx], color);
     }
 }
+
+function contains(listOfCells, cell) {
+    for (var idx = 0; idx < listOfCells.length; idx += 1) {
+        if (listOfCells[idx].x === cell.x && listOfCells[idx].y === cell.y) {
+            return true;
+        }
+    }
+    return false;
+}
+

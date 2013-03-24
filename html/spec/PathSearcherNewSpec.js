@@ -19,6 +19,8 @@ describe('PathSearcherNew', function() {
         board.add(startCell, color);
         path = searcher.search(startCell, targetCell);
         expect(path.length).toBe(2);
+        expect(contains(path, {x: 3, y: 3})).toBe(true);
+        expect(contains(path, {x: 4, y: 3})).toBe(true);
     });
 
     it('should find a path to an empty nearby square', function() {
@@ -29,6 +31,22 @@ describe('PathSearcherNew', function() {
         board.add(startCell, color);
         path = searcher.search(startCell, targetCell);
         expect(path.length).toBe(4);
+        expect(contains(path, {x: 3, y: 3})).toBe(true);
+        expect(contains(path, {x: 5, y: 4})).toBe(true);
+    });
+
+    it('should detect when no path is possible', function() {
+        var startCell = {x: 0 , y: 0},
+            targetCell = {x: 5 , y: 5},
+            color = 'blue',
+            path;
+
+        board.add(startCell, color);
+        board.add({x: 5, y: 4}, color);
+        board.add({x: 4, y: 5}, color);
+
+        path = searcher.search(startCell, targetCell);
+        expect(path.length).toBe(0);
     });
 
     it('should encapsulate a PathNode', function() {
