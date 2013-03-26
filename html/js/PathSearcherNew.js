@@ -53,11 +53,8 @@ PathSearcherNew.prototype.search = function (startCell, targetCell) {
                 if (!nodeInList(openList, neighbour)) {
                     addNodeToList(openList, neighbour);
                 }
-
             }
-
         }
-
 
         loops += 1;
         if (loops > safety) {
@@ -73,7 +70,8 @@ function reconstructPath(targetCell) {
         return [{x: targetCell.x, y: targetCell.y}];
     }
 
-    return [{x: targetCell.x, y: targetCell.y}].concat(reconstructPath(targetCell.cameFrom));
+    return [{x: targetCell.x, y: targetCell.y}].concat(
+        reconstructPath(targetCell.cameFrom));
 }
 
 PathSearcherNew.prototype.estimatedCostToEnd = function (startCell, targetCell) {
@@ -83,12 +81,8 @@ PathSearcherNew.prototype.estimatedCostToEnd = function (startCell, targetCell) 
 
 // return lowest cost-to-end node in nodeList, or undefined if list empty
 function getLowestCostNode(nodeList) {
-    var lowest;
-    _.forEach(nodeList, function (node) {
-        lowest = typeof lowest === 'undefined' ? node : lowest;
-        lowest = node.costToEnd < lowest.costToEnd ? node : lowest;
-    });
-    return lowest;
+    var lowest = _.min(nodeList, function(node) { return node.costToEnd; });
+    return typeof lowest === 'object' ? lowest : 'undefined';
 }
 
 function removeNodeFromList(nodeList, node) {
@@ -124,10 +118,8 @@ function sharesKeys(keys, objA, objB) {
 }
 
 function cellsEqual(cellA, cellB) {
-    if (sharesKeys(['x', 'y'], cellA, cellB)) {
-        return cellA.x === cellB.x && cellA.y === cellB.y;
-    }
-    return false;
+    return sharesKeys(['x', 'y'], cellA, cellB) &&
+        cellA.x === cellB.x && cellA.y === cellB.y;
 }
 
 function PathNode(cell, costSoFar, costToEnd) {

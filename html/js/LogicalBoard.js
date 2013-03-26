@@ -15,12 +15,9 @@ function LogicalBoard(width, height) {
 
 // True if no empty cells on board
 LogicalBoard.prototype.isFull = function () {
-    for (var idx = 0; idx < this._board.length; idx += 1) {
-        if (this._board[idx] === '') {
-            return false;
-        }
-    }
-    return true;
+    return _.every(this._board, function (cell) {
+        return cell !== '';
+    });
 }
 
 // get idx into this.board given cell(x,y) (idx = width * y + x)
@@ -69,12 +66,12 @@ LogicalBoard.prototype.getNeighbours = function (cell, onlyEmpty) {
 
 // return only the empty neighbours
 LogicalBoard.prototype.getEmptyNeighbours = function (neighbours) {
-    var emptyNeighbours  = [];
-    for (var idx = 0; idx < neighbours.length; idx += 1) {
-        if (this.get(neighbours[idx]) === '') {
-            emptyNeighbours.push(neighbours[idx]);
+    var emptyNeighbours = [];
+    _.forEach(neighbours, function (neighbour) {
+        if (this.get(neighbour) === '') {
+            emptyNeighbours.push(neighbour);
         }
-    }
+    }, this);
     return emptyNeighbours;
 }
 
@@ -85,27 +82,27 @@ LogicalBoard.prototype.findCompleteRuns = function (minLength) {
 
 // clear the cells for run (run: [1,2,..,n], indices of this.board)
 LogicalBoard.prototype.clearRun = function (run) {
-    for (var idx = 0; idx < run.length; idx += 1) {
-        this._board[run[idx]] = '';
-    }
+    _.forEach(run, function (index) {
+        this._board[index] = '';
+    }, this);
 }
 
 // clear the cells in each run (runs: [[1,2,2], [3,5,7],..])
 LogicalBoard.prototype.clearRuns = function (runs) {
-    for (var idx = 0; idx < runs.length; idx += 1) {
-        this.clearRun(runs[idx]);
-    }
+    _.forEach(runs, function (run) {
+        this.clearRun(run);
+    }, this);
 }
 
 LogicalBoard.prototype.toString = function () {
     var buffer = 'LogicalBoard:\n';
-    for (var idx = 0; idx < this._board.length; idx += 1) {
-        buffer += this._board[idx][0] + this._board[idx][1] || pad(idx, 2);
+    _.forEach(this._board, function (color, index) {
+        buffer += color.slice(0, 2) || pad(index, 2);
         buffer += ' ';
-        if ((idx + 1)  % this._width === 0) {
+        if ((index + 1) % this._width === 0) {
             buffer += '\n';
         }
-    }
+    }, this);
     return buffer;
 }
 
