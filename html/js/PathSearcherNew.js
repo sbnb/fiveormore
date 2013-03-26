@@ -16,23 +16,23 @@ PathSearcherNew.prototype.search = function (startCell, targetCell) {
         tentativeCostSoFar,
         estimatedCostToEnd,
         safety = 200,
-        loops = 0;
+        loops = 0,
+        that = this;
 
     while (openList.length !== 0) {
 
-        currentNode = getNodeWithLowestCostToEnd(openList);
+        currentNode = getLowestCostNode(openList);
 
         if (cellsEqual(currentNode, targetCell)) {
             return reconstructPath(currentNode);
         }
 
-        removeNodeFromList(openList, currentNode);
+        openList = removeNodeFromList(openList, currentNode);
         addNodeToList(closedList, currentNode);
         neighbourCells = this._logicalBoard.getNeighbours({x: currentNode.x,
             y: currentNode.y}, true);
 
         for (var idx = 0; idx < neighbourCells.length; idx += 1) {
-
             neighbour = neighbourCells[idx];
             tentativeCostSoFar = currentNode.costSoFar + 1;
             estimatedCostToEnd = this.estimatedCostToEnd(neighbour, targetCell);
@@ -68,14 +68,6 @@ PathSearcherNew.prototype.search = function (startCell, targetCell) {
     return [];
 }
 
-function listAsStr(cellList) {
-    var buff = '';
-    for (var idx = 0; idx < cellList.length; idx += 1) {
-        buff += '(' + cellList[idx].x + ',' + cellList[idx].y + ') '
-    }
-    return buff;
-}
-
 function reconstructPath(targetCell) {
     if (!targetCell.cameFrom) {
         return [{x: targetCell.x, y: targetCell.y}];
@@ -89,31 +81,23 @@ PathSearcherNew.prototype.estimatedCostToEnd = function (startCell, targetCell) 
         Math.abs(targetCell.y - startCell.y);
 }
 
-function getNodeWithLowestCostToEnd(openList) {
-    if (openList.length === 0) {
-        return {};
-    }
-
-    var lowestCostNode = openList[0];
-    for (var idx = 0; idx < openList.length; idx += 1) {
-        if (openList[idx].costToEnd < lowestCostNode.costToEnd) {
-            lowestCostNode = openList[idx];
-        }
-    }
-    return lowestCostNode;
+// return lowest cost-to-end node in nodeList, or undefined if list empty
+function getLowestCostNode(nodeList) {
+    var lowest;
+    _.forEach(nodeList, function (node) {
+        lowest = typeof lowest === 'undefined' ? node : lowest;
+        lowest = node.costToEnd < lowest.costToEnd ? node : lowest;
+    });
+    return lowest;
 }
 
 function removeNodeFromList(nodeList, node) {
     if ('x' in node && 'y' in node) {
-        var idx = nodeList.length - 1;
-        while (idx > -1) {
-            if (cellsEqual(node, nodeList[idx])) {
-                nodeList.splice(idx, 1);
-                break;
-            }
-            idx -= 1;
-        }
+        return _.filter(nodeList, function (eachNode) {
+            return !cellsEqual(node, eachNode);
+        });
     }
+    return nodeList;
 }
 
 // add node to list if (and only if) not already in there
@@ -125,31 +109,25 @@ function addNodeToList(nodeList, node) {
 
 // return true if node is in list
 function nodeInList(nodeList, node) {
-    for (var idx = 0; idx < nodeList.length; idx += 1) {
-        if (cellsEqual(node, nodeList[idx])) {
-            return true;
-        }
+    return _.any(nodeList, function (eachNode) {
+        return cellsEqual(node, eachNode);
+    });
+}
+
+function sharesKeys(keys, objA, objB) {
+    if (_.isUndefined(objA) || _.isUndefined(objB)) {
+        return false;
     }
-    return false;
+    return _.every(keys, function (key) {
+        return key in objA && key in objB;
+    });
 }
 
 function cellsEqual(cellA, cellB) {
-    if (cellA && cellB && 'x' in cellA && 'x' in cellB && 'y' in cellA && 'y' in cellB) {
-        if (cellA.x === cellB.x && cellA.y === cellB.y ) {
-            return true;
-        }
+    if (sharesKeys(['x', 'y'], cellA, cellB)) {
+        return cellA.x === cellB.x && cellA.y === cellB.y;
     }
     return false;
-}
-
-function size(obj) {
-    var count = 0;
-    for (var prop in obj) {
-        if (obj.hasOwnProperty(prop)) {
-            count += 1;
-        }
-    }
-    return count;
 }
 
 function PathNode(cell, costSoFar, costToEnd) {

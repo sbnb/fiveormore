@@ -14,6 +14,7 @@
 <!--replace_start-->
   <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
   <script type="text/javascript" src="js/json2.js"></script>
+  <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
   <script type="text/javascript" src="js/jquery.cookie.js"></script>
   <script type="text/javascript" src="js/constants.js"></script>
   <script type="text/javascript" src="js/CookieHandler.js"></script>
