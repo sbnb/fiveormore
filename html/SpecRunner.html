@@ -13,15 +13,24 @@
   <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
 
   <!-- include source files here... -->
+  <script type="text/javascript" src="js/constants.js"></script>
   <script type="text/javascript" src="js/LogicalBoard.js"></script>
+  <script type="text/javascript" src="js/GameEventProducer.js"></script>
+  <script type="text/javascript" src="js/Renderer.js"></script>
   <script type="text/javascript" src="js/RunFinder.js"></script>
-  <script type="text/javascript" src="js/PathSearcherNew.js"></script>
+  <script type="text/javascript" src="js/PathSearcher.js"></script>
+  <script type="text/javascript" src="js/BoardIndex.js"></script>
+  <script type="text/javascript" src="js/Node.js"></script>
 
   <!-- include spec files here... -->
   <script type="text/javascript" src="spec/SpecHelper.js"></script>
   <script type="text/javascript" src="spec/LogicalBoardSpec.js"></script>
+  <script type="text/javascript" src="spec/GameEventProducerSpec.js"></script>
+  <script type="text/javascript" src="spec/RendererSpec.js"></script>
   <script type="text/javascript" src="spec/RunFinderSpec.js"></script>
-  <script type="text/javascript" src="spec/PathSearcherNewSpec.js"></script>
+  <script type="text/javascript" src="spec/PathSearcherSpec.js"></script>
+  <script type="text/javascript" src="spec/BoardIndexSpec.js"></script>
+  <script type="text/javascript" src="spec/NodeSpec.js"></script>
 
   <script type="text/javascript">
     (function() {
@@ -55,5 +64,13 @@
 </head>
 
 <body>
+
+<div id="target" style="display: none;">
+<table border="1" summary="" id="" class="">
+  <tr><td>r0 c0</td><td>r0 c1</td><td>r0 c2</td><td>r0 c3</td></tr>
+  <tr><td>r1 c0</td><td>r1 c1</td><td>r1 c2</td><td>r1 c3</td></tr>
+  <tr><td>r2 c0</td><td>r2 c1</td><td>r2 c2</td><td>r2 c3</td></tr>
+</table>
+</div>
 </body>
 </html>

@@ -111,6 +111,31 @@ describe('LogicalBoard', function() {
         expect(neighbours[0]).toEqual({x: 1, y: 0});
     });
 
+    it('should return a snapshot of the board', function() {
+        var snapshot = board.takeSnapshot();
+        expect(snapshot.length).toBe(width * height);
+    });
+
+    it('can find differences between current state and old snapshot', function() {
+        board.add({x: 2, y: 2}, 'green');
+        var snapshot = board.takeSnapshot();
+        expect();
+        board.add({x: 2, y: 2}, '');
+        board.add({x: 1, y: 1}, 'blue');
+        var changed = board.getChangedCells(snapshot);
+        expect(changed.length).toBe(2);
+        expect(changed[0]).toEqual({x: 1, y: 1});
+        expect(changed[1]).toEqual({x: 2, y: 2});
+    });
+
+    it('finds all cells changed if snapshot empty', function() {
+        var changed = board.getChangedCells([]),
+            lastIndex = width * height - 1;
+        expect(changed.length).toBe(width * height);
+        expect(changed[0]).toEqual({x: 0, y: 0});
+        expect(changed[lastIndex]).toEqual({x: width - 1, y: height - 1});
+    });
+
     function fillBoard() {
         var color = 'blue';
         for (var x = 0; x < width; x += 1) {

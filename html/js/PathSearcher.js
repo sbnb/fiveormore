@@ -2,13 +2,13 @@
     Search for valid paths on a board.
 */
 
-function PathSearcherNew(logicalBoard) {
+function PathSearcher(logicalBoard) {
     this._logicalBoard = logicalBoard;
 }
 
 // Return the list of cells from startCell to targetCell (include both ends)
-PathSearcherNew.prototype.search = function (startCell, targetCell) {
-    var openList = [new PathNode(startCell, 0, this.estimatedCostToEnd(startCell, targetCell))],
+PathSearcher.prototype.search = function (startCell, targetCell) {
+    var openList = [new PathNode(startCell, 0, getEstimatedCostToEnd(startCell, targetCell))],
         closedList = [],
         currentNode,
         neighbourCells,
@@ -35,7 +35,7 @@ PathSearcherNew.prototype.search = function (startCell, targetCell) {
         for (var idx = 0; idx < neighbourCells.length; idx += 1) {
             neighbour = neighbourCells[idx];
             tentativeCostSoFar = currentNode.costSoFar + 1;
-            estimatedCostToEnd = this.estimatedCostToEnd(neighbour, targetCell);
+            estimatedCostToEnd = getEstimatedCostToEnd(neighbour, targetCell);
 
             if (nodeInList(closedList, neighbour)) {
                 if (tentativeCostSoFar >= estimatedCostToEnd) {
@@ -74,7 +74,7 @@ function reconstructPath(targetCell) {
         reconstructPath(targetCell.cameFrom));
 }
 
-PathSearcherNew.prototype.estimatedCostToEnd = function (startCell, targetCell) {
+function getEstimatedCostToEnd(startCell, targetCell) {
     return Math.abs(targetCell.x - startCell.x) +
         Math.abs(targetCell.y - startCell.y);
 }

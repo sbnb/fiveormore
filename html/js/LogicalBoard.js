@@ -7,6 +7,7 @@ function LogicalBoard(width, height) {
     this._width = width;
     this._height = height;
     this._runFinder = new RunFinder(this);
+    this.cellSelected = null;
 
     for (var idx = 0, len = width * height; idx < len; idx += 1) {
         this._board.push('');
@@ -59,13 +60,13 @@ LogicalBoard.prototype.getNeighbours = function (cell, onlyEmpty) {
     }
 
     if (onlyEmpty) {
-        neighbours = this.getEmptyNeighbours(neighbours);
+        neighbours = this._removeFilledNeighbours(neighbours);
     }
     return neighbours;
 }
 
 // return only the empty neighbours
-LogicalBoard.prototype.getEmptyNeighbours = function (neighbours) {
+LogicalBoard.prototype._removeFilledNeighbours = function (neighbours) {
     var emptyNeighbours = [];
     _.forEach(neighbours, function (neighbour) {
         if (this.get(neighbour) === '') {
@@ -92,6 +93,26 @@ LogicalBoard.prototype.clearRuns = function (runs) {
     _.forEach(runs, function (run) {
         this.clearRun(run);
     }, this);
+}
+
+LogicalBoard.prototype.takeSnapshot = function () {
+    return this._board.slice();
+}
+
+LogicalBoard.prototype.getChangedCells = function (snapshot) {
+    var changed = [];
+    _.forEach(this._board, function (color, index) {
+        if (index >= snapshot.length || color !== snapshot[index]) {
+            changed.push(this._cellFromIndex(index));
+        }
+    }, this);
+    return changed;
+}
+
+LogicalBoard.prototype._cellFromIndex = function (index) {
+    var x = (index % this._width),
+        y = Math.floor(index / this._width);
+    return {x: x, y: y};
 }
 
 LogicalBoard.prototype.toString = function () {

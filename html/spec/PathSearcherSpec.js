@@ -1,4 +1,4 @@
-describe('PathSearcherNew', function() {
+describe('PathSearcher', function() {
 
     var searcher,
         board,
@@ -8,7 +8,7 @@ describe('PathSearcherNew', function() {
 
     beforeEach(function() {
         board = new LogicalBoard(width, height);
-        searcher = new PathSearcherNew(board);
+        searcher = new PathSearcher(board);
     });
 
     it('should find a path to an empty adjacent square', function() {
