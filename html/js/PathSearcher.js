@@ -24,7 +24,9 @@ PathSearcher.prototype.search = function (startCell, targetCell) {
         currentNode = getLowestCostNode(openList);
 
         if (cellsEqual(currentNode, targetCell)) {
-            return reconstructPath(currentNode);
+            var path = reconstructPath(currentNode);
+            path = path.reverse();
+            return path.slice(1);
         }
 
         openList = removeNodeFromList(openList, currentNode);

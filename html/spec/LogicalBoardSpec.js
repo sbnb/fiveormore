@@ -136,6 +136,8 @@ describe('LogicalBoard', function() {
         expect(changed[lastIndex]).toEqual({x: width - 1, y: height - 1});
     });
 
+    // TODO: check subscribe / notify on updates works
+
     function fillBoard() {
         var color = 'blue';
         for (var x = 0; x < width; x += 1) {

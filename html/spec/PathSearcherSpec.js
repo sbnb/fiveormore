@@ -18,8 +18,7 @@ describe('PathSearcher', function() {
             path;
         board.add(startCell, color);
         path = searcher.search(startCell, targetCell);
-        expect(path.length).toBe(2);
-        expect(contains(path, {x: 3, y: 3})).toBe(true);
+        expect(path.length).toBe(1);
         expect(contains(path, {x: 4, y: 3})).toBe(true);
     });
 
@@ -30,8 +29,7 @@ describe('PathSearcher', function() {
             path;
         board.add(startCell, color);
         path = searcher.search(startCell, targetCell);
-        expect(path.length).toBe(4);
-        expect(contains(path, {x: 3, y: 3})).toBe(true);
+        expect(path.length).toBe(3);
         expect(contains(path, {x: 5, y: 4})).toBe(true);
     });
 
