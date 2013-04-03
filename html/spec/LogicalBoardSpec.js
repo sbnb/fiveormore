@@ -136,7 +136,28 @@ describe('LogicalBoard', function() {
         expect(changed[lastIndex]).toEqual({x: width - 1, y: height - 1});
     });
 
-    // TODO: check subscribe / notify on updates works
+    it('publishes to subscribers on board updates', function() {
+        var called = 0,
+            sub = function (msg, data) {
+                called += 1;
+            };
+
+        var token = board.subscribe(sub);
+
+        runs(function() {
+            board.add({x: 2, y: 2}, 'green');
+        });
+
+        waitsFor(function() {
+            return called === 1;
+        }, "called to become 1", 10);
+
+        runs(function() {
+            expect(called).toBe(1);
+            PubSub.unsubscribe(token);
+        });
+    });
+
 
     function fillBoard() {
         var color = 'blue';

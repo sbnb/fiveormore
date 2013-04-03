@@ -2,6 +2,13 @@ function Renderer(logicalBoard, tableId) {
     this._logicalBoard = logicalBoard;
     this._tableId = tableId;
     this.snapshot = [];
+
+    // register as a subscriber to changes in LogicalBoard
+    // render when any changes made
+    var that = this;
+    this._logicalBoard.subscribe(function (msg, data) {
+        that.render();
+    });
 }
 
 // render any changed cells since the last render
@@ -15,3 +22,4 @@ Renderer.prototype.render = function () {
 
     this.snapshot = this._logicalBoard.takeSnapshot();
 }
+

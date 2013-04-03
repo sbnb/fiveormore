@@ -29,6 +29,7 @@ LogicalBoard.prototype.index = function (cell) {
 // add a stone color at cell(x,y)
 LogicalBoard.prototype.add = function (cell, color) {
     this._board[this.index(cell)] = color;
+    PubSub.publish(constants.UPDATES, {foo: 'bar'});
 }
 
 // retrieve the color at cell(x,y) (or empty string)
@@ -94,6 +95,11 @@ LogicalBoard.prototype.clearRuns = function (runs) {
         this.clearRun(run);
     }, this);
 }
+
+LogicalBoard.prototype.subscribe = function (subscriber) {
+    return PubSub.subscribe(constants.UPDATES, subscriber);
+}
+
 
 LogicalBoard.prototype.takeSnapshot = function () {
     return this._board.slice();
