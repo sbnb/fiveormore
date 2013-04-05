@@ -9,4 +9,5 @@
 [GameEventProducer]->[GameEvents array]
 [GameEventConsumer]->[GameEvents array]
 [LogicalBoard]<->[RunFinder]
+[LogicalBoard]-->[PreviewStones]
 [Game]<>->[Score]

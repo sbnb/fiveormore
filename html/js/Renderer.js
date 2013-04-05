@@ -20,6 +20,8 @@ Renderer.prototype.render = function () {
         $cell.removeClass().addClass(color);
     }, this);
 
+    // render preview stones
+
     this.snapshot = this._logicalBoard.takeSnapshot();
 }
 
