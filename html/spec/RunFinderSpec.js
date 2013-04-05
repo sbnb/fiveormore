@@ -70,9 +70,9 @@ describe('RunFinder', function() {
         setFiveRunsOfThree(board, 'blue', 'red');
         var runs = finder.find(3);
         expect(runs.length).toEqual(5);
-        flattened = flatten([[6,7,8],[0,6,12],[2,8,14],[0,7,14],[2,7,12]]);
+        flattened = _.flatten([[6,7,8],[0,6,12],[2,8,14],[0,7,14],[2,7,12]]);
 
-        expect(flatten(runs).sort()).toEqual(flattened.sort());
+        expect(_.flatten(runs).sort()).toEqual(flattened.sort());
     });
 
 });

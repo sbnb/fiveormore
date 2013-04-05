@@ -25,10 +25,6 @@ function setFiveRunsOfThree(board, onColor, offColor) {
     board.add({x: 2, y: 2}, onColor);
 }
 
-function flatten(multiDimArray) {
-    return [].concat.apply([], multiDimArray);
-}
-
 function addListOfCellsToBoard(board, cells, color) {
     for (var idx = 0; idx < cells.length; idx += 1) {
         board.add(cells[idx], color);
