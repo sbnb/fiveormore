@@ -1,6 +1,7 @@
-function Renderer(logicalBoard, tableId) {
+function Renderer(logicalBoard, tableId, previewSelector) {
     this._logicalBoard = logicalBoard;
     this._tableId = tableId;
+    this._previewSelector = previewSelector;
     this.snapshot = [];
 
     // register as a subscriber to changes in LogicalBoard
@@ -17,11 +18,19 @@ Renderer.prototype.render = function () {
 
     _.forEach(changed, function (cell) {
         var $cell = $(this._tableId + ' tr').eq(cell.y).find('td').eq(cell.x);
+        var color = this._logicalBoard.get(cell);
         $cell.removeClass().addClass(color);
     }, this);
 
-    // render preview stones
-
+    this._renderPreviewStones();
     this.snapshot = this._logicalBoard.takeSnapshot();
 }
 
+Renderer.prototype._renderPreviewStones = function () {
+    var stones = this._logicalBoard.previewStones.stones;
+    _.forEach(stones, function (color, idx) {
+        var selector = this._previewSelector + ' li:eq(' + idx + ')',
+            $previewLi = $(selector);
+        $previewLi.removeClass().addClass(color);
+    }, this);
+}

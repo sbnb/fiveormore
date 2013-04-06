@@ -10,4 +10,5 @@
 [GameEventConsumer]->[GameEvents array]
 [LogicalBoard]<->[RunFinder]
 [LogicalBoard]-->[PreviewStones]
+[PreviewStones]-->[Colors]
 [Game]<>->[Score]

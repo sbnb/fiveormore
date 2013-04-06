@@ -22,6 +22,26 @@ describe('LogicalBoard', function() {
         expect(board.get(cell)).toBe(color);
     });
 
+    it('returns empty cells', function() {
+        expect(board.getEmptyCells().length).toBe(width * height);
+        board.add({x: 3 , y: 3}, 'blue');
+        board.add({x: 5 , y: 5}, 'red');
+        expect(board.getEmptyCells().length).toBe(width * height - 2);
+    });
+
+    it('empty cells are shuffled', function() {
+        var firstRun = board.getEmptyCells(),
+            secondRun = board.getEmptyCells();
+        expect(firstRun).not.toEqual(secondRun);
+    });
+
+    it('can place a list of stone colors randomly in empty cells', function() {
+        var stones = ['red', 'green', 'blue'];
+        board.placeStones(stones);
+        expect(board.getEmptyCells().length).toEqual(width * height - 3);
+    });
+
+
     it('should report as full if it is', function() {
         fillBoard();
         expect(board.isFull()).toBe(true);

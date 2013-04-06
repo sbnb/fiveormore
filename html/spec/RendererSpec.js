@@ -6,12 +6,18 @@ describe('Renderer', function() {
         renderer,
         onColor = 'blue',
         offColor = 'red',
-        tableId = '#target table';
+        tableId = '#target table',
+        previewSelector = '#preview';
 
     beforeEach(function() {
+        // clear table cells
         $(tableId + ' td').removeClass();
+
+        // clear preview tds
+        $(previewSelector + ' li').removeClass();
+
         board = new LogicalBoard(width, height);
-        renderer = new Renderer(board, tableId);
+        renderer = new Renderer(board, tableId, previewSelector);
         setFiveRunsOfThree(board, onColor, offColor);
     });
 
@@ -39,8 +45,17 @@ describe('Renderer', function() {
         });
     });
 
+    it('renders the prevew stones', function() {
+        waits(1);
+        runs(function() {
+            var $previewLis = $(previewSelector + ' li'),
+                stones = board.previewStones.stones;
+            expect($previewLis.eq(0).hasClass(stones[0])).toBe(true);
+            expect($previewLis.eq(1).hasClass(stones[1])).toBe(true);
+            expect($previewLis.eq(2).hasClass(stones[2])).toBe(true);
+        });
 
 
-
+    });
 
 });

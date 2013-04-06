@@ -8,6 +8,7 @@ function LogicalBoard(width, height) {
     this._height = height;
     this._runFinder = new RunFinder(this);
     this.cellSelected = null;
+    this.previewStones = new PreviewStones();
 
     for (var idx = 0, len = width * height; idx < len; idx += 1) {
         this._board.push('');
@@ -18,8 +19,8 @@ LogicalBoard.prototype = {
     // True if no empty cells on board
     isFull:
         function () {
-            return _.every(this._board, function (cell) {
-                return cell !== '';
+            return _.every(this._board, function (color) {
+                return color !== '';
             })
         },
 
@@ -36,10 +37,34 @@ LogicalBoard.prototype = {
             PubSub.publish(constants.UPDATES, {});
         },
 
+    // place a list of stones randomly on the board in empty cells
+    // returns: the array of cells where they were placed
+    placeStones:
+        function (stones) {
+            var emptyCells = this.getEmptyCells().slice(0, stones.length);
+            _.forEach(emptyCells, function (cell, idx) {
+                this._board[this.index(cell)] = stones[idx];
+            }, this);
+            PubSub.publish(constants.UPDATES, {});
+            return emptyCells;
+        },
+
     // retrieve the color at cell(x,y) (or empty string)
     get:
         function (cell) {
             return this._board[this.index(cell)];
+        },
+
+    // return the empty cells as a shuffled array (random order)
+    getEmptyCells:
+        function () {
+            var emptyCells = [];
+            _.forEach(this._board, function (color, idx) {
+                if (color === '') {
+                    emptyCells.push(this._cellFromIndex(idx));
+                }
+            }, this);
+            return _.shuffle(emptyCells);
         },
 
     // retrieve the neighbours of cell as an array of cells

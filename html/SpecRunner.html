@@ -25,6 +25,8 @@
   <script type="text/javascript" src="js/PathSearcher.js"></script>
   <script type="text/javascript" src="js/BoardIndex.js"></script>
   <script type="text/javascript" src="js/Score.js"></script>
+  <script type="text/javascript" src="js/Colors.js"></script>
+  <script type="text/javascript" src="js/PreviewStones.js"></script>
   <script type="text/javascript" src="js/Node.js"></script>
 
   <!-- include spec files here... -->
@@ -38,9 +40,33 @@
   <script type="text/javascript" src="spec/BoardIndexSpec.js"></script>
   <script type="text/javascript" src="spec/NodeSpec.js"></script>
   <script type="text/javascript" src="spec/ScoreSpec.js"></script>
+  <script type="text/javascript" src="spec/ColorsSpec.js"></script>
+  <script type="text/javascript" src="spec/PreviewStonesSpec.js"></script>
   <script type="text/javascript" src="spec/PubSubSpec.js"></script>
 
+
+</head>
+
+<body>
+
+  <div id="target" style="display: none;">
+    <table border="1" summary="" id="" class="">
+      <tr><td>r0 c0</td><td>r0 c1</td><td>r0 c2</td><td>r0 c3</td></tr>
+      <tr><td>r1 c0</td><td>r1 c1</td><td>r1 c2</td><td>r1 c3</td></tr>
+      <tr><td>r2 c0</td><td>r2 c1</td><td>r2 c2</td><td>r2 c3</td></tr>
+    </table>
+
+    <div id="preview">
+      <ul>
+        <li class='fucktardial'><p>groovy</p></li>
+        <li class='fucktardial'><p>bollocks</p></li>
+        <li class='fucktardial'><p>annoy</p></li>
+      </ul>
+    </div>
+  </div>
+
   <script type="text/javascript">
+
     (function() {
       var jasmineEnv = jasmine.getEnv();
       jasmineEnv.updateInterval = 1000;
@@ -69,16 +95,5 @@
     })();
   </script>
 
-</head>
-
-<body>
-
-<div id="target" style="display: none;">
-<table border="1" summary="" id="" class="">
-  <tr><td>r0 c0</td><td>r0 c1</td><td>r0 c2</td><td>r0 c3</td></tr>
-  <tr><td>r1 c0</td><td>r1 c1</td><td>r1 c2</td><td>r1 c3</td></tr>
-  <tr><td>r2 c0</td><td>r2 c1</td><td>r2 c2</td><td>r2 c3</td></tr>
-</table>
-</div>
 </body>
 </html>
