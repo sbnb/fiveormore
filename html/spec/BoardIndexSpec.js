@@ -3,7 +3,7 @@ describe('BoardIndex', function() {
     var rowIdx = 2,
         colIdx = 3,
         boardIndex,
-        tableId = '#target table';
+        tableId = '#container table';
 
     beforeEach(function() {
         boardIndex = new BoardIndex(rowIdx, colIdx);

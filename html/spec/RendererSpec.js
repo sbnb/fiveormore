@@ -6,7 +6,7 @@ describe('Renderer', function() {
         renderer,
         onColor = 'blue',
         offColor = 'red',
-        tableId = '#target table',
+        tableId = '#container table',
         previewSelector = '#preview';
 
     beforeEach(function() {
@@ -17,7 +17,7 @@ describe('Renderer', function() {
         $(previewSelector + ' li').removeClass();
 
         board = new LogicalBoard(width, height);
-        renderer = new Renderer(board, tableId, previewSelector);
+        renderer = new Renderer(board, tableId, previewSelector, new Score());
         setFiveRunsOfThree(board, onColor, offColor);
     });
 
@@ -35,15 +35,36 @@ describe('Renderer', function() {
 
     it('updates the DOM with changed cells', function() {
         waitsFor(function() {
-            var $cell = $(tableId + ' tr').eq(0).find('td').eq(0);
+            var $cell = $(tableId + ' tbody tr').eq(0).find('td').eq(0);
             return $cell.hasClass(onColor);
         }, "$cell has class onColor", 1);
 
         runs(function() {
-            var $cell = $(tableId + ' tr').eq(0).find('td').eq(0);
+            var $cell = $(tableId + ' tbody tr').eq(0).find('td').eq(0);
             expect($cell.hasClass(onColor)).toBe(true);
         });
     });
+
+    it('updates the DOM when a cell is selected', function() {
+        // check that DOM has been updated to select the clicked cell
+        var cell = {x: 2, y: 2};
+        board.selectCell(cell);
+
+        // select all cells to check cell selection clears all but one
+        var $allCells = $(tableId + ' td');
+            totalCells = $allCells.length;
+        $allCells.addClass('selected');
+        expect($(tableId + ' td.selected').length).toBe(totalCells);
+
+        waits(1);
+
+        runs(function() {
+            var $cell = $(tableId + ' tr').eq(2).find('td').eq(2);
+            expect($cell.hasClass('selected')).toBe(true);
+            expect($(tableId + ' td.selected').length).toBe(1);
+        });
+    });
+
 
     it('renders the prevew stones', function() {
         waits(1);

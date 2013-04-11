@@ -7,7 +7,7 @@ describe('GameEventConsumer', function() {
         selectedCell = {x: 0, y: 0},
         targetCell = {x: 1, y: 1},
         color = 'blue',
-        tableId = '#target table';
+        tableId = '#container table';
 
     beforeEach(function() {
         $(tableId + ' td').removeClass();
@@ -15,16 +15,13 @@ describe('GameEventConsumer', function() {
         board.add(selectedCell, color);
         board.cellSelected = selectedCell;
         gameEvents = [];
-        consumer = new GameEventConsumer(board, gameEvents);
+        consumer = new GameEventConsumer(board, gameEvents, new Score(new PointsPopup()));
         gameEvents.push({event: constants.SEEK_MOVE, target: targetCell});
     });
 
     it('translates valid move into animation transitions', function() {
         consumer.consume({schedulingOk: false});
-        expect(gameEvents.length).toBe(2);
-        _.forEach(gameEvents, function (event) {
-            expect(event.event).toBe(constants.TRANSITION);
-        }, this);
+        expect(countEvents(gameEvents, constants.TRANSITION)).toBe(2);
     });
 
     it('removes selectedCell from board', function() {
@@ -45,16 +42,18 @@ describe('GameEventConsumer', function() {
     it('consumes transition frames into animations', function() {
         consumer.consume({schedulingOk: false});  // create transitions
         consumer.consume({schedulingOk: false}); // consume first transition
-        expect(gameEvents.length).toBe(1);
+
+        expect(countEvents(gameEvents, constants.TRANSITION)).toBe(1);
         expect(board.get(selectedCell)).toBe(constants.EMPTY);
         expect(board.get({x: 0, y: 1})).toBe(color);
+
         consumer.consume({schedulingOk: false}); // consume second transition
-        expect(gameEvents.length).toBe(0);
+
+        expect(countEvents(gameEvents, constants.TRANSITION)).toBe(0);
         expect(board.get(selectedCell)).toBe(constants.EMPTY);
         expect(board.get({x: 0, y: 1})).toBe(constants.EMPTY);
         expect(board.get(targetCell)).toBe(color);
     });
-
 
     it('can schedule future consumes (async)', function() {
         runs(function() {
@@ -62,7 +61,7 @@ describe('GameEventConsumer', function() {
         });
 
         waitsFor(function() {
-          return gameEvents.length === 0;
+          return countEvents(gameEvents, constants.TRANSITION) === 0;
         }, "gameEvents length to be 0", 50);
 
         runs(function() {
@@ -72,5 +71,46 @@ describe('GameEventConsumer', function() {
         });
 
     });
+
+    it('does not add pieces after a matched run', function() {
+        // fill board with a run
+        var cells = [{x: 0 , y: 1}, {x: 1 , y: 1}, {x: 2 , y: 1}, {x: 3 , y: 1}, {x: 4 , y: 1}];
+        addListOfCellsToBoard(board, cells, 'green');
+        gameEvents.length = 0;
+
+        // run a match (will succeed)
+        gameEvents.push({event: constants.MATCH_RUNS});
+        consumer.consume({schedulingOk: false});
+
+        // no events created since the match found a run (no add pieces)
+        expect(gameEvents.length).toBe(0);
+    });
+
+    it('does add pieces after a failure to match a run', function() {
+        gameEvents.length = 0;
+
+        // run a match (which will fail)
+        gameEvents.push({event: constants.MATCH_RUNS});
+        consumer.consume({schedulingOk: false});
+
+        // expect an ADD_PIECES event, and a special MATCH_NO_ADD event
+        expect(countEvents(gameEvents, constants.ADD_PIECES)).toBe(1);
+        expect(countEvents(gameEvents, constants.MATCH_RUNS_NO_ADD)).toBe(1);
+    });
+
+    //~ it('does not add pieces after a matched run', function() {
+        //~ // fill board with a run
+        //~ var cells = [{x: 0 , y: 1}, {x: 1 , y: 1}, {x: 2 , y: 1}, {x: 3 , y: 1}, {x: 4 , y: 1}];
+        //~ addListOfCellsToBoard(board, cells, 'green');
+        //~ gameEvents.length = 0;
+
+        //~ // run a match (will succeed)
+        //~ gameEvents.push({event: constants.MATCH_RUNS});
+        //~ consumer.consume({schedulingOk: false});
+
+        //~ // no events created since the match found a run (no add pieces)
+        //~ expect(gameEvents.length).toBe(0);
+    //~ });
+
 
 });

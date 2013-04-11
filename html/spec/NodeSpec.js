@@ -2,7 +2,7 @@ describe('Node', function() {
 
     var rowIdx = 2,
         colIdx = 3,
-        tableId = '#target table',
+        tableId = '#container table',
         $td,
         ancestor = null,
         boardIndex,

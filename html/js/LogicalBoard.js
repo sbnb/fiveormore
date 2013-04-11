@@ -49,6 +49,17 @@ LogicalBoard.prototype = {
             return emptyCells;
         },
 
+    selectCell:
+        function (cell) {
+            this.cellSelected = cell;
+            PubSub.publish(constants.UPDATES, {});
+        },
+
+    getSelectedCell:
+        function () {
+            return this.cellSelected;
+        },
+
     // retrieve the color at cell(x,y) (or empty string)
     get:
         function (cell) {
@@ -72,7 +83,7 @@ LogicalBoard.prototype = {
     // if onlyEmpty is given as true, ignore filled neighbours
     getNeighbours:
         function (cell, onlyEmpty) {
-            onlyEmpty = setIfUndefined(onlyEmpty, false);
+            onlyEmpty = tools.setIfUndefined(onlyEmpty, false);
             var neighbours = [];
 
             if (cell.y > 0) {
@@ -129,6 +140,7 @@ LogicalBoard.prototype = {
             _.forEach(runs, function (run) {
                 this.clearRun(run);
             }, this);
+            PubSub.publish(constants.UPDATES, {});
         },
 
     subscribe:
@@ -179,7 +191,3 @@ function pad(num, size) {
     return s.substr(s.length-size);
 }
 
-function setIfUndefined(variable, defaultValue) {
-    variable = (typeof variable === "undefined") ? defaultValue : variable;
-    return variable;
-}

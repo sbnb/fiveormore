@@ -1,22 +1,23 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-  "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <title>Jasmine Spec Runner</title>
-
-  <link rel="shortcut icon" type="image/png" href="/lib/jasmine-1.3.1/jasmine_favicon.png">
-  <link rel="stylesheet" type="text/css" href="/lib/jasmine-1.3.1/jasmine.css">
-  <script type="text/javascript" src="/lib/jasmine-1.3.1/jasmine.js"></script>
-  <script type="text/javascript" src="/lib/jasmine-1.3.1/jasmine-html.js"></script>
-
-  <!-- dependencies -->
-  <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Five or More Game</title>
+  <meta name="description" content="Five or More is a fun and addictive puzzle game: align stones in lines of the same color to score points. Compete for your place in the high scores!">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/resetdw.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
+<!--replace_start-->
+  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
+  <script type="text/javascript" src="js/json2.js"></script>
   <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
   <script type="text/javascript" src="js/jquery.cookie.js"></script>
   <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
 
-  <!-- include source files here... -->
   <script type="text/javascript" src="js/constants.js"></script>
   <script type="text/javascript" src="js/const.js"></script>
   <script type="text/javascript" src="js/CookieHandler.js"></script>
@@ -39,31 +40,34 @@
   <script type="text/javascript" src="js/GameBuilder.js"></script>
   <script type="text/javascript" src="js/Game2.js"></script>
 
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/SpecHelper.js"></script>
-  <script type="text/javascript" src="spec/LogicalBoardSpec.js"></script>
-  <script type="text/javascript" src="spec/GameEventProducerSpec.js"></script>
-  <script type="text/javascript" src="spec/GameEventConsumerSpec.js"></script>
-  <script type="text/javascript" src="spec/RendererSpec.js"></script>
-  <script type="text/javascript" src="spec/RunFinderSpec.js"></script>
-  <script type="text/javascript" src="spec/PathSearcherSpec.js"></script>
-  <script type="text/javascript" src="spec/BoardIndexSpec.js"></script>
-  <script type="text/javascript" src="spec/NodeSpec.js"></script>
-  <script type="text/javascript" src="spec/PopupControllerSpec.js"></script>
-  <script type="text/javascript" src="spec/ScoreSpec.js"></script>
-  <script type="text/javascript" src="spec/HighScoresSpec.js"></script>
-  <script type="text/javascript" src="spec/PointsPopupSpec.js"></script>
-  <script type="text/javascript" src="spec/ColorsSpec.js"></script>
-  <script type="text/javascript" src="spec/PreviewStonesSpec.js"></script>
-  <script type="text/javascript" src="spec/PubSubSpec.js"></script>
-  <script type="text/javascript" src="spec/Game2Spec.js"></script>
+<!--replace_end-->
+  <!--combined_js_insert-->
 
+  <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="css/ie7-and-down.css">
+  <![endif]-->
+
+  <script type="text/javascript">
+    var isIe = false;
+  </script>
+  <!--[if ie]>
+    <script type="text/javascript">
+      isIe = true;
+    </script>
+  <![endif]-->
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.full-width').horizontalNav({});
+      $(constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
+      new GameBuilder('#container').build(constants.BOARD_SELECTOR).start();
+    });
+  </script>
 
 </head>
 
 <body>
-
-  <div id="container" style="display: none;">
+  <div id="container">
 
     <div class="menuWrap">
       <nav class="horizontal-nav full-width">
@@ -98,13 +102,13 @@
 
     <tbody>
     <tr>
-      <td>r0 c0</td><td>r0 c1</td><td>r0 c2</td><td>r0 c3</td><td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td>r1 c0</td><td>r1 c1</td><td>r1 c2</td><td>r1 c3</td><td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <td>r2 c0</td><td>r2 c1</td><td>r2 c2</td><td>r2 c3</td><td></td><td></td><td></td><td></td><td></td>
+      <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
@@ -134,11 +138,11 @@
 
     <div id="buttonsWrap">
       <ul id="controlBar" class="plain">
-        <li id="newGame">New Game</li>
+        <li id="newGameButton" class="newGame">New Game</li>
         <li id="highScoresButton">High Scores</li>
-        <li id="showRules">Rules</li>
-        <li id="showPreferences">Preferences</li>
-        <li id="showAbout">About</li>
+        <li id="showRules" class="show">Rules</li>
+        <li id="showPreferences" class="show">Preferences</li>
+        <li id="showAbout" class="show">About</li>
       </ul>
     </div>
 
@@ -183,7 +187,7 @@
       </div>
 <!-- END highScoresWrap -->
 
-      <div id="playAgain"><span>Play again?</span></div>
+      <div id="playAgain" class="newGame"><span>Play again?</span></div>
 
       <p class="closeText"><span class="closeWindowText">Close this Window</span></p>
 
@@ -271,34 +275,14 @@
 
   </div>
 
-
   <script type="text/javascript">
-
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-25173044-2']);
+    _gaq.push(['_trackPageview']);
     (function() {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
-
-      var htmlReporter = new jasmine.HtmlReporter();
-
-      jasmineEnv.addReporter(htmlReporter);
-
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
-
-      var currentWindowOnload = window.onload;
-
-      window.onload = function() {
-        if (currentWindowOnload) {
-          currentWindowOnload();
-        }
-        execJasmine();
-      };
-
-      function execJasmine() {
-        jasmineEnv.execute();
-      }
-
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
   </script>
 

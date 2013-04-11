@@ -27,7 +27,7 @@ GameEventProducer.prototype.processClick = function (cell) {
     var contents = this._logicalBoard.get(cell);
 
     if (contents === constants.EMPTY) {
-        if (this._logicalBoard.cellSelected !== null) {
+        if (this._logicalBoard.getSelectedCell() !== null) {
             this._gameEvents.push({event: constants.SEEK_MOVE, target: cell});
         }
     }

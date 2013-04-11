@@ -1,29 +1,33 @@
-describe('GameEventProducer', function() {
+describe('Score', function() {
 
     var score;
 
     beforeEach(function() {
-        score = new Score();
-    });
-
-    it('scores empty runs as 0', function() {
-        var empty1 = [],
-            empty2 = [[], [], []];
-        score.add(empty1);
-        score.add(empty2);
-        expect(score.get()).toBe(0);
+        score = new Score(new PointsPopup());
     });
 
     it('adds a simple run', function() {
-        var run = [1, 3, 7, 8, 11];
-        score.add(run);
-        expect(score.get()).toBe(30);
+        var run = [[1, 3, 7, 8, 11]];
+        var points = score.add(run);
+        expect(score.get()).toBe(score.POINTS_FOR_LENGTH[run[0].length]);
+        expect(points).toBe(score.POINTS_FOR_LENGTH[run[0].length]);
     });
 
-    it('adds a complex run', function() {
-        var run = [[1, 3], [7, 8], 11];
-        score.add(run);
-        expect(score.get()).toBe(30);
+    it('adds each possible length', function() {
+        var runs = [[1,2,3,4,5], [1,2,3,4,5,6], [1,2,3,4,5,6,7],
+            [1,2,3,4,5,6,7,8], [1,2,3,4,5,6,7,8,9]];
+        var points = score.add(runs);
+
+        var expectTotal = score.POINTS_FOR_LENGTH[5] +
+            score.POINTS_FOR_LENGTH[6] +
+            score.POINTS_FOR_LENGTH[7] +
+            score.POINTS_FOR_LENGTH[8] +
+            score.POINTS_FOR_LENGTH[9];
+
+        expect(score.get()).toBe(expectTotal);
+        expect(points).toBe(expectTotal);
+
+
     });
 
 });

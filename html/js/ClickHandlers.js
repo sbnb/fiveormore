@@ -1,86 +1,74 @@
-function ClickHandlers() {
+// length: 155 lines - reduce
+function ClickHandlers(container) {
 
-    this.setUp = function(boardGame, highScores, popups, score, cookieHandler) {
+    this._container = container;
+
+    this.setUp = function(highScores, popups, score, cookieHandler) {
         var uniqId = cookieHandler.readUniqId();
-        $(HOW_TO_PLAY_PU).hide();
 
-        $('#newGame').off('click').click(function(e) {
-            messageServer(MESSAGE_ID.NEW_GAME, uniqId);
-            popups.closeGameOverPopup();
-            boardGame.setNewBoard();
+        $('.newGame').off('click').click(function(e) {
+            startNewGame(e.target.id);
         });
 
-        $('#playAgain').off('click').click(function(e) {
-            messageServer(MESSAGE_ID.PLAY_AGAIN, uniqId);
-            popups.closeGameOverPopup();
-            boardGame.setNewBoard();
-        });
-
-        $('#finish').off('click').click(function(e) {
-            boardGame.gameOver();
-        });
+        function startNewGame(buttonId) {
+            var buttonIdToMessageId = {
+                'newGameButton': MESSAGE_ID.NEW_GAME,
+                'playAgain': MESSAGE_ID.PLAY_AGAIN
+            };
+            messageServer(buttonIdToMessageId[buttonId], uniqId);
+            popups.closeAll();
+            new GameBuilder(this._container).build(constants.BOARD_SELECTOR).start();
+        }
 
         $('#highScoresButton').off('click').click(function(e) {
             messageServer(MESSAGE_ID.VIEW_HIGH_SCORES, uniqId);
-            highScores.generateHighScoresHtml(boardGame.showHighScoresNowServerScoresLoaded);
+            highScores.generateHighScoresHtml(function (serverScores) {
+                highScores.displayHighScores({serverScores: serverScores});
+                popups.requestedHighScores();
+            });
         });
 
+
         $('#submitHighScore').off('click').click(function(e) {
-            messageServer(MESSAGE_ID.ENTERED_HIGH_SCORE, uniqId);
-            highScores.enterNewHighScore(uniqId, $('#highScoreName').val(), score.getScore());
-            highScores.displayHighScores({});
-            popups.submittedNameForHighScore();
+            submitHighScore()
         });
 
         $('#highScoreName').off('keypress').bind('keypress', function(e){
             if ( e.keyCode === 13 ) {
-                messageServer(MESSAGE_ID.ENTERED_HIGH_SCORE, uniqId);
-                highScores.enterNewHighScore(uniqId, $('#highScoreName').val(), score.getScore());
-                highScores.displayHighScores({});
-                popups.submittedNameForHighScore();
+                submitHighScore()
             }
         });
+
+        function submitHighScore() {
+            messageServer(MESSAGE_ID.ENTERED_HIGH_SCORE, uniqId);
+            highScores.enterNewHighScore(uniqId, $('#highScoreName').val(), score.getScore());
+            highScores.displayHighScores({});
+            popups.submittedNameForHighScore();
+        }
 
         $('#highScoresWrap').off('click').on('click', 'em', function(e) {
-            $('#localScores').hide();
-            $('#allTimeScores').hide();
-            $('#recentScores').hide();
-
-            switch($(this).attr('class')) {
-                case 'allTime': {
-                    $('#allTimeScores').show();
-                    break;
-                }
-                case 'recent': {
-                    $('#recentScores').show();
-                    break;
-                }
-                case 'local': {
-                    $('#localScores').show();
-                    break;
-                }
-                default: {
-                    logMessage("ClickHandler: error should not get here!");
-                }
-            }
+            $('.subScore').hide();
+            var hsSubtypeSelector = '#' + e.target.className + 'Scores';
+            $(hsSubtypeSelector).show();
         });
 
-        $('#showHowToPlay').off('click').click(function(e) {
-            messageServer(MESSAGE_ID.VIEW_RULES, uniqId);
-            popups.openHowToPlayPopup();
+
+        // handler for viewing simple popups of information, with no processing
+        $('.show').off('click').click(function (e) {
+            var m = MESSAGE_ID,
+                buttonIdMappings = {
+                    'showRules': {popup: 'rules', messageId: m.VIEW_RULES},
+                    'showPreferences': {popup: 'preferences', messageId: m.VIEW_PREFERENCES},
+                    'showAbout': {popup: 'about', messageId: m.VIEW_ABOUT}
+                };
+            messageServer(buttonIdMappings[e.target.id].messageId, uniqId);
+            popups.showPopup(buttonIdMappings[e.target.id].popup);
         });
 
-        $('#howToPlay div.closeWindowX span, #howToPlay span.closeWindowText').off('click').click(function(e) {
-            popups.closeHowToPlayPopup();
-        });
 
-        $('#showPreferences').off('click').click(function(e) {
-            messageServer(MESSAGE_ID.VIEW_PREFERENCES, uniqId);
-            popups.openPreferencesPopup();
-        });
-
-        $('#preferencesPopup div.closeWindowX span, #preferencesPopup span.closeWindowText').off('click').click(function(e) {
-            popups.closePreferencesPopup();
+        // handler for closing popup windows (only one popup is open at a time)
+        $('div.closeWindowX span, span.closeWindowText').off('click').click(function (e) {
+            popups.closeAll();
         });
 
         $('input[name=boardSize]').off('change').change(function(){
@@ -120,20 +108,7 @@ function ClickHandlers() {
             $('input:radio[name=shapesOn][value=off]').attr('checked', 'checked');
         }
 
-        $('#showAbout').off('click').click(function(e) {
-            messageServer(MESSAGE_ID.VIEW_ABOUT, uniqId);
-            popups.openAboutPopup();
-        });
-
-        $('#aboutPopup div.closeWindowX span, #aboutPopup span.closeWindowText').off('click').click(function(e) {
-            popups.closeAboutPopup();
-        });
-
-        $('#gameOverPopup div.closeWindowX span, #gameOverPopup span.closeWindowText').click(function(e) {
-            popups.closeGameOverPopup();
-        });
-
-        centerAbsoluteOnElement($('#container'), $("#loading"), $(TABLE));
+        centerAbsoluteOnElement($(this._container), $("#loading"), $(TABLE));
 
         // safety: hide loading gif on ajax stop, in case success func in
         // getHighScoresFromServer doesn't fire
@@ -144,6 +119,4 @@ function ClickHandlers() {
         });
 
     }
-
-
 };

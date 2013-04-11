@@ -1,7 +1,7 @@
 var BOARD = "table#fiveormore tbody";
 var TABLE = "table#fiveormore";
 var GAME_OVER_PU = '#gameOverPopup';
-var HOW_TO_PLAY_PU = '#howToPlay';
+var HOW_TO_PLAY_PU = '#rules';
 var STONE_COLORS = ["green", "red", "blue", "orange", "purple", "yellow"];
 var STONE_SHAPES = {green: "circle.png", red: "star.png", blue: "triangle.png", orange: "square.png", purple: "splat.png", yellow: "diamond.png"};
 var SHAPES_ON = true;
@@ -34,8 +34,6 @@ var UNIQ_ID_DEFAULT = "unknown";
 var LOCAL_HS_DEFAULT = [];
 var USERNAME_DEFAULT = "";
 var HS_MAX_NAME_LENGTH = 20;
-var HS_NUM_DISPLAYED = 10;
-var HS_LEADIN = '&nbsp;&nbsp;';
 var SMALL_BOARD_CUTOFF = 550;    // height of viewport in pixels, below this use small board
 var MEDIUM_BOARD_CUTOFF = 750;
 var SIZE = {SMALL: 'small', MEDIUM: 'medium', LARGE: 'large'};
@@ -79,14 +77,62 @@ function isEmptyObject(obj) {
     return true;
 }
 
-// jquery extensions
-jQuery.fn.center = function () {
-    var theParent = this.parent();
-    this.css("position","absolute");
-    this.css("top", (($(theParent).height() - this.outerHeight()) / 2) + $(theParent).scrollTop() + "px");
-    this.css("left", (($(theParent).width() - this.outerWidth()) / 2) + $(theParent).scrollLeft() + "px");
-    return this;
-}
+(function ($) {
+    'use strict';
+
+    // center this element on the background element
+    // if $bgElement contains multiple elements, center on whole area
+    // this element should be absolutely positioned (made so if not)
+    // will not work with margins
+    $.fn.centerOn = function ($bgElement) {
+        var bgCenter = $bgElement.getCenter();
+        this.css("position", "absolute");
+        this.css({left: bgCenter.left - this.outerWidth() / 2,
+            top: bgCenter.top - this.outerHeight() / 2});
+        return this;
+    };
+
+    // find the center point of this element (or elements) on the screen
+    $.fn.getCenter = function () {
+
+        var offset = this.offset(),
+            min = {x: offset.left, y: offset.top},
+            max = {x: offset.left, y: offset.top};
+
+        this.each(function (idx) {
+            var offset = $(this).offset(),
+                topLeft,
+                bottomRight;
+
+            topLeft = {x: offset.left, y: offset.top};
+            bottomRight = {x: offset.left + $(this).outerWidth(),
+                y: offset.top + $(this).outerHeight()};
+
+            min.x = Math.min(topLeft.x, min.x);
+            min.y = Math.min(topLeft.y, min.y);
+            max.x = Math.max(bottomRight.x, max.x);
+            max.y = Math.max(bottomRight.y, max.y);
+        });
+        return {left: (min.x + max.x) / 2, top: (min.y + max.y) / 2};
+    };
+
+    // like eq() but give an array of indexes instead of just one
+    $.fn.eqAnyOf = function (arrayOfIndexes) {
+        return this.filter(function(i) {
+            return $.inArray(i, arrayOfIndexes) > -1;
+        });
+    };
+
+})(jQuery);
+
+//~ // jquery extensions
+//~ jQuery.fn.center = function () {
+    //~ var theParent = this.parent();
+    //~ this.css("position","absolute");
+    //~ this.css("top", (($(theParent).height() - this.outerHeight()) / 2) + $(theParent).scrollTop() + "px");
+    //~ this.css("left", (($(theParent).width() - this.outerWidth()) / 2) + $(theParent).scrollLeft() + "px");
+    //~ return this;
+//~ }
 
 jQuery.fn.centerHorizontal = function () {
     var theParent = this.parent();
@@ -125,6 +171,7 @@ function messageServer(messageId, uniqId) {
     _gaq.push(['_trackEvent', 'Interaction', MSG_TXT[messageId-1], uniqId]);
 }
 
+// TODO: move ajax calls serverTalk object, or split between highscores and tools
 function sendScoreToServer(uniqId, username, score) {
     $.ajax({
         url: 'server.php',
@@ -134,30 +181,22 @@ function sendScoreToServer(uniqId, username, score) {
 }
 
 function getHighScoresFromServer(successFunction) {
-    showLoading();
+    $("#loading").show();
     $.ajax({
         url: 'server.php',
         type: 'POST',
         data: 'q=getHighScores',
         success: function(result) {
-            hideLoading();
+            $("#loading").hide();
             successFunction(JSON.parse(result));
         }
     });
 }
 
-function showLoading() {
-  $("#loading").show();
-}
-
-function hideLoading() {
-  $("#loading").hide();
-}
-
 // production only routines
 function assert(condition, message) {
     if (ASSERTS_ON && !condition) {
-        console.log("ASSERTION FAIL: " + message);
+        throw Error("ASSERTION FAIL: " + message);
     }
 }
 

@@ -9,7 +9,7 @@ function BoardGame() {
     var pathAnimator;
     var animating;
     var popups = new PopupController();
-    var clickHandlers = new ClickHandlers();
+    var clickHandlers = new ClickHandlers('#container');
     var cookieHandler = new CookieHandler();
     var highScores = new HighScores(cookieHandler);
 
@@ -162,11 +162,6 @@ function BoardGame() {
 
     this.gameOver = function() {
         gameOverWaitForServerResponse();
-    }
-
-    this.showHighScoresNowServerScoresLoaded = function(serverScores) {
-        highScores.displayHighScores({serverScores: serverScores});
-        popups.requestedHighScores();
     }
 
     function gameOverWaitForServerResponse() {

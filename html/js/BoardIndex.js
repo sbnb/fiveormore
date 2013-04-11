@@ -14,8 +14,8 @@ function BoardIndex(rowIdx, colIdx) {
     }
 
     this.getAsJqueryTd = function(tableId) {
-        tableId = setIfUndefined(tableId, BOARD);
-        var $cell = $(tableId + ' tr').eq(this.row).find('td').eq(this.col);
+        tableId = tools.setIfUndefined(tableId, BOARD);
+        var $cell = $(tableId + ' tbody tr').eq(this.row).find('td').eq(this.col);
         return $cell;
     }
 };

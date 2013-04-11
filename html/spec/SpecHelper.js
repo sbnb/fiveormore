@@ -40,3 +40,10 @@ function contains(listOfCells, cell) {
     return false;
 }
 
+function countEvents(gameEvents, eventType) {
+    var count = 0;
+    _.forEach(gameEvents, function (event) {
+        count = event.event === eventType ? count + 1 : count;
+    }, this);
+    return count;
+}
