@@ -21,7 +21,7 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
         loadHighScoresFromCookie();
 
         _.forEach(hsData, function (data, key) {
-            console.log('score: ' + score + ' key: ' + key + ' ' + hsData[key].scores);
+            //~ console.log('score: ' + score + ' key: ' + key + ' ' + hsData[key].scores);
             hsData[key].isHighScore = isHighScore(hsData[key].scores, score);
         }, this);
 
@@ -35,26 +35,40 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
         getHighScoresFromServer(reentryFunction);
     }
 
+    function getHighScoresFromServer(successFunction) {
+        $("#loading").show();
+        $.ajax({
+            url: 'server.php',
+            type: 'POST',
+            data: 'q=getHighScores',
+            success: function(result) {
+                $("#loading").hide();
+                successFunction(JSON.parse(result));
+            }
+        });
+    }
+
+    // TODO: read in all existing high scores
     this.enterNewHighScore = function(uniqId, name, theScore) {
         var sanitisedName = name === "" ? "anonymous" : name;
 
-        console.log('enterNewHighScore(' + uniqId + ', ' + name + ', ' + theScore + '):');
+        //~ console.log('enterNewHighScore(' + uniqId + ', ' + name + ', ' + theScore + '):');
 
-        if (isHighScore(hsData.local.scores, score)) {
-            console.log('   is a local high score');
+        if (isHighScore(hsData.local.scores, theScore)) {
+            //~ console.log('   is a local high score');
             updateHighScoreArray(hsData.local.scores, sanitisedName, theScore);
             saveHighScoresToCookie();
             cookieHandler.saveUsername(sanitisedName);
         }
 
-        if (isHighScore(hsData.allTime.scores, score)) {
-            console.log('   is a allTime high score');
+        if (isHighScore(hsData.allTime.scores, theScore)) {
+            //~ console.log('   is a allTime high score');
             updateHighScoreArray(hsData.allTime.scores, sanitisedName, theScore);
             sendScoreToServer(uniqId, sanitisedName, theScore);
         }
 
-        if (isHighScore(hsData.recent.scores, score)) {
-            console.log('   is a recent high score');
+        if (isHighScore(hsData.recent.scores, theScore)) {
+            //~ console.log('   is a recent high score');
             updateHighScoreArray(hsData.recent.scores, sanitisedName, theScore);
             sendScoreToServer(uniqId, sanitisedName, theScore);
         }
@@ -100,11 +114,12 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
 
     function loadHighScoresFromCookie() {
         localScores = cookieHandler.readLocalHighScores();
+        //~ console.log('loadHighScoresFromCookie: localScores: \n' + JSON.stringify(localScores, null, 2));
         hsData.local.scores = cookieHandler.readLocalHighScores();
     }
 
     function isHighScore(highScores, score) {
-        console.log('isHighScore: score: ' + score + ' scores: ' + JSON.stringify(highScores));
+        //~ console.log('isHighScore: score: ' + score + ' scores: ' + JSON.stringify(highScores));
         if (highScores.length === 0) {
             return true;
         }
@@ -149,5 +164,13 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
         return 0;
     }
 
-    /* Server high scores */
+    // TODO: move ajax calls serverTalk object, or split between highscores and tools
+    function sendScoreToServer(uniqId, username, score) {
+        $.ajax({
+            url: 'server.php',
+            type: 'POST',
+            data: 'q=sendHighScore&uniqId='+uniqId+'&username='+username+'&score='+score
+        });
+    }
+
 };

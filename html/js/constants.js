@@ -171,28 +171,6 @@ function messageServer(messageId, uniqId) {
     _gaq.push(['_trackEvent', 'Interaction', MSG_TXT[messageId-1], uniqId]);
 }
 
-// TODO: move ajax calls serverTalk object, or split between highscores and tools
-function sendScoreToServer(uniqId, username, score) {
-    $.ajax({
-        url: 'server.php',
-        type: 'POST',
-        data: 'q=sendHighScore&uniqId='+uniqId+'&username='+username+'&score='+score
-    });
-}
-
-function getHighScoresFromServer(successFunction) {
-    $("#loading").show();
-    $.ajax({
-        url: 'server.php',
-        type: 'POST',
-        data: 'q=getHighScores',
-        success: function(result) {
-            $("#loading").hide();
-            successFunction(JSON.parse(result));
-        }
-    });
-}
-
 // production only routines
 function assert(condition, message) {
     if (ASSERTS_ON && !condition) {

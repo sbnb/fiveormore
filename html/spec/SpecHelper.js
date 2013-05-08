@@ -47,3 +47,15 @@ function countEvents(gameEvents, eventType) {
     }, this);
     return count;
 }
+
+function populateHighScoreList(highScoreList) {
+    highScoreList.maybeAdd('Bob', 10);
+    highScoreList.maybeAdd('Bill', 11);
+    highScoreList.maybeAdd('Chuck', 12);
+}
+
+function createHighScoreList(limit) {
+    highScoreList = new HighScoreList(limit);
+    populateHighScoreList(highScoreList);
+    return highScoreList;
+}

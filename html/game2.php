@@ -23,6 +23,11 @@
   <script type="text/javascript" src="js/CookieHandler.js"></script>
   <script type="text/javascript" src="js/PopupController.js"></script>
   <script type="text/javascript" src="js/ClickHandlers.js"></script>
+  <script type="text/javascript" src="js/HighScoreList.js"></script>
+  <script type="text/javascript" src="js/LocalHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/ServerHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/HighScoreGroup.js"></script>
+  <script type="text/javascript" src="js/HighScoreAccessor.js"></script>
   <script type="text/javascript" src="js/HighScores.js"></script>
   <script type="text/javascript" src="js/MessageDisplayer.js"></script>
   <script type="text/javascript" src="js/PointsPopup.js"></script>
