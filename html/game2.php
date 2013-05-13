@@ -37,11 +37,9 @@
   <script type="text/javascript" src="js/Renderer.js"></script>
   <script type="text/javascript" src="js/RunFinder.js"></script>
   <script type="text/javascript" src="js/PathSearcher.js"></script>
-  <script type="text/javascript" src="js/BoardIndex.js"></script>
   <script type="text/javascript" src="js/Score.js"></script>
   <script type="text/javascript" src="js/Colors.js"></script>
   <script type="text/javascript" src="js/PreviewStones.js"></script>
-  <script type="text/javascript" src="js/Node.js"></script>
   <script type="text/javascript" src="js/GameBuilder.js"></script>
   <script type="text/javascript" src="js/Game2.js"></script>
 
