@@ -69,4 +69,5 @@ Renderer.prototype = {
             var $cell = $(this._boardSelector + ' tr').eq(cell.y).find('td').eq(cell.x);
             return $cell;
         }
-}
+};
+

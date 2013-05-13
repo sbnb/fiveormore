@@ -45,6 +45,5 @@ PreviewStones.prototype = {
         function () {
             return this.stones.toString();
         }
-
-}
+};
 

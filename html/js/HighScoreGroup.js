@@ -33,7 +33,7 @@ HighScoreGroup.prototype.update = function (username, score, uniqId) {
     // if it is either recent or allTime
     // then accessor.writeServer(username, score, uniqId)
 
-}
+};
 
 HighScoreGroup.prototype.toString = function () {
     var buffer = 'HighScoreGroup:\n';

@@ -3,7 +3,7 @@ function ServerHighScoreWriter() {
 
 ServerHighScoreWriter.prototype.write = function (username, score, uniqId) {
     sendScoreToServer(username, score, uniqId);
-}
+};
 
 function sendScoreToServer(username, score, uniqId) {
     $.ajax({

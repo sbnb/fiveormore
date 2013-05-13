@@ -5,7 +5,7 @@ function MessageDisplayer() {
 
     var messageDivSelector = '#messages',
         messageTextSelector = '#messages span',
-        tableSelector = constants.TABLE_SELECTOR
+        tableSelector = constants.TABLE_SELECTOR,
         bottomOffset = constants.MSG_BOTTOM_OFFSET;
 
     function display(message) {

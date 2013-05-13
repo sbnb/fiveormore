@@ -1,7 +1,7 @@
 function Score(pointsPopup) {
     this.score = 0;
     this._pointsPopup = pointsPopup;
-};
+}
 
 Score.prototype = {
 
@@ -23,5 +23,4 @@ Score.prototype = {
     get: function () {
         return this.score;
     }
-}
-
+};

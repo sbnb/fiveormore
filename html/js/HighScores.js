@@ -1,8 +1,7 @@
 // lines: 212 - refactor!
 function HighScores(cookieHandler, NUM_TO_DISPLAY) {
 
-    var cookieHandler = cookieHandler;
-        localScores = [],
+    var localScores = [],
         allTimeScores = [],
         recentScores = [],
         hsData = {
@@ -28,12 +27,12 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
         return hsData.local.isHighScore ||
             hsData.recent.isHighScore  ||
             hsData.allTime.isHighScore;
-    }
+    };
 
     this.generateHighScoresHtml = function(reentryFunction) {
         loadHighScoresFromCookie();
         getHighScoresFromServer(reentryFunction);
-    }
+    };
 
     function getHighScoresFromServer(successFunction) {
         $("#loading").show();
@@ -72,7 +71,7 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
             updateHighScoreArray(hsData.recent.scores, sanitisedName, theScore);
             sendScoreToServer(uniqId, sanitisedName, theScore);
         }
-    }
+    };
 
     function updateHighScoreArray(highScoreArray, name, theScore) {
         if (highScoreArray.length >= NUM_TO_DISPLAY) {
@@ -93,14 +92,14 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
         }
         loadHighScoresFromCookie();
         setHighScoresHtml();
-    }
+    };
 
     function setServerScores(combinedServerScores) {
-        allTimeScores = combinedServerScores["allTime"];
-        recentScores = combinedServerScores["recent"];
+        allTimeScores = combinedServerScores.allTime;
+        recentScores = combinedServerScores.recent;
 
-        hsData.allTime.scores = combinedServerScores["allTime"];
-        hsData.recent.scores = combinedServerScores["recent"];
+        hsData.allTime.scores = combinedServerScores.allTime;
+        hsData.recent.scores = combinedServerScores.recent;
     }
 
     function setHighScoresHtml() {
@@ -173,4 +172,4 @@ function HighScores(cookieHandler, NUM_TO_DISPLAY) {
         });
     }
 
-};
+}

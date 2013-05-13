@@ -20,4 +20,4 @@ LocalHighScoreReader.prototype.read = function () {
     });
 
     return localScoresList;
-}
+};

@@ -139,7 +139,7 @@ jQuery.fn.centerHorizontal = function () {
     this.css("position","absolute");
     this.css("left", (($(theParent).width() - this.outerWidth()) / 2) + $(theParent).scrollLeft() + "px");
     return this;
-}
+};
 
 // center jquery element $over on element $under
 // invariant: both elements are children of relative pos $container
@@ -153,13 +153,13 @@ function centerAbsoluteOnElement($container, $over, $under) {
 }
 
 function keys(obj) {
-    var keys = [];
+    var theKeys = [];
     for(var key in obj) {
         if (obj.hasOwnProperty(key)) {
-            keys.push(key);
+            theKeys.push(key);
         }
     }
-    return keys;
+    return theKeys;
 }
 
 function messageServer(messageId, uniqId) {

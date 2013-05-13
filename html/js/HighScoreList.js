@@ -15,7 +15,7 @@ HighScoreList.prototype.maybeAdd = function (name, score) {
         return true;
     }
     return false;
-}
+};
 
 HighScoreList.prototype.isHighScore = function (score) {
     var SCORE = 1,
@@ -31,16 +31,16 @@ HighScoreList.prototype._add = function (name, score) {
     this.entries.push([name, score]);
     this.entries.sort(compareByScore).reverse();
     this._truncateToLimit();
-}
+};
 
 HighScoreList.prototype._truncateToLimit = function () {
     var len = this.entries.length;
     this.entries.length = len > this.limit ? this.limit : len;
-}
+};
 
 HighScoreList.prototype.toArray = function () {
     return _.clone(this.entries, true);
-}
+};
 
 HighScoreList.prototype.toString = function () {
     var buffer = 'High Scores\n',
@@ -52,7 +52,7 @@ HighScoreList.prototype.toString = function () {
             entry[SCORE] + '\n';
     }, this);
     return buffer;
-}
+};
 
 // compare two highscore entries by score: [name, -> score <-]
 function compareByScore(a, b) {

@@ -35,4 +35,4 @@ GameEventProducer.prototype.processClick = function (cell) {
         // filled cell click, select it
         this._gameEvents.push({event: constants.SELECT, target: cell});
     }
-}
+};

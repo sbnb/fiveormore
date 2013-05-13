@@ -21,7 +21,7 @@ LogicalBoard.prototype = {
         function () {
             return _.every(this._board, function (color) {
                 return color !== '';
-            })
+            });
         },
 
     // get idx into this.board given cell(x,y) (idx = width * y + x)
@@ -183,7 +183,7 @@ LogicalBoard.prototype = {
             }, this);
             return buffer;
         }
-}
+};
 
 
 function pad(num, size) {

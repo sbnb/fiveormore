@@ -39,17 +39,17 @@ function BoardGame() {
 
     this.setNewBoard = function() {
         setUpBoard();
-    }
+    };
 
     this.turnShapesOn = function() {
         turnOnShapesForBoardStones();
         turnOnShapesForPreviewStones();
-    }
+    };
 
     this.turnShapesOff = function() {
         turnOffShapesForBoardStones();
         turnOffShapesForPreviewStones();
-    }
+    };
 
     function turnOnShapesForBoardStones() {
         $(BOARD).find('td').each(function(idx) {
@@ -100,8 +100,8 @@ function BoardGame() {
     function nearlyFillBoard() {
         if (TEST_FULL_BOARD) {
             $(BOARD).find('td').each(function(idx) {
-                var idx = rand(STONE_COLORS.length);
-                $(this).removeClass().addClass(STONE_COLORS[idx]);
+                var colIdx = rand(STONE_COLORS.length);
+                $(this).removeClass().addClass(STONE_COLORS[colIdx]);
                 if(rand(10)===0) {
                 $(this).removeClass().addClass(EMPTY);
                 }
@@ -162,7 +162,7 @@ function BoardGame() {
 
     this.gameOver = function() {
         gameOverWaitForServerResponse();
-    }
+    };
 
     function gameOverWaitForServerResponse() {
         messageServer(MESSAGE_ID.GAME_FINISHED, cookieHandler.readUniqId());
@@ -245,7 +245,7 @@ function BoardGame() {
     this.animationFinished = function() {
         animating = false;
         checkForMatchesAndPlaceNewStones();
-    }
+    };
 
     function checkForMatchesAndPlaceNewStones() {
         var completedColorChain = stoneMatcher.findAllColorChains();
@@ -268,4 +268,4 @@ function BoardGame() {
         return (countEmptySquares()  === 0);
     }
 
-};
+}

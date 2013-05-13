@@ -61,11 +61,10 @@ PathSearcher.prototype.search = function (startCell, targetCell) {
         loops += 1;
         if (loops > safety) {
             throw "Loop safety breakout at loop: " + loops;
-            break;
         }
     }
     return [];
-}
+};
 
 function reconstructPath(targetCell) {
     if (!targetCell.cameFrom) {

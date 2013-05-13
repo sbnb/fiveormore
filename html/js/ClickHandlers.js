@@ -30,12 +30,12 @@ function ClickHandlers(container) {
 
 
         $('#submitHighScore').off('click').click(function(e) {
-            submitHighScore()
+            submitHighScore();
         });
 
         $('#highScoreName').off('keypress').bind('keypress', function(e){
             if ( e.keyCode === 13 ) {
-                submitHighScore()
+                submitHighScore();
             }
         });
 
@@ -113,10 +113,10 @@ function ClickHandlers(container) {
         // safety: hide loading gif on ajax stop, in case success func in
         // getHighScoresFromServer doesn't fire
         $("#loading").ajaxStart(function(){
-            //$(this).show();
-        }).ajaxStop(function(){
-            $(this).hide();
-        });
+                //$(this).show();
+            }).ajaxStop(function(){
+                $(this).hide();
+            });
 
-    }
-};
+    };
+}

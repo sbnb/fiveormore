@@ -20,7 +20,7 @@ RunFinder.prototype.find = function (minLength) {
         saveValidRuns(singleRuns, savedRuns, minLength);
     }
     return savedRuns.horizontal.concat(savedRuns.vertical, savedRuns.rightDiagonal, savedRuns.leftDiagonal);
-}
+};
 
 function findRun(boardArray, width, startIdx, increment, limit) {
     var idx,
@@ -123,5 +123,5 @@ function getLeftDiagonalLimit(idx, width, height) {
 }
 
 function getBottomEdge(idx, height) {
-    return height - Math.floor(idx / height) - 1
+    return height - Math.floor(idx / height) - 1;
 }

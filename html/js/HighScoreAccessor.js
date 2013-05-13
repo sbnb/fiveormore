@@ -35,8 +35,8 @@ HighScoreAccessor.prototype.read = function (callback) {
 
 HighScoreAccessor.prototype.writeLocal = function (username, localScoresList) {
     this._localWriter.write(username, localScoresList);
-}
+};
 
 HighScoreAccessor.prototype.writeServer = function (username, score, uniqId) {
     this._serverWriter.write(username, score, uniqId);
-}
+};

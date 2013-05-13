@@ -1,11 +1,11 @@
 function StoneMaker() {
-    
+
     var previewStoneColors = new Array(NUM_NEW_STONES);
     setPreview();
-    
+
     // add NUM_NEW_STONES stones to board in random empty positions
     // return true on completion, false if no empty positions left afterward
-    this.placeStones = function(numEmptySquares) {        
+    this.placeStones = function(numEmptySquares) {
         var boardWillFill= boardWillBeFull(numEmptySquares);
         var squaresToFill = Math.min(NUM_NEW_STONES, numEmptySquares);
         for (var idx = 0; idx < squaresToFill;  idx++) {
@@ -15,8 +15,8 @@ function StoneMaker() {
             setPreview();
         }
         return boardWillFill;
-    }
-    
+    };
+
     function addNewStoneToBoard(numEmptySquares, stoneColor) {
         var emptySquareIndex = rand(numEmptySquares);
         var $cell = $(BOARD).find(EMPTY_TD).eq(emptySquareIndex);
@@ -24,9 +24,9 @@ function StoneMaker() {
         if (SHAPES_ON) {
             $cell.html('<img src="imgs/'+STONE_SHAPES[stoneColor]+'" />');
         }
-        
+
     }
-    
+
     // set preview stones
     function setPreview() {
         var $previewLis = $('#preview').find('li');
@@ -40,15 +40,15 @@ function StoneMaker() {
             else {
                 $(this).html('');
             }
-            
+
         });
     }
-    
+
     function getNewStoneColor() {
         return STONE_COLORS[rand(STONE_COLORS.length)];
     }
-    
+
     function boardWillBeFull(numEmptySquares) {
         return numEmptySquares <= NUM_NEW_STONES;
     }
-};
+}

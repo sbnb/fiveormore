@@ -10,45 +10,45 @@ function PopupController() {
         rules: false,
         preferences: false,
         about: false
-    }
+    };
 
     this.gameOverNoHighScore = function() {
         allOff();
         turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
             'showCloseWindow');
         callJqueryShowAndHides();
-    }
+    };
 
     this.gameOverGotHighScore = function(username) {
         allOff();
         turnOn('gameOverPopup', 'gameOver', 'enterHighScore');
         $('#highScoreName').val(username);
         callJqueryShowAndHides();
-    }
+    };
 
     this.submittedNameForHighScore = function() {
         allOff();
         turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
             'showCloseWindow');
         callJqueryShowAndHides();
-    }
+    };
 
     this.requestedHighScores = function() {
         allOff();
         turnOn('gameOverPopup', 'highScoresWrap', 'showCloseWindow');
         callJqueryShowAndHides();
-    }
+    };
 
     this.closeAll = function() {
         allOff();
         callJqueryShowAndHides();
-    }
+    };
 
     this.showPopup = function(popupId) {
         allOff();
         turnOn(popupId);
         callJqueryShowAndHides();
-    }
+    };
 
     function callJqueryShowAndHides() {
         setVisibilityFromState('gameOver');
@@ -113,4 +113,4 @@ function PopupController() {
             states[state] = true;
         });
     }
-};
+}

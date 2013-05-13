@@ -125,4 +125,4 @@ GameEventConsumer.prototype = {
                 setTimeout(_.bind(this.consume, this, {schedulingOk: true, interval: interval}), interval);
             }
         }
-}
+};

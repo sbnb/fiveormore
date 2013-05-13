@@ -23,7 +23,7 @@ function PointsPopup(popupDiv, textDiv, fadeTime, opacity) {
         $popupDiv.show();
         $popupDiv.animate({
                 opacity: this._opacity.lower,
-                top: '-=30',
+                top: '-=30'
             },
             this._fadeTime,
             function() {
