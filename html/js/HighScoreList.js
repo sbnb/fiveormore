@@ -10,14 +10,14 @@ function HighScoreList(LIMIT) {
 
 // if is high score, add it and return true, else false
 HighScoreList.prototype.maybeAdd = function (name, score) {
-    if (this.isHighScore(score)) {
+    if (this._isHighScore(score)) {
         this._add(name, score);
         return true;
     }
     return false;
 };
 
-HighScoreList.prototype.isHighScore = function (score) {
+HighScoreList.prototype._isHighScore = function (score) {
     var SCORE = 1,
         entries = this.entries;
     if (entries.length < this.limit) {

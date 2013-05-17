@@ -20,7 +20,10 @@ var constants = {
     EMPTY: '',
     UPDATES: 'updates',
     // interval between animation frames
-    INTERVAL: 50
+    INTERVAL: 50,
+
+    // number of high scores to display in each highscore list
+    HIGH_SCORE_LENGTH: 10
 };
 
 var tools = {

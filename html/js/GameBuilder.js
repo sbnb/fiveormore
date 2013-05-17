@@ -6,7 +6,9 @@ function GameBuilder(container) {
     this._container = container;
 }
 
-// build a new Game object and return it
+// TODO: only window.game should be exposed in the DOM - currently full of crap
+
+// build a new Game object and return it - call on game start (& restart)
 GameBuilder.prototype.build = function (boardSelector) {
     var game = new Game2(),
         logicalBoard = new LogicalBoard(constants.DIMENSIONS.WIDTH,
@@ -19,13 +21,20 @@ GameBuilder.prototype.build = function (boardSelector) {
         clickHandlers = new ClickHandlers(this._container),
         highScores = new HighScores(cookieHandler, 10);
 
+    // build high score objects
+    game.highScoreAccessor = buildHighScoreAccessor(cookieHandler);
+    game.highScoreAccessor.read(function (hsGroup) {
+        // TODO: may not need HSG yet, and need to create fresh when HS button pressed
+        game.highScoreGroup = hsGroup;
+    });
+
     game.logicalBoard = logicalBoard;
     game.score = score;
     game.renderer = new Renderer(logicalBoard, boardSelector,
         constants.PREVIEW_SELECTOR, score);
     game.gameEvents = gameEvents;
     game.gameEventProducer = new GameEventProducer(logicalBoard, gameEvents);
-    game.gameEventConsumer = new GameEventConsumer(logicalBoard, gameEvents, score);
+    game.gameEventConsumer = new GameEventConsumer(logicalBoard, gameEvents, score, game.onGameOver);
 
     clearBoard();
     setUpTdClickListener(boardSelector, game);
@@ -36,6 +45,19 @@ GameBuilder.prototype.build = function (boardSelector) {
 
     return game;
 };
+
+/* Construct a HighScoreAccessor object, along with its readers & writers */
+function buildHighScoreAccessor(cookieHandler) {
+    var options = {},
+        limit = constants.HIGH_SCORE_LENGTH;
+
+    options.localHighScoreReader = new LocalHighScoreReader(cookieHandler, limit);
+    options.serverHighScoreReader = new ServerHighScoreReader(limit);
+    options.localHighScoreWriter = new LocalHighScoreWriter(cookieHandler);
+    options.serverHighScoreWriter = new ServerHighScoreWriter();
+
+    return new HighScoreAccessor(options);
+}
 
 function clearBoard() {
     if (isIe) {
@@ -58,6 +80,7 @@ function setUpTdClickListener(boardSelector, game) {
     });
 }
 
+// TODO: board size editing should be own object
 function setBoardSize(cookieHandler) {
     var preferences, viewportHeightInPx, size;
 

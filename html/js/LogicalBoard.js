@@ -1,6 +1,5 @@
 /*
-    A logical representation of the board. This object contains NO jQuery, to
-    facilitate easier testing.
+    A model of the board. This object contains NO jQuery or controllers.
 */
 function LogicalBoard(width, height) {
     this._board = [];

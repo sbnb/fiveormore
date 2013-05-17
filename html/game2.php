@@ -11,6 +11,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
   <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
+
 <!--replace_start-->
   <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
   <script type="text/javascript" src="js/json2.js"></script>
@@ -25,7 +26,9 @@
   <script type="text/javascript" src="js/ClickHandlers.js"></script>
   <script type="text/javascript" src="js/HighScoreList.js"></script>
   <script type="text/javascript" src="js/LocalHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/LocalHighScoreWriter.js"></script>
   <script type="text/javascript" src="js/ServerHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/ServerHighScoreWriter.js"></script>
   <script type="text/javascript" src="js/HighScoreGroup.js"></script>
   <script type="text/javascript" src="js/HighScoreAccessor.js"></script>
   <script type="text/javascript" src="js/HighScores.js"></script>
@@ -63,7 +66,8 @@
     $(document).ready(function() {
       $('.full-width').horizontalNav({});
       $(constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
-      new GameBuilder('#container').build(constants.BOARD_SELECTOR).start();
+      window.game = new GameBuilder('#container').build(constants.BOARD_SELECTOR);
+      window.game.start();
     });
   </script>
 

@@ -10,9 +10,11 @@
     setting up the TRANSITION events for animation.
 
     Also produces MATCH_RUNS and ADD_PIECES events.
+
+    Calls gameOverCallback when game complete.
 */
 
-function GameEventConsumer(logicalBoard, gameEvents, score) {
+function GameEventConsumer(logicalBoard, gameEvents, score, gameOverCallback) {
     this._logicalBoard = logicalBoard;
     this._gameEvents = gameEvents;
     this.score = score;
@@ -33,7 +35,8 @@ GameEventConsumer.prototype = {
                 schedulingOk: true,
                 interval: constants.INTERVAL
             });
-            var event = this._gameEvents.shift();
+            var event = this._gameEvents.shift()
+                gameOver = false;
             //~ console.log('cosuming event: ' + event.event);
             switch(event.event) {
                 case constants.SEEK_MOVE:
@@ -54,6 +57,12 @@ GameEventConsumer.prototype = {
                     break;
                 case constants.ADD_PIECES:
                     this._logicalBoard.previewStones.addToBoard(this._logicalBoard);
+                    gameOver = this._isGameOver();
+                    if (gameOver) {
+                        // TODO: launch a game over sequence from here.
+                        // something in Game2.js, need a ref
+                        console.log('game over');
+                    }
                     break;
                 default:
                     console.log('Unknown event: ' + event.event);
@@ -115,6 +124,11 @@ GameEventConsumer.prototype = {
                 this._gameEvents.push({event: constants.MATCH_RUNS_NO_ADD});
             }
             // render board
+        },
+
+    _isGameOver:
+        function () {
+            return this._logicalBoard.isFull();
         },
 
     _scheduleNextConsume:
