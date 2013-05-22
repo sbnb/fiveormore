@@ -1,10 +1,12 @@
-// length: 155 lines - reduce
+// length: 155 lines - reduced to 126
 function ClickHandlers(container) {
 
     this._container = container;
 
-    this.setUp = function(highScores, popups, score, cookieHandler) {
-        var uniqId = cookieHandler.readUniqId();
+    this.setUp = function(game, cookieHandler) {
+        var uniqId = cookieHandler.readUniqId(),
+            highScoreAccessor = game.highScoreAccessor,
+            popups = game.popups;
 
         $('.newGame').off('click').click(function(e) {
             startNewGame(e.target.id);
@@ -22,8 +24,8 @@ function ClickHandlers(container) {
 
         $('#highScoresButton').off('click').click(function(e) {
             messageServer(MESSAGE_ID.VIEW_HIGH_SCORES, uniqId);
-            highScores.generateHighScoresHtml(function (serverScores) {
-                highScores.displayHighScores({serverScores: serverScores});
+            highScoreAccessor.read(function (hsGroup) {
+                hsGroup.writeHighScoresToDom();
                 popups.requestedHighScores();
             });
         });
@@ -40,10 +42,17 @@ function ClickHandlers(container) {
         });
 
         function submitHighScore() {
-            messageServer(MESSAGE_ID.ENTERED_HIGH_SCORE, uniqId);
-            highScores.enterNewHighScore(uniqId, $('#highScoreName').val(), score.getScore());
-            highScores.displayHighScores({});
+            assert(typeof game.highScoreGroup !== 'undefined',
+                'ClickHandlers.submitHighScore: no game.highScoresGroup');
+
+            var name = $('#highScoreName').val(),
+                score = game.score.get();
+
+            game.highScoreGroup.update(name, score, uniqId);
+            game.highScoreGroup.writeHighScoresToDom();
             popups.submittedNameForHighScore();
+            game.cookieHandler.saveUsername(name);
+            messageServer(MESSAGE_ID.ENTERED_HIGH_SCORE, uniqId);
         }
 
         $('#highScoresWrap').off('click').on('click', 'em', function(e) {
@@ -74,6 +83,10 @@ function ClickHandlers(container) {
         $('input[name=boardSize]').off('change').change(function(){
             messageServer(MESSAGE_ID.BOARD_SIZE_CHANGE, uniqId);
             changeBoardSize(this.id);
+        });
+
+        $('#endGame').off('click').click(function (e) {
+            constants.GAME_OVER_DEV = true;
         });
 
         function changeBoardSize(size) {

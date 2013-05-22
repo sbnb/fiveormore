@@ -3,6 +3,7 @@ describe('GameEventConsumer', function() {
     var board,
         width = 6,
         height = 6,
+        game,
         gameEvents,
         selectedCell = {x: 0, y: 0},
         targetCell = {x: 1, y: 1},
@@ -15,7 +16,11 @@ describe('GameEventConsumer', function() {
         board.add(selectedCell, color);
         board.cellSelected = selectedCell;
         gameEvents = [];
-        consumer = new GameEventConsumer(board, gameEvents, new Score(new PointsPopup()));
+
+        //~ game = new GameBuilder('#container').build(constants.BOARD_SELECTOR);
+
+        consumer = new GameEventConsumer(board, gameEvents, new Score(new PointsPopup()), game);
+        //~ consumer = new GameEventConsumer(game);
         gameEvents.push({event: constants.SEEK_MOVE, target: targetCell});
     });
 

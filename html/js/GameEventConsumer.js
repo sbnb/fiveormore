@@ -14,7 +14,7 @@
     Calls gameOverCallback when game complete.
 */
 
-function GameEventConsumer(logicalBoard, gameEvents, score, gameOverCallback) {
+function GameEventConsumer(logicalBoard, gameEvents, score) {
     this._logicalBoard = logicalBoard;
     this._gameEvents = gameEvents;
     this.score = score;
@@ -59,9 +59,7 @@ GameEventConsumer.prototype = {
                     this._logicalBoard.previewStones.addToBoard(this._logicalBoard);
                     gameOver = this._isGameOver();
                     if (gameOver) {
-                        // TODO: launch a game over sequence from here.
-                        // something in Game2.js, need a ref
-                        console.log('game over');
+                        window.game.onGameOver();
                     }
                     break;
                 default:
@@ -128,7 +126,7 @@ GameEventConsumer.prototype = {
 
     _isGameOver:
         function () {
-            return this._logicalBoard.isFull();
+            return this._logicalBoard.isFull() || constants.GAME_OVER_DEV;
         },
 
     _scheduleNextConsume:

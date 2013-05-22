@@ -16,7 +16,6 @@ describe('HighScoreGroup', function() {
         highScoreAccessor = jasmine.createSpyObj('highScoreAccessor',
             ['writeLocal', 'writeServer']);
 
-
         highScoreGroup = new HighScoreGroup(highScoreLists, highScoreAccessor);
     });
 
@@ -36,6 +35,16 @@ describe('HighScoreGroup', function() {
         expect(highScoreGroup.allTime.entries.length).toBe(3);
         expect(highScoreGroup.local.entries[2][NAME]).toBe('Bob');
         expect(highScoreGroup.local.entries[2][SCORE]).toBe(10);
+    });
+
+    it('recognises a qualifying score', function() {
+        expect(highScoreGroup.isHighScore(11)).toBe(true);
+        expect(highScoreGroup.isHighScore(100)).toBe(true);
+    });
+
+    it('recognises a non-qualifying score', function() {
+        expect(highScoreGroup.isHighScore(0)).toBe(false);
+        expect(highScoreGroup.isHighScore(10)).toBe(false);
     });
 
     it('adds qualifying highscore to local list', function() {

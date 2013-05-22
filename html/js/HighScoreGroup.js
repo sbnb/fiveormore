@@ -10,6 +10,12 @@ function HighScoreGroup(lists, highScoreAccessor) {
     this._accessor = highScoreAccessor;
 }
 
+HighScoreGroup.prototype.isHighScore = function (score) {
+    return (this.local.isHighScore(score) || this.recent.isHighScore(score) ||
+        this.allTime.isHighScore(score));
+}
+
+// potentially adds a high score, writing to the server or local storage if so
 HighScoreGroup.prototype.update = function (username, score, uniqId) {
     var isLocalHs = this.local.maybeAdd(username, score);
     if (isLocalHs) {
@@ -23,6 +29,13 @@ HighScoreGroup.prototype.update = function (username, score, uniqId) {
     }
 
 };
+
+// write the current high scores into the DOM
+HighScoreGroup.prototype.writeHighScoresToDom = function () {
+    $('#localScores dl').html(this.local.wrapInHtml());
+    $('#recentScores dl').html(this.recent.wrapInHtml());
+    $('#allTimeScores dl').html(this.allTime.wrapInHtml());
+}
 
 HighScoreGroup.prototype.toString = function () {
     var buffer = 'HighScoreGroup:\n';

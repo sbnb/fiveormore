@@ -22,6 +22,8 @@ var constants = {
     // interval between animation frames
     INTERVAL: 50,
 
+    GAME_OVER_DEV: false,
+
     // number of high scores to display in each highscore list
     HIGH_SCORE_LENGTH: 10
 };

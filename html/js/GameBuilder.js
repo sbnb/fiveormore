@@ -18,30 +18,32 @@ GameBuilder.prototype.build = function (boardSelector) {
         popups = new PopupController(),
         pointsPopup = new PointsPopup(),
         score = new Score(pointsPopup),
-        clickHandlers = new ClickHandlers(this._container),
+        clickHandlers,
         highScores = new HighScores(cookieHandler, 10);
 
-    // build high score objects
+    game.popups = popups;
+    game.cookieHandler = cookieHandler;
     game.highScoreAccessor = buildHighScoreAccessor(cookieHandler);
-    game.highScoreAccessor.read(function (hsGroup) {
-        // TODO: may not need HSG yet, and need to create fresh when HS button pressed
-        game.highScoreGroup = hsGroup;
-    });
-
     game.logicalBoard = logicalBoard;
     game.score = score;
     game.renderer = new Renderer(logicalBoard, boardSelector,
         constants.PREVIEW_SELECTOR, score);
     game.gameEvents = gameEvents;
     game.gameEventProducer = new GameEventProducer(logicalBoard, gameEvents);
-    game.gameEventConsumer = new GameEventConsumer(logicalBoard, gameEvents, score, game.onGameOver);
+    game.gameEventConsumer = new GameEventConsumer(logicalBoard, gameEvents, score);
 
     clearBoard();
     setUpTdClickListener(boardSelector, game);
-    clickHandlers.setUp(highScores, popups, score, cookieHandler);
+
+    clickHandlers = new ClickHandlers(this._container);
+    clickHandlers.setUp(game, cookieHandler);
+
     setBoardSize(cookieHandler);
     positionPopupWindows(popups);
     //~ messageServer(MESSAGE_ID.PAGE_REFRESHED, cookieHandler.readUniqId());
+
+    // TODO: special shortcut to finish a game (dev only)
+    constants.GAME_OVER_DEV = false;
 
     return game;
 };

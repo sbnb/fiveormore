@@ -12,14 +12,16 @@ function PopupController() {
         about: false
     };
 
-    this.gameOverNoHighScore = function() {
+    this.playAgain = function() {
         allOff();
         turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
             'showCloseWindow');
+        $('#recentScores').show();
+        $('#localScores, #allTimeScores').hide();
         callJqueryShowAndHides();
     };
 
-    this.gameOverGotHighScore = function(username) {
+    this.namePromptForHighScore = function(username) {
         allOff();
         turnOn('gameOverPopup', 'gameOver', 'enterHighScore');
         $('#highScoreName').val(username);
@@ -30,12 +32,16 @@ function PopupController() {
         allOff();
         turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
             'showCloseWindow');
+        $('#recentScores').show();
+        $('#localScores, #allTimeScores').hide();
         callJqueryShowAndHides();
     };
 
     this.requestedHighScores = function() {
         allOff();
         turnOn('gameOverPopup', 'highScoresWrap', 'showCloseWindow');
+        $('#recentScores').show();
+        $('#localScores, #allTimeScores').hide();
         callJqueryShowAndHides();
     };
 

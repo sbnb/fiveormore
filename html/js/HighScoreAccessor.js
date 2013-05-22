@@ -21,7 +21,8 @@ function HighScoreAccessor(options) {
 // via callback function
 HighScoreAccessor.prototype.read = function (callback) {
     var group,
-        lists = {};
+        lists = {},
+        that = this;
 
     // TODO: what if server or local storage not there? what happens?
     lists.local = this._localReader.read();
@@ -29,7 +30,7 @@ HighScoreAccessor.prototype.read = function (callback) {
     this._serverReader.read(function (serverLists) {
         lists.recent = serverLists.recent;
         lists.allTime = serverLists.allTime;
-        group = new HighScoreGroup(lists, this);
+        group = new HighScoreGroup(lists, that);
         callback(group);
     });
 };

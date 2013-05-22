@@ -1,5 +1,6 @@
 function Score(pointsPopup) {
-    this.score = 0;
+    // TODO: revert initial score to 0 when finished
+    this.score = 5000;
     this._pointsPopup = pointsPopup;
 }
 
@@ -14,7 +15,6 @@ Score.prototype = {
             assert(run.length >= constants.RUN_LENGTH, 'Score.add: run not long enough: ' + run.length);
             var points = this.POINTS_FOR_LENGTH[run.length];
             this.score += points;
-            // TODO: popup points for this run
             this._pointsPopup.display(points, run);
         }, this);
         return this.score - preScore;

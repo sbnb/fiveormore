@@ -280,6 +280,10 @@
       <p id="pointsText"></p>
     </div>
 
+    <div id="endGame" style="border: 2px solid #AAA; width: 70px">
+      <p>End Game</p>
+    </div>
+
   </div>
 
   <script type="text/javascript">
