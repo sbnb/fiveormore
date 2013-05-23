@@ -18,8 +18,7 @@ GameBuilder.prototype.build = function (boardSelector) {
         popups = new PopupController(),
         pointsPopup = new PointsPopup(),
         score = new Score(pointsPopup),
-        clickHandlers,
-        highScores = new HighScores(cookieHandler, 10);
+        clickHandlers;
 
     game.popups = popups;
     game.cookieHandler = cookieHandler;
