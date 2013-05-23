@@ -12,41 +12,6 @@
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
   <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
 
-<!--replace_start-->
-  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
-  <script type="text/javascript" src="js/json2.js"></script>
-  <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
-  <script type="text/javascript" src="js/jquery.cookie.js"></script>
-  <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
-
-  <script type="text/javascript" src="js/constants.js"></script>
-  <script type="text/javascript" src="js/const.js"></script>
-  <script type="text/javascript" src="js/CookieHandler.js"></script>
-  <script type="text/javascript" src="js/PopupController.js"></script>
-  <script type="text/javascript" src="js/ClickHandlers.js"></script>
-  <script type="text/javascript" src="js/HighScoreList.js"></script>
-  <script type="text/javascript" src="js/LocalHighScoreReader.js"></script>
-  <script type="text/javascript" src="js/LocalHighScoreWriter.js"></script>
-  <script type="text/javascript" src="js/ServerHighScoreReader.js"></script>
-  <script type="text/javascript" src="js/ServerHighScoreWriter.js"></script>
-  <script type="text/javascript" src="js/HighScoreGroup.js"></script>
-  <script type="text/javascript" src="js/HighScoreAccessor.js"></script>
-  <script type="text/javascript" src="js/HighScores.js"></script>
-  <script type="text/javascript" src="js/MessageDisplayer.js"></script>
-  <script type="text/javascript" src="js/PointsPopup.js"></script>
-  <script type="text/javascript" src="js/LogicalBoard.js"></script>
-  <script type="text/javascript" src="js/GameEventProducer.js"></script>
-  <script type="text/javascript" src="js/GameEventConsumer.js"></script>
-  <script type="text/javascript" src="js/Renderer.js"></script>
-  <script type="text/javascript" src="js/RunFinder.js"></script>
-  <script type="text/javascript" src="js/PathSearcher.js"></script>
-  <script type="text/javascript" src="js/Score.js"></script>
-  <script type="text/javascript" src="js/Colors.js"></script>
-  <script type="text/javascript" src="js/PreviewStones.js"></script>
-  <script type="text/javascript" src="js/GameBuilder.js"></script>
-  <script type="text/javascript" src="js/Game2.js"></script>
-
-<!--replace_end-->
   <!--combined_js_insert-->
 
   <!--[if lte IE 7]>
@@ -61,15 +26,6 @@
       isIe = true;
     </script>
   <![endif]-->
-
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('.full-width').horizontalNav({});
-      $(constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
-      window.game = new GameBuilder('#container').build(constants.BOARD_SELECTOR);
-      window.game.start();
-    });
-  </script>
 
 </head>
 
@@ -285,6 +241,50 @@
     </div>
 
   </div>
+
+<!--replace_start-->
+  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
+  <script type="text/javascript" src="js/json2.js"></script>
+  <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
+
+  <script type="text/javascript" src="js/constants.js"></script>
+  <script type="text/javascript" src="js/const.js"></script>
+  <script type="text/javascript" src="js/CookieHandler.js"></script>
+  <script type="text/javascript" src="js/PopupController.js"></script>
+  <script type="text/javascript" src="js/ClickHandlers.js"></script>
+  <script type="text/javascript" src="js/HighScoreList.js"></script>
+  <script type="text/javascript" src="js/LocalHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/LocalHighScoreWriter.js"></script>
+  <script type="text/javascript" src="js/ServerHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/ServerHighScoreWriter.js"></script>
+  <script type="text/javascript" src="js/HighScoreGroup.js"></script>
+  <script type="text/javascript" src="js/HighScoreAccessor.js"></script>
+  <script type="text/javascript" src="js/MessageDisplayer.js"></script>
+  <script type="text/javascript" src="js/PointsPopup.js"></script>
+  <script type="text/javascript" src="js/LogicalBoard.js"></script>
+  <script type="text/javascript" src="js/GameEventProducer.js"></script>
+  <script type="text/javascript" src="js/GameEventConsumer.js"></script>
+  <script type="text/javascript" src="js/Renderer.js"></script>
+  <script type="text/javascript" src="js/RunFinder.js"></script>
+  <script type="text/javascript" src="js/PathSearcher.js"></script>
+  <script type="text/javascript" src="js/Score.js"></script>
+  <script type="text/javascript" src="js/Colors.js"></script>
+  <script type="text/javascript" src="js/PreviewStones.js"></script>
+  <script type="text/javascript" src="js/GameBuilder.js"></script>
+  <script type="text/javascript" src="js/Game2.js"></script>
+
+<!--replace_end-->
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.full-width').horizontalNav({});
+      $(constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
+      window.game = new GameBuilder('#container').build(constants.BOARD_SELECTOR);
+      window.game.start();
+    });
+  </script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
