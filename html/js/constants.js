@@ -84,6 +84,7 @@ function isEmptyObject(obj) {
     // if $bgElement contains multiple elements, center on whole area
     // this element should be absolutely positioned (made so if not)
     // will not work with margins
+    // assertion: all elements share same offset parent
     $.fn.centerOn = function ($bgElement) {
         var bgCenter = $bgElement.getCenter();
         this.css("position", "absolute");
@@ -92,21 +93,21 @@ function isEmptyObject(obj) {
         return this;
     };
 
-    // find the center point of this element (or elements) on the screen
+    // find center point of this element(s) relative to offset parent
     $.fn.getCenter = function () {
 
-        var offset = this.offset(),
-            min = {x: offset.left, y: offset.top},
-            max = {x: offset.left, y: offset.top};
+        var position = this.position(),
+            min = {x: position.left, y: position.top},
+            max = {x: position.left, y: position.top};
 
         this.each(function (idx) {
-            var offset = $(this).offset(),
+            var position = $(this).position(),
                 topLeft,
                 bottomRight;
 
-            topLeft = {x: offset.left, y: offset.top};
-            bottomRight = {x: offset.left + $(this).outerWidth(),
-                y: offset.top + $(this).outerHeight()};
+            topLeft = {x: position.left, y: position.top};
+            bottomRight = {x: position.left + $(this).outerWidth(),
+                y: position.top + $(this).outerHeight()};
 
             min.x = Math.min(topLeft.x, min.x);
             min.y = Math.min(topLeft.y, min.y);
