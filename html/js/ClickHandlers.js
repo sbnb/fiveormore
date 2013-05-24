@@ -19,7 +19,9 @@ function ClickHandlers(container) {
             };
             messageServer(buttonIdToMessageId[buttonId], uniqId);
             popups.closeAll();
-            new GameBuilder(this._container).build(constants.BOARD_SELECTOR).start();
+
+            window.game = new GameBuilder(this._container).build(constants.BOARD_SELECTOR);
+            window.game.start();
         }
 
         $('#highScoresButton').off('click').click(function(e) {
@@ -43,7 +45,7 @@ function ClickHandlers(container) {
 
         function submitHighScore() {
             assert(typeof game.highScoreGroup !== 'undefined',
-                'ClickHandlers.submitHighScore: no game.highScoresGroup');
+                'ClickHandlers.submitHighScore: no game.highScoreGroup');
 
             var name = $('#highScoreName').val(),
                 score = game.score.get();

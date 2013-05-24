@@ -35,9 +35,8 @@ GameEventConsumer.prototype = {
                 schedulingOk: true,
                 interval: constants.INTERVAL
             });
-            var event = this._gameEvents.shift()
-                gameOver = false;
-            //~ console.log('cosuming event: ' + event.event);
+
+            var event = this._gameEvents.shift();
             switch(event.event) {
                 case constants.SEEK_MOVE:
                     this.processSeekMove(event.target);
@@ -57,8 +56,7 @@ GameEventConsumer.prototype = {
                     break;
                 case constants.ADD_PIECES:
                     this._logicalBoard.previewStones.addToBoard(this._logicalBoard);
-                    gameOver = this._isGameOver();
-                    if (gameOver) {
+                    if (this._isGameOver()) {
                         window.game.onGameOver();
                     }
                     break;

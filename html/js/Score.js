@@ -1,6 +1,6 @@
 function Score(pointsPopup) {
     // TODO: revert initial score to 0 when finished
-    this.score = 5000;
+    this.score = 5001;
     this._pointsPopup = pointsPopup;
 }
 

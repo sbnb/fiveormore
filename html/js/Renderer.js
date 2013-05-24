@@ -24,7 +24,6 @@ Renderer.prototype = {
 
     render:
         function () {
-            //~ console.log('rendering...');
             var changed = this._logicalBoard.getChangedCells(this.snapshot);
             _.forEach(changed, function (cell) {
                 var color = this._logicalBoard.get(cell) || EMPTY;
