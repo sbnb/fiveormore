@@ -3,7 +3,7 @@ describe('Colors', function() {
     var colors;
 
     beforeEach(function() {
-        colors = new Colors();
+        colors = new FOM.Colors();
     });
 
     it('returns right number of colors', function() {

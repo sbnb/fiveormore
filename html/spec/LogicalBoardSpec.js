@@ -7,7 +7,7 @@ describe('LogicalBoard', function() {
         offColor = 'red';
 
     beforeEach(function() {
-        board = new LogicalBoard(width, height);
+        board = new FOM.LogicalBoard(width, height);
     });
 
     it('should not be full when created', function() {

@@ -7,9 +7,9 @@ describe('GameEventProducer', function() {
         height = 6;
 
     beforeEach(function() {
-        board = new LogicalBoard(width, height);
+        board = new FOM.LogicalBoard(width, height);
         gameEvents = [];
-        eventProducer = new GameEventProducer(board, gameEvents);
+        eventProducer = new FOM.GameEventProducer(board, gameEvents);
     });
 
     it('ignores all events if gameEvents not empty', function() {
@@ -22,14 +22,14 @@ describe('GameEventProducer', function() {
         board.cellSelected = {x: 2, y: 2};
         eventProducer.processClick({x: 1, y: 1});
         expect(gameEvents.length).toBe(1);
-        expect(gameEvents[0].event).toBe(constants.SEEK_MOVE);
+        expect(gameEvents[0].event).toBe(FOM.constants.SEEK_MOVE);
     });
 
     it('can select a filled cell with no current selection', function() {
         board.add({x: 1, y: 1}, 'red');
         eventProducer.processClick({x: 1, y: 1});
         expect(gameEvents.length).toBe(1);
-        expect(gameEvents[0].event).toBe(constants.SELECT);
+        expect(gameEvents[0].event).toBe(FOM.constants.SELECT);
         expect(gameEvents[0].target).toEqual({x: 1, y: 1});
     });
 
@@ -39,7 +39,7 @@ describe('GameEventProducer', function() {
         board.cellSelected = {x: 2, y: 2};
         eventProducer.processClick({x: 1, y: 1});
         expect(gameEvents.length).toBe(1);
-        expect(gameEvents[0].event).toBe(constants.SELECT);
+        expect(gameEvents[0].event).toBe(FOM.constants.SELECT);
         expect(gameEvents[0].target).toEqual({x: 1, y: 1});
     });
 

@@ -1,27 +1,32 @@
-function MessageDisplayer() {
+(function (FOM, $, _) {
 
-    this.display = display;
-    this.hide = hide;
+    "use strict";
 
-    var messageDivSelector = '#messages',
-        messageTextSelector = '#messages span',
-        tableSelector = constants.TABLE_SELECTOR,
-        bottomOffset = constants.MSG_BOTTOM_OFFSET;
+    FOM.MessageDisplayer = function () {
 
-    function display(message) {
-        var $messageDiv = $(messageDivSelector),
-            $table = $(tableSelector),
-            tablePos = $table.position(),
-            bottom = tablePos.top + $table.outerHeight() - bottomOffset;
+        this.display = display;
+        this.hide = hide;
 
-        $(messageTextSelector).text(message);
-        $messageDiv.centerHorizontal();
-        $messageDiv.css({ position: "absolute", top: bottom + "px"});
-        $messageDiv.fadeIn('fast');
-    }
+        var messageDivSelector = '#messages',
+            messageTextSelector = '#messages span',
+            tableSelector = FOM.constants.TABLE_SELECTOR,
+            bottomOffset = FOM.constants.MSG_BOTTOM_OFFSET;
 
-    function hide() {
-        $(messageDivSelector + ':visible').fadeOut('fast');
-    }
+        function display(message) {
+            var $messageDiv = $(messageDivSelector),
+                $table = $(tableSelector),
+                tablePos = $table.position(),
+                bottom = tablePos.top + $table.outerHeight() - bottomOffset;
 
-}
+            $(messageTextSelector).text(message);
+            $messageDiv.centerHorizontal();
+            $messageDiv.css({ position: "absolute", top: bottom + "px"});
+            $messageDiv.fadeIn('fast');
+        }
+
+        function hide() {
+            $(messageDivSelector + ':visible').fadeOut('fast');
+        }
+    };
+
+})(FOM, jQuery, _);

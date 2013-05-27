@@ -16,8 +16,8 @@ describe('Renderer', function() {
         // clear preview tds
         $(previewSelector + ' li').removeClass();
 
-        board = new LogicalBoard(width, height);
-        renderer = new Renderer(board, tableId, previewSelector, new Score());
+        board = new FOM.LogicalBoard(width, height);
+        renderer = new FOM.Renderer(board, tableId, previewSelector, new FOM.Score());
         setFiveRunsOfThree(board, onColor, offColor);
     });
 

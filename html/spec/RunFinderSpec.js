@@ -4,8 +4,8 @@ describe('RunFinder', function() {
         board;
 
     beforeEach(function() {
-        board = new LogicalBoard(6,6);
-        finder = new RunFinder(board);
+        board = new FOM.LogicalBoard(6,6);
+        finder = new FOM.RunFinder(board);
     });
 
     it('should find a horizontal run', function() {

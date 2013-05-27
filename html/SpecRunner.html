@@ -10,14 +10,15 @@
   <script type="text/javascript" src="/lib/jasmine-1.3.1/jasmine-html.js"></script>
 
   <!-- dependencies -->
-  <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
   <script type="text/javascript" src="js/jquery.cookie.js"></script>
   <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
+  <script type="text/javascript">
+    var FOM = {env: {isIe: false}};
+  </script>
 
   <!-- include source files here... -->
-  <script type="text/javascript" src="js/constants.js"></script>
   <script type="text/javascript" src="js/const.js"></script>
   <script type="text/javascript" src="js/CookieHandler.js"></script>
   <script type="text/javascript" src="js/PopupController.js"></script>

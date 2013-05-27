@@ -9,7 +9,7 @@ describe('PointsPopup', function() {
         fadeOut = 1;
 
     beforeEach(function() {
-        popup = new PointsPopup(popupDiv, textDiv, fadeOut, opacity);
+        popup = new FOM.PointsPopup(popupDiv, textDiv, fadeOut, opacity);
         popup.display(points, [1,2,3,4,5]);
     });
 

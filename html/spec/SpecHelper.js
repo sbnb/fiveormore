@@ -55,7 +55,7 @@ function populateHighScoreList(highScoreList) {
 }
 
 function createHighScoreList(limit) {
-    highScoreList = new HighScoreList(limit);
+    highScoreList = new FOM.HighScoreList(limit);
     populateHighScoreList(highScoreList);
     return highScoreList;
 }

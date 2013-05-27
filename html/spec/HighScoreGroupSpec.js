@@ -16,7 +16,7 @@ describe('HighScoreGroup', function() {
         highScoreAccessor = jasmine.createSpyObj('highScoreAccessor',
             ['writeLocal', 'writeServer']);
 
-        highScoreGroup = new HighScoreGroup(highScoreLists, highScoreAccessor);
+        highScoreGroup = new FOM.HighScoreGroup(highScoreLists, highScoreAccessor);
     });
 
     it('contains local high scores', function() {
@@ -69,7 +69,7 @@ describe('HighScoreGroup', function() {
         expect(highScoreLists.allTime.entries[2]).toEqual(['Bill', 11]);
     });
 
-    it('writes to the server and locally on new high scores', function() {
+    it('writes to the server and locally on new FOM.high scores', function() {
         highScoreGroup.update('Mary', 100, 'abcdefg');
         expect(highScoreAccessor.writeLocal).toHaveBeenCalled();
         expect(highScoreAccessor.writeLocal.callCount).toBe(1);

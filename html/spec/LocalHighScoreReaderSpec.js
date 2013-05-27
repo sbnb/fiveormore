@@ -11,7 +11,7 @@ describe('LocalHighScoreReader', function() {
         cookieHandler.readLocalHighScores.andCallFake(function() {
             return localScores;
         });
-        localReader = new LocalHighScoreReader(cookieHandler, limit);
+        localReader = new FOM.LocalHighScoreReader(cookieHandler, limit);
     });
 
     it('reads local high scores', function() {

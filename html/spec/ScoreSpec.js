@@ -3,7 +3,7 @@ describe('Score', function() {
     var score;
 
     beforeEach(function() {
-        score = new Score(new PointsPopup());
+        score = new FOM.Score(new FOM.PointsPopup());
     });
 
     it('adds a simple run', function() {

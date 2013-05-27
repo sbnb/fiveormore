@@ -1,30 +1,37 @@
-function Game2() {
-}
+(function (FOM, $, _) {
 
-Game2.prototype.start = function () {
-    this.logicalBoard.previewStones.addToBoard(this.logicalBoard);
-};
+    "use strict";
 
-// callback for GameEventConsumer to call when game over conditions met
-Game2.prototype.onGameOver = function () {
-    var that = this,
-        username = this.cookieHandler.readUsername(),
-        score = this.score.get(),
-        uniqId = this.cookieHandler.readUniqId();
+    FOM.Game2 = function () {
+    };
 
-    $('#finalScore span').text(score);
+    FOM.Game2.prototype.start = function () {
+        this.logicalBoard.previewStones.addToBoard(this.logicalBoard);
+        console.dir(window);
+    };
 
-    this.highScoreAccessor.read(function (hsGroup) {
-        that.highScoreGroup = hsGroup;  // cache the high scores
+    // callback for GameEventConsumer to call when game over conditions met
+    FOM.Game2.prototype.onGameOver = function () {
+        var that = this,
+            username = this.cookieHandler.readUsername(),
+            score = this.score.get(),
+            uniqId = this.cookieHandler.readUniqId();
 
-        if (hsGroup.isHighScore(score)) {
-            that.popups.namePromptForHighScore(username);
-        }
-        // Otherwise just display fresh high scores
-        else {
-            hsGroup.writeHighScoresToDom();
-            that.popups.playAgain();
-        }
-    });
+        $('#finalScore span').text(score);
 
-};
+        this.highScoreAccessor.read(function (hsGroup) {
+            that.highScoreGroup = hsGroup;  // cache the high scores
+
+            if (hsGroup.isHighScore(score)) {
+                that.popups.namePromptForHighScore(username);
+            }
+            // Otherwise just display fresh high scores
+            else {
+                hsGroup.writeHighScoresToDom();
+                that.popups.playAgain();
+            }
+        });
+
+    };
+
+})(FOM, jQuery, _);

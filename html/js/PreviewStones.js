@@ -1,49 +1,54 @@
-/*
-    PreviewStones
+(function (FOM, $, _) {
 
-    The next three stones that will appear on the board after the users current
-    turn completes.
+    "use strict";
 
-    Visually represented above the board, in:
+    /*
+        PreviewStones
 
-        <ul id='#preview'>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-*/
+        The next three stones that will appear on the board after the users current
+        turn completes.
 
-// colors is an object: see Colors.js
-function PreviewStones() {
-    this.colors = new Colors();
-    this.stones = [];
-    this.refresh();
-}
+        Visually represented above the board, in:
 
-PreviewStones.prototype = {
+            <ul id='#preview'>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+    */
 
-    // refresh the preview stones held in memory
-    refresh:
-        function () {
-            this.stones = this.colors.getRandom(3);
-        },
+    // colors is an object: see Colors.js
+    FOM.PreviewStones = function () {
+        this.colors = new FOM.Colors();
+        this.stones = [];
+        this.refresh();
+    };
 
-    // add the current preview stones to the logical board
-    addToBoard:
-        function (logicalBoard) {
-            logicalBoard.placeStones(this.stones);
-            this.refresh();
-        },
+    FOM.PreviewStones.prototype = {
 
-    // return number of preview stones held
-    size:
-        function () {
-            return this.stones.length;
-        },
+        // refresh the preview stones held in memory
+        refresh:
+            function () {
+                this.stones = this.colors.getRandom(3);
+            },
 
-    toString:
-        function () {
-            return this.stones.toString();
-        }
-};
+        // add the current preview stones to the logical board
+        addToBoard:
+            function (logicalBoard) {
+                logicalBoard.placeStones(this.stones);
+                this.refresh();
+            },
 
+        // return number of preview stones held
+        size:
+            function () {
+                return this.stones.length;
+            },
+
+        toString:
+            function () {
+                return this.stones.toString();
+            }
+    };
+
+})(FOM, jQuery, _);

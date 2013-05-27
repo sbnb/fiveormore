@@ -10,7 +10,6 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
 
   <!--combined_js_insert-->
 
@@ -19,11 +18,11 @@
   <![endif]-->
 
   <script type="text/javascript">
-    var isIe = false;
+    var FOM = {env: {isIe: false}};
   </script>
   <!--[if ie]>
     <script type="text/javascript">
-      isIe = true;
+      FOM.env.isIe = true;
     </script>
   <![endif]-->
 
@@ -280,8 +279,8 @@
     $(document).ready(function() {
       $('.full-width').horizontalNav({});
       $(FOM.constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
-      window.game = new FOM.GameBuilder('#container').build(FOM.constants.BOARD_SELECTOR);
-      window.game.start();
+      FOM.game = new FOM.GameBuilder('#container').build(FOM.constants.BOARD_SELECTOR);
+      FOM.game.start();
     });
   </script>
 

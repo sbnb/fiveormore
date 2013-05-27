@@ -7,8 +7,8 @@ describe('PathSearcher', function() {
 
 
     beforeEach(function() {
-        board = new LogicalBoard(width, height);
-        searcher = new PathSearcher(board);
+        board = new FOM.LogicalBoard(width, height);
+        searcher = new FOM.PathSearcher(board);
     });
 
     it('should find a path to an empty adjacent square', function() {
@@ -49,7 +49,7 @@ describe('PathSearcher', function() {
 
     it('should encapsulate a PathNode', function() {
         var cell = {x: 1, y: 1},
-            node = new PathNode(cell, 10, 20);
+            node = new FOM.PathNode(cell, 10, 20);
         expect(node.x).toBe(1);
         expect(node.y).toBe(1);
     });

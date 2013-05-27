@@ -8,7 +8,7 @@ describe('ServerHighScoreReader', function() {
         }
 
     beforeEach(function() {
-        serverReader = new ServerHighScoreReader(limit);
+        serverReader = new FOM.ServerHighScoreReader(limit);
     });
 
     it('reads local high scores', function() {

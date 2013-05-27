@@ -6,7 +6,7 @@ describe('HighScoreList', function() {
         SCORE = 1;
 
     beforeEach(function() {
-        highScoreList = new HighScoreList(LIMIT);
+        highScoreList = new FOM.HighScoreList(LIMIT);
         populateHighScoreList(highScoreList);
     });
 
@@ -25,7 +25,7 @@ describe('HighScoreList', function() {
     });
 
     it('recognises a qualifying score, by empty slots available', function() {
-        var aHighScoreList = new HighScoreList(LIMIT);
+        var aHighScoreList = new FOM.HighScoreList(LIMIT);
         expect(aHighScoreList.isHighScore(0)).toBe(true);
         expect(aHighScoreList.isHighScore(20)).toBe(true);
     });

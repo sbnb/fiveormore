@@ -1,6 +1,6 @@
 describe('Game2', function() {
 
-    var gameBuilder = new GameBuilder('#container'),
+    var gameBuilder = new FOM.GameBuilder('#container'),
         game,
         boardSelector = '#container';
 

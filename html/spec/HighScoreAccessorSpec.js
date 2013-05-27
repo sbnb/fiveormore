@@ -29,12 +29,12 @@ describe('HighScoreAccessor', function() {
             localHighScoreWriter: localWriter,
             serverHighScoreWriter: serverWriter
         };
-        highScoreAccessor = new HighScoreAccessor(options);
+        highScoreAccessor = new FOM.HighScoreAccessor(options);
     });
 
     it('can get a HighScoreGroup on read', function() {
         highScoreAccessor.read(function (highScoreGroup) {
-            expect(highScoreGroup.constructor.name).toEqual('HighScoreGroup');
+            expect(highScoreGroup.toString()).toMatch(/HighScoreGroup/);
             expect(localReader.read).toHaveBeenCalled();
             expect(serverReader.read).toHaveBeenCalled();
         });
@@ -42,7 +42,7 @@ describe('HighScoreAccessor', function() {
 
     it('returns the right lists as a HighScoreGroup', function() {
         highScoreAccessor.read(function (highScoreGroup) {
-            expect(highScoreGroup.constructor.name).toEqual('HighScoreGroup');
+            expect(highScoreGroup.toString()).toMatch(/HighScoreGroup/);
             expect(highScoreGroup.local).toEqual(getLocalList(limit));
             var server = getServerList(limit);
             expect(highScoreGroup.recent).toEqual(server.recent);
@@ -69,7 +69,7 @@ describe('HighScoreAccessor', function() {
 
 
     function getLocalList(limit) {
-        var localList = new HighScoreList(limit);
+        var localList = new FOM.HighScoreList(limit);
         localList.maybeAdd('Bill', 100);
         localList.maybeAdd('Bill', 150);
         localList.maybeAdd('Bill', 200);
@@ -78,8 +78,8 @@ describe('HighScoreAccessor', function() {
 
     function getServerList(limit) {
         var scores = {},
-            recentList = new HighScoreList(limit),
-            allTimeList = new HighScoreList(limit);
+            recentList = new FOM.HighScoreList(limit),
+            allTimeList = new FOM.HighScoreList(limit);
 
         recentList.maybeAdd('Mary', 400);
         recentList.maybeAdd('Chuck', 300);
