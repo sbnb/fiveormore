@@ -249,7 +249,6 @@
   <script type="text/javascript" src="js/jquery.cookie.js"></script>
   <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
 
-  <script type="text/javascript" src="js/constants.js"></script>
   <script type="text/javascript" src="js/const.js"></script>
   <script type="text/javascript" src="js/CookieHandler.js"></script>
   <script type="text/javascript" src="js/PopupController.js"></script>
@@ -280,8 +279,8 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('.full-width').horizontalNav({});
-      $(constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
-      window.game = new GameBuilder('#container').build(constants.BOARD_SELECTOR);
+      $(FOM.constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
+      window.game = new FOM.GameBuilder('#container').build(FOM.constants.BOARD_SELECTOR);
       window.game.start();
     });
   </script>
