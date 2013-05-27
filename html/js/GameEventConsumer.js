@@ -49,16 +49,16 @@ GameEventConsumer.prototype = {
                     this._processTransition(event);
                     break;
                 case constants.MATCH_RUNS:
-                    this._matchRuns();
+                    var match = this._matchRuns();
                     break;
                 case constants.MATCH_RUNS_NO_ADD:
                     this._matchRuns(false);
+                    if (this._isGameOver() && !match) {
+                        window.game.onGameOver();
+                    }
                     break;
                 case constants.ADD_PIECES:
                     this._logicalBoard.previewStones.addToBoard(this._logicalBoard);
-                    if (this._isGameOver()) {
-                        window.game.onGameOver();
-                    }
                     break;
                 default:
                     console.log('Unknown event: ' + event.event);
@@ -106,6 +106,7 @@ GameEventConsumer.prototype = {
             }
         },
 
+    // match runs, add points, clear runs. Return true is run matched.
     _matchRuns:
         function (addPiecesAfter) {
             addPiecesAfter = tools.setIfUndefined(addPiecesAfter, true);
@@ -119,7 +120,7 @@ GameEventConsumer.prototype = {
                 // special match runs -- no add pieces after
                 this._gameEvents.push({event: constants.MATCH_RUNS_NO_ADD});
             }
-            // render board
+            return _.flatten(runs).length > 0;
         },
 
     _isGameOver:

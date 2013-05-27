@@ -17,10 +17,10 @@ describe('GameEventConsumer', function() {
         board.cellSelected = selectedCell;
         gameEvents = [];
 
-        //~ game = new GameBuilder('#container').build(constants.BOARD_SELECTOR);
+        window.game = {onGameOver: function () {}};
+        spyOn(window.game, 'onGameOver');
 
         consumer = new GameEventConsumer(board, gameEvents, new Score(new PointsPopup()), game);
-        //~ consumer = new GameEventConsumer(game);
         gameEvents.push({event: constants.SEEK_MOVE, target: targetCell});
     });
 
@@ -103,19 +103,42 @@ describe('GameEventConsumer', function() {
         expect(countEvents(gameEvents, constants.MATCH_RUNS_NO_ADD)).toBe(1);
     });
 
-    //~ it('does not add pieces after a matched run', function() {
-        //~ // fill board with a run
-        //~ var cells = [{x: 0 , y: 1}, {x: 1 , y: 1}, {x: 2 , y: 1}, {x: 3 , y: 1}, {x: 4 , y: 1}];
-        //~ addListOfCellsToBoard(board, cells, 'green');
-        //~ gameEvents.length = 0;
+    it('ends game when on MATCH_RUNS_NO_ADD when board full', function() {
+        // fill board with no matching runs
+        fillBoard(board, ['red', 'blue', 'green', 'yellow']);
 
-        //~ // run a match (will succeed)
-        //~ gameEvents.push({event: constants.MATCH_RUNS});
-        //~ consumer.consume({schedulingOk: false});
+        // run a match (will fail)
+        gameEvents.push({event: constants.MATCH_RUNS_NO_ADD});
+        consumer.consume({schedulingOk: false});
+        consumer.consume({schedulingOk: false});
 
-        //~ // no events created since the match found a run (no add pieces)
-        //~ expect(gameEvents.length).toBe(0);
-    //~ });
+        expect(gameEvents.length).toBe(0);
+        expect(window.game.onGameOver).toHaveBeenCalled();
+    });
 
+    it('does not end game when MATCH_RUNS_NO_ADD finds a match on a full board', function() {
+        // fill board with some matching runs
+        fillBoard(board, ['red', 'blue']);
+        // run a match (will succeed)
+        gameEvents.push({event: constants.MATCH_RUNS_NO_ADD});
+        consumer.consume({schedulingOk: false});
+        consumer.consume({schedulingOk: false});
+
+        expect(gameEvents.length).toBe(0);
+        expect(window.game.onGameOver).not.toHaveBeenCalled();
+    });
+
+
+    // fill a board alternating the colors in array colors
+    function fillBoard(board, colors) {
+        var colIdx = 0;
+        _.forEach(board._board, function (col, idx, boardArray) {
+            board._board[idx] = colors[colIdx];
+            colIdx += 1;
+            if (colIdx === colors.length) {
+                colIdx = 0;
+            }
+        }, this);
+    }
 
 });
