@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
     /*global _gaq*/
@@ -172,4 +172,4 @@
     };
 
 
-})(FOM, jQuery, _);
+})();

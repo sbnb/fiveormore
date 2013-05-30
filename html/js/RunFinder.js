@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -130,4 +130,4 @@
         return height - Math.floor(idx / height) - 1;
     }
 
-})(FOM, jQuery, _);
+})();

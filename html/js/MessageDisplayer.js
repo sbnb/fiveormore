@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -29,4 +29,4 @@
         }
     };
 
-})(FOM, jQuery, _);
+})();

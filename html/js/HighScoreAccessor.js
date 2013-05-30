@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -47,4 +47,4 @@
         this._serverWriter.write(username, score, uniqId);
     };
 
-})(FOM, jQuery, _);
+})();

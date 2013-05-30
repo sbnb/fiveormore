@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -7,7 +7,6 @@
 
     FOM.Game2.prototype.start = function () {
         this.logicalBoard.previewStones.addToBoard(this.logicalBoard);
-        console.dir(window);
     };
 
     // callback for GameEventConsumer to call when game over conditions met
@@ -34,4 +33,4 @@
 
     };
 
-})(FOM, jQuery, _);
+})();

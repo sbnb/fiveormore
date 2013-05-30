@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -31,7 +31,7 @@
                 FOM.game.start();
             }
 
-            $('#highScoresButton').off('click').click(function(e) {
+            $('#highScoresButton').off('click').click(function() {
                 sendMsg(msgId.VIEW_HIGH_SCORES, uniqId);
                 highScoreAccessor.read(function (hsGroup) {
                     hsGroup.writeHighScoresToDom();
@@ -40,7 +40,7 @@
             });
 
 
-            $('#submitHighScore').off('click').click(function(e) {
+            $('#submitHighScore').off('click').click(function() {
                 submitHighScore();
             });
 
@@ -85,7 +85,7 @@
 
 
             // handler for closing popup windows (only one popup is open at a time)
-            $('div.closeWindowX span, span.closeWindowText').off('click').click(function (e) {
+            $('div.closeWindowX span, span.closeWindowText').off('click').click(function () {
                 popups.closeAll();
             });
 
@@ -94,7 +94,7 @@
                 changeBoardSize(this.id);
             });
 
-            $('#endGame').off('click').click(function (e) {
+            $('#endGame').off('click').click(function () {
                 FOM.constants.GAME_OVER_DEV = true;
             });
 
@@ -144,4 +144,4 @@
         };
     };
 
-})(FOM, jQuery, _);
+})();

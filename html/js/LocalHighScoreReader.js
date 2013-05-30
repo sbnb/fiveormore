@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -26,4 +26,4 @@
         return localScoresList;
     };
 
-})(FOM, jQuery, _);
+})();

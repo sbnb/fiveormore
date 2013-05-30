@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -101,4 +101,4 @@
         return 0;
     }
 
-})(FOM, jQuery, _);
+})();

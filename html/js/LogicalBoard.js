@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
     /*global PubSub*/
@@ -196,4 +196,4 @@
         return s.substr(s.length-size);
     }
 
-})(FOM, jQuery, _);
+})();

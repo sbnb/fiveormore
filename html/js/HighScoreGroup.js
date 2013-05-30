@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -49,4 +49,4 @@
         return buffer;
     };
 
-})(FOM, jQuery, _);
+})();

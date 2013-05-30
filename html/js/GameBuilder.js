@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
     /*global window*/
@@ -122,4 +122,4 @@
         $('#messages').centerHorizontal().hide();
     }
 
-})(FOM, jQuery, _);
+})();

@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
     /*global setTimeout*/
@@ -143,4 +143,4 @@
             }
     };
 
-})(FOM, jQuery, _);
+})();

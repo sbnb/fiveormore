@@ -1,4 +1,4 @@
-(function (FOM, $, _) {
+(function () {
 
     "use strict";
 
@@ -135,4 +135,4 @@
         this.costToEnd = costToEnd;
     };
 
-})(FOM, jQuery, _);
+})();
