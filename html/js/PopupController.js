@@ -113,6 +113,7 @@
 
         /* Set all members of states to false. */
         function allOff() {
+            /* jshint forin: false */
             for (var prop in states) {
                 states[prop] = false;
             }

@@ -68,7 +68,6 @@
             writeAllData();
         };
 
-        readAllData(this);
 
         // save a new uniqId if none found in cookie
         if (allData.uniqId === FOM.constants.UNIQ_ID_DEFAULT) {
@@ -81,6 +80,8 @@
             allData.uniqId = ctx.readUniqId();
             allData.username = ctx.readUsername();
         }
+
+        readAllData(this);
 
         function writeAllData() {
             t.assert(allData.preferences,

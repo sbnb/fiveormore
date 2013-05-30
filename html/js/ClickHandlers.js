@@ -112,10 +112,10 @@
             // TODO: this shapes on needs to go to new shapes handler
             $('input[name=shapesOn]').off('change').change(function() {
                 if ("on" === this.id) {
-                    boardGame.turnShapesOn();
+                    //~ boardGame.turnShapesOn();
                 }
                 else {
-                    boardGame.turnShapesOff();
+                    //~ boardGame.turnShapesOff();
                 }
                 saveShapesSetting(this.id);
             });

@@ -110,6 +110,7 @@
         // rfc: http://www.ietf.org/rfc/rfc4122.txt
         // src: http://stackoverflow.com/a/2117523/1175459
         generateUniqId: function () {
+            /* jshint eqeqeq: false */
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
                 function(c) {
                     var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
@@ -125,7 +126,7 @@
                 checkNested(test, 'level1', 'level2', 'level3'); // true
                 checkNested(test, 'level1', 'level2', 'foo'); // false
         */
-        checkNested: function (obj /*, level1, level2, ... levelN*/) {
+        checkNested: function (/*obj, level1, level2, ... levelN*/) {
             var args = Array.prototype.slice.call(arguments),
                 obj = args.shift();
 
@@ -133,7 +134,7 @@
                 return false;
             }
 
-            for (var i = 0; i < args.length; i++) {
+            for (var i = 0; i < args.length; i += 1) {
                 if (!obj.hasOwnProperty(args[i])) {
                     return false;
                 }

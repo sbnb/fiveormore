@@ -13,50 +13,52 @@
         var singleRuns = {},
             savedRuns = {horizontal: [], vertical: [], leftDiagonal: [],
                 rightDiagonal: []},
-            boardArray = this.logicalBoard._board,
             width = this.logicalBoard._width,
             height = this.logicalBoard._height;
 
         for (var idx = 0; idx < this.boardArray.length; idx += 1) {
-            singleRuns.horizontal = findRun(boardArray, width, idx, 1,
-                getEndOfRow(idx, width));
+            singleRuns.horizontal =
+                this.findRun(idx, 1, getEndOfRow(idx, width));
             singleRuns.vertical =
-                findRun(boardArray, width, idx, width, boardArray.length);
+                this.findRun(idx, width, this.boardArray.length);
             singleRuns.leftDiagonal =
-                findRun(boardArray, width, idx, width + 1,
+                this.findRun(idx, width + 1,
                     getDownDiagonalLimit(idx, width, height));
             singleRuns.rightDiagonal =
-                findRun(boardArray, width, idx, width - 1,
+                this.findRun(idx, width - 1,
                     getLeftDiagonalLimit(idx, width, height));
+
             saveValidRuns(singleRuns, savedRuns, minLength);
         }
+
         return savedRuns.horizontal.concat(
             savedRuns.vertical,
             savedRuns.rightDiagonal,
             savedRuns.leftDiagonal);
     };
 
-    function findRun(boardArray, width, startIdx, increment, limit) {
+    FOM.RunFinder.prototype.findRun = function (startIdx, increment, limit) {
         /*jshint maxdepth:3*/
         var idx,
             run = [];
 
-        if (boardArray[startIdx] !== '') {
-            var color =  boardArray[startIdx];
+        if (this.boardArray[startIdx] !== '') {
+            var color = this.boardArray[startIdx];
             idx = startIdx;
-            while (boardArray[idx] === color) {
+            while (this.boardArray[idx] === color) {
                 run.push(idx);
                 idx += increment;
-                if (idx >= limit || idx > boardArray.length) {
+                if (idx >= limit || idx > this.boardArray.length) {
                     break;
                 }
             }
         }
         return run;
-    }
+    };
 
     // save new runs, if they are long enough and unique
     function saveValidRuns(singleRuns, savedRuns, minLength) {
+        /* jshint forin: false */
         var run, saved, key;
 
         for (key in singleRuns) {

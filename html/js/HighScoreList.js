@@ -59,8 +59,6 @@
     };
 
     FOM.HighScoreList.prototype.wrapInHtml = function () {
-        return wrapScoresInHtml(this.entries);
-
         // wrap each score with <dt><dd> tags
         function wrapScoresInHtml(highScores) {
             var html = '',
@@ -88,6 +86,8 @@
         function chopUserName(name, maxLength) {
             return name.length <= maxLength ? name : name.slice(0, maxLength);
         }
+
+        return wrapScoresInHtml(this.entries);
     };
 
     // compare two highscore entries by score: [name, -> score <-]

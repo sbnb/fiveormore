@@ -2,17 +2,16 @@
 
     "use strict";
 
+    /*
+        Used to display messages to the user on the page.
+    */
     FOM.MessageDisplayer = function () {
-
-        this.display = display;
-        this.hide = hide;
-
         var messageDivSelector = '#messages',
             messageTextSelector = '#messages span',
             tableSelector = FOM.constants.TABLE_SELECTOR,
             bottomOffset = FOM.constants.MSG_BOTTOM_OFFSET;
 
-        function display(message) {
+        this.display = function(message) {
             var $messageDiv = $(messageDivSelector),
                 $table = $(tableSelector),
                 tablePos = $table.position(),
@@ -22,11 +21,11 @@
             $messageDiv.centerHorizontal();
             $messageDiv.css({ position: "absolute", top: bottom + "px"});
             $messageDiv.fadeIn('fast');
-        }
+        };
 
-        function hide() {
+        this.hide = function() {
             $(messageDivSelector + ':visible').fadeOut('fast');
-        }
+        };
     };
 
 })();
