@@ -54,6 +54,12 @@
                 return emptyCells;
             },
 
+        // place the stones in preview stones onto the board
+        addPreviewStones:
+            function () {
+                this.previewStones.addToBoard(this);
+            },
+
         selectCell:
             function (cell) {
                 this.cellSelected = cell;

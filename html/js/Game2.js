@@ -6,7 +6,7 @@
     };
 
     FOM.Game2.prototype.start = function () {
-        this.logicalBoard.previewStones.addToBoard(this.logicalBoard);
+        this.logicalBoard.addPreviewStones();
     };
 
     // callback for GameEventConsumer to call when game over conditions met

@@ -39,12 +39,14 @@
         });
     };
 
-    FOM.HighScoreAccessor.prototype.writeLocal = function (username, localScoresList) {
-        this._localWriter.write(username, localScoresList);
-    };
+    FOM.HighScoreAccessor.prototype.writeLocal =
+        function (username, localScoresList) {
+            this._localWriter.write(username, localScoresList);
+        };
 
-    FOM.HighScoreAccessor.prototype.writeServer = function (username, score, uniqId) {
-        this._serverWriter.write(username, score, uniqId);
-    };
+    FOM.HighScoreAccessor.prototype.writeServer =
+        function (username, score, uniqId) {
+            this._serverWriter.write(username, score, uniqId);
+        };
 
 })();

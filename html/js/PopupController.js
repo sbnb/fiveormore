@@ -2,6 +2,8 @@
 
     "use strict";
 
+    var t = FOM.tools;
+
     // line length 180 - reduce it
     FOM.PopupController = function () {
         var states = {
@@ -75,7 +77,8 @@
                 $('#gameOverPopup .closeWindowX').hide();
             }
 
-            setVisibilityFromState('gameOverPopup', {center: true, fadeIn: true});
+            setVisibilityFromState('gameOverPopup',
+                {center: true, fadeIn: true});
             setVisibilityFromState('rules', {center: true});
             setVisibilityFromState('preferences', {center: true});
             setVisibilityFromState('about', {center: true});
@@ -87,13 +90,14 @@
             Options allow 'fadeIn' and 'center'ing of the div when showing.
         */
         function setVisibilityFromState(property, options) {
-            options = FOM.tools.setIfUndefined(options, {});
-            options.center = FOM.tools.setIfUndefined(options.center, false);
-            options.fadeIn = FOM.tools.setIfUndefined(options.fadeIn, false);
+            options = t.setIfUndefined(options, {});
+            options.center = t.setIfUndefined(options.center, false);
+            options.fadeIn = t.setIfUndefined(options.fadeIn, false);
 
             if (states[property]) {
                 if (options.center) {
-                    FOM.tools.centerAbsoluteOnElement($('#container'), $('#' + property), $(FOM.constants.TABLE_SELECTOR));
+                    t.centerAbsoluteOnElement($('#container'),
+                        $('#' + property), $(FOM.constants.TABLE_SELECTOR));
                 }
                 if (options.fadeIn) {
                     $('#' + property).fadeIn('fast');
@@ -114,12 +118,12 @@
             }
         }
 
-        /* For each argument, set states[argument] to true (variable arg length) */
+        /* For each arg, set states[arg] to true (variable arg length) */
         function turnOn() {
             var fun = states.hasOwnProperty;
             _.forEach(arguments, function (state) {
-                FOM.tools.assert(states.hasOwnProperty(state), 'PopupController.turnOn(): ' +
-                    'no such state: ' + state);
+                t.assert(states.hasOwnProperty(state),
+                    'PopupController.turnOn(): no such state: ' + state);
                 states[state] = true;
             });
         }

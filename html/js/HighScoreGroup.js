@@ -15,11 +15,14 @@
     };
 
     FOM.HighScoreGroup.prototype.isHighScore = function (score) {
-        return (this.local.isHighScore(score) || this.recent.isHighScore(score) ||
-            this.allTime.isHighScore(score));
+        return (
+            this.local.isHighScore(score) ||
+            this.recent.isHighScore(score) ||
+            this.allTime.isHighScore(score)
+        );
     };
 
-    // potentially adds a high score, writing to the server or local storage if so
+    // potentially adds a high score, writing to the server or cookie (local)
     FOM.HighScoreGroup.prototype.update = function (username, score, uniqId) {
         var isLocalHs = this.local.maybeAdd(username, score);
         if (isLocalHs) {

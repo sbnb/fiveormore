@@ -64,8 +64,9 @@
         // wrap each score with <dt><dd> tags
         function wrapScoresInHtml(highScores) {
             var html = '',
-                entry;
-            for (var idx = 0; idx < FOM.constants.HIGH_SCORE_LENGTH; idx += 1) {
+                entry,
+                idx;
+            for (idx = 0; idx < FOM.constants.HIGH_SCORE_LENGTH; idx += 1) {
                 entry = getHighScoreEntry(highScores, idx);
                 html += '<dt>' + entry.rank + '. ' + entry.name + '</dt>\n';
                 html += '<dd>' + entry.score + '</dd>\n';
@@ -76,9 +77,9 @@
         function getHighScoreEntry(highScores, idx) {
             var lead = idx < 9 ? '&nbsp;&nbsp;' : '',
                 entry = {rank: lead + (idx + 1), name: '', score: '&nbsp;'},
-                HS_MAX_NAME_LENGTH = 20;
+                maxLength = 20;
             if (highScores.length > idx) {
-                entry.name = chopUserName(highScores[idx][0], HS_MAX_NAME_LENGTH);
+                entry.name = chopUserName(highScores[idx][0], maxLength);
                 entry.score = highScores[idx][1];
             }
             return entry;

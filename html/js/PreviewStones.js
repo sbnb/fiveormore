@@ -5,8 +5,8 @@
     /*
         PreviewStones
 
-        The next three stones that will appear on the board after the users current
-        turn completes.
+        The next three stones that will appear on the board after the users
+        current turn completes.
 
         Visually represented above the board, in:
 

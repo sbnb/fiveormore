@@ -2,6 +2,9 @@
 
     "use strict";
 
+    var t = FOM.tools;
+    var c = FOM.constants;
+
     FOM.Score = function (pointsPopup) {
         // TODO: revert initial score to 0 when finished
         this.score = 0;
@@ -16,7 +19,9 @@
         add: function (runs) {
             var preScore = this.score;
             _.forEach(runs, function (run) {
-                FOM.tools.assert(run.length >= FOM.constants.RUN_LENGTH, 'Score.add: run not long enough: ' + run.length);
+                t.assert(run.length >= c.RUN_LENGTH,
+                    'Score.add: run not long enough: ' + run.length);
+
                 var points = this.POINTS_FOR_LENGTH[run.length];
                 this.score += points;
                 this._pointsPopup.display(points, run);

@@ -77,7 +77,8 @@
                 var m = msgId,
                     buttonIdMappings = {
                         'showRules': {popup: 'rules', messageId: m.VIEW_RULES},
-                        'showPreferences': {popup: 'preferences', messageId: m.VIEW_PREFERENCES},
+                        'showPreferences': {popup: 'preferences',
+                            messageId: m.VIEW_PREFERENCES},
                         'showAbout': {popup: 'about', messageId: m.VIEW_ABOUT}
                     };
                 sendMsg(buttonIdMappings[e.target.id].messageId, uniqId);
@@ -86,7 +87,8 @@
 
 
             // for closing popup windows (only one popup is open at a time)
-            $('.closeWindowX span, .closeWindowText').off('click').click(function () {
+            var windowClosers = '.closeWindowX span, .closeWindowText';
+            $(windowClosers).off('click').click(function () {
                 popups.closeAll();
             });
 
@@ -125,14 +127,18 @@
                 cookieHandler.savePreferences(prefs);
             }
 
+            // TODO: hey, this is not in a function!
+            var shapesRadioInput = 'input:radio[name=shapesOn]';
+
             if (FOM.constants.SHAPES_ON) {
-                $('input:radio[name=shapesOn][value=on]').attr('checked', 'checked');
+                $(shapesRadioInput + '[value=on]').attr('checked', 'checked');
             }
             else {
-                $('input:radio[name=shapesOn][value=off]').attr('checked', 'checked');
+                $(shapesRadioInput + '[value=off]').attr('checked', 'checked');
             }
 
-            FOM.tools.centerAbsoluteOnElement($(this._container), $("#loading"), $(FOM.constants.TABLE_SELECTOR));
+            FOM.tools.centerAbsoluteOnElement($(this._container),
+                $("#loading"), $(FOM.constants.TABLE_SELECTOR));
 
             // safety: hide loading gif on ajax stop, in case success func in
             // getHighScoresFromServer doesn't fire

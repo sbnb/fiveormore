@@ -2,6 +2,8 @@
 
     "use strict";
 
+    var c = FOM.constants;
+
     /*
         GameEventProducer (GEP)
 
@@ -30,14 +32,14 @@
 
         var contents = this._logicalBoard.get(cell);
 
-        if (contents === FOM.constants.EMPTY) {
+        if (contents === c.EMPTY) {
             if (this._logicalBoard.getSelectedCell() !== null) {
-                this._gameEvents.push({event: FOM.constants.SEEK_MOVE, target: cell});
+                this._gameEvents.push({event: c.SEEK_MOVE, target: cell});
             }
         }
         else {
             // filled cell click, select it
-            this._gameEvents.push({event: FOM.constants.SELECT, target: cell});
+            this._gameEvents.push({event: c.SELECT, target: cell});
         }
     };
 

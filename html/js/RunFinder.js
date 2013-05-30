@@ -11,19 +11,29 @@
     FOM.RunFinder.prototype.find = function (minLength) {
 
         var singleRuns = {},
-            savedRuns = {horizontal: [], vertical: [], leftDiagonal: [], rightDiagonal: []},
+            savedRuns = {horizontal: [], vertical: [], leftDiagonal: [],
+                rightDiagonal: []},
             boardArray = this.logicalBoard._board,
             width = this.logicalBoard._width,
             height = this.logicalBoard._height;
 
         for (var idx = 0; idx < this.boardArray.length; idx += 1) {
-            singleRuns.horizontal = findRun(boardArray, width, idx, 1, getEndOfRow(idx, width));
-            singleRuns.vertical = findRun(boardArray, width, idx, width, boardArray.length);
-            singleRuns.leftDiagonal = findRun(boardArray, width, idx, width + 1, getDownDiagonalLimit(idx, width, height));
-            singleRuns.rightDiagonal = findRun(boardArray, width, idx, width - 1, getLeftDiagonalLimit(idx, width, height));
+            singleRuns.horizontal = findRun(boardArray, width, idx, 1,
+                getEndOfRow(idx, width));
+            singleRuns.vertical =
+                findRun(boardArray, width, idx, width, boardArray.length);
+            singleRuns.leftDiagonal =
+                findRun(boardArray, width, idx, width + 1,
+                    getDownDiagonalLimit(idx, width, height));
+            singleRuns.rightDiagonal =
+                findRun(boardArray, width, idx, width - 1,
+                    getLeftDiagonalLimit(idx, width, height));
             saveValidRuns(singleRuns, savedRuns, minLength);
         }
-        return savedRuns.horizontal.concat(savedRuns.vertical, savedRuns.rightDiagonal, savedRuns.leftDiagonal);
+        return savedRuns.horizontal.concat(
+            savedRuns.vertical,
+            savedRuns.rightDiagonal,
+            savedRuns.leftDiagonal);
     };
 
     function findRun(boardArray, width, startIdx, increment, limit) {
@@ -73,28 +83,8 @@
 
     // true if every element of array a is also in array b
     function subset(a, b) {
-        if (a.length > b.length) {
-            return false;
-        }
-
-        var setA = arrayToKeys(a),
-            setB = arrayToKeys(b);
-
-        for (var element in setA) {
-            if (!(element in setB)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // convert array vals to obj keys ['a','b','c'] => {'a': 'a', 'b': 'b', 'c': 'c'}
-    function arrayToKeys(array) {
-        var obj = {};
-        for (var i = 0; i < array.length; ++i) {
-            if (array[i] !== undefined) obj[array[i]] = array[i];
-        }
-        return obj;
+        var intersection = _.intersection(a, b);
+        return intersection.length === a.length;
     }
 
     // given width of 3: idx=[0,1,2] => 3 : idx=[3,4,5] => 6, etc
@@ -105,7 +95,8 @@
             limit += 1;
 
             if (limit > 200) {
-                FOM.tools.assert(false, 'RunFinder.getEndOfRow: infinite loop detected');
+                FOM.tools.assert(false,
+                    'RunFinder.getEndOfRow: infinite loop detected');
                 break;
             }
         }

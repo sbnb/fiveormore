@@ -23,19 +23,15 @@
         SELECT: 'select',
 
         // server message types
-        MESSAGE_ID: {
-            NEW_GAME: 1, GAME_FINISHED: 2, PAGE_REFRESHED: 3,
-            VIEW_HIGH_SCORES: 4, ENTERED_HIGH_SCORE: 5, VIEW_RULES: 6, VIEW_ABOUT: 7,
-            PLAY_AGAIN: 8, VIEW_PREFERENCES: 9, BOARD_SIZE_CHANGE: 10
-        },
+        MESSAGE_ID: {NEW_GAME: 1, GAME_FINISHED: 2, PAGE_REFRESHED: 3,
+            VIEW_HIGH_SCORES: 4, ENTERED_HIGH_SCORE: 5, VIEW_RULES: 6,
+            VIEW_ABOUT: 7, PLAY_AGAIN: 8, VIEW_PREFERENCES: 9,
+            BOARD_SIZE_CHANGE: 10},
         // text for server message types
-        MSG_TXT: ['hitNewGame','gameFinished','pageRefreshed','viewedHighScores',
-        'enteredHighScore','viewedRules','viewedAbout','hitPlayAgain',
-        'viewedPreferences','changedBoardSize'],
-
-        // TODO: EMPTY may have been '', look here for bugs
-        // TODO: ok, but nowe the CSS is wrong, was relying on two versions of EMPTY
-        // need to fix, probably just base CSS settings
+        MSG_TXT: ['hitNewGame', 'gameFinished', 'pageRefreshed',
+            'viewedHighScores', 'enteredHighScore', 'viewedRules',
+            'viewedAbout', 'hitPlayAgain', 'viewedPreferences',
+            'changedBoardSize'],
         EMPTY: '',
         // interval between animation frames
         INTERVAL: 50,
@@ -55,18 +51,24 @@
     };
 
     FOM.tools = {
-        setIfUndefined: function (variable, defaultValue) {
-                variable = (typeof variable === "undefined") ? defaultValue : variable;
-                return variable;
-            },
+        setIfUndefined: function (variable, defaultVal) {
+            var isUndef = typeof variable === "undefined";
+            variable = isUndef ? defaultVal : variable;
+            return variable;
+        },
 
         centerAbsoluteOnElement: function($container, $over, $under) {
             var RULES_TOP_OFFSET = 20,
                 pos = $under.position(),
                 left = ($container.width() - $over.outerWidth()) / 2,
-                top = pos.top + ( ($under.outerHeight() - $over.outerHeight() ) / 2 );
+                heightDiff = $under.outerHeight() - $over.outerHeight(),
+                top = pos.top + (heightDiff / 2);
+
             top = top < RULES_TOP_OFFSET ? RULES_TOP_OFFSET : top;
-            $over.css({ position: "absolute", top: top + "px", left: left + "px" });
+            $over.css({
+                position: "absolute",
+                top: top + "px", left: left + "px"
+            });
         },
 
         changePointsPopupTextSize: function (size) {
@@ -81,18 +83,20 @@
                     $('#pointsPopup p').css('fontSize', '4em');
                     break;
                 default:
-                    FOM.tools.assert(false, 'const.changePointsPopupTextSize: unknown size ' + size);
+                    FOM.tools.assert(false,
+                        'const.changePointsPopupTextSize: bad size ' + size);
             }
         },
 
         // send message to server, and push event to Google Analytics
         messageServer: function (messageId, uniqId) {
+            var eventText = FOM.constants.MSG_TXT[messageId-1];
             $.ajax({
                 url: 'server.php',
                 type: 'POST',
                 data: 'q=message&uniqId='+uniqId+'&messageId='+messageId
             });
-            _gaq.push(['_trackEvent', 'Interaction', FOM.constants.MSG_TXT[messageId-1], uniqId]);
+            _gaq.push(['_trackEvent', 'Interaction', eventText, uniqId]);
         },
 
         // production only routines
@@ -111,7 +115,33 @@
                     var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
                     return v.toString(16);
                 });
+        },
+
+        /*
+            isDefined check for nested objects
+            src: http://stackoverflow.com/a/2631198/1175459
+            usage:
+                var test = {level1:{level2:{level3:'level3'}} };
+                checkNested(test, 'level1', 'level2', 'level3'); // true
+                checkNested(test, 'level1', 'level2', 'foo'); // false
+        */
+        checkNested: function (obj /*, level1, level2, ... levelN*/) {
+            var args = Array.prototype.slice.call(arguments),
+                obj = args.shift();
+
+            if ('undefined' === typeof obj) {
+                return false;
+            }
+
+            for (var i = 0; i < args.length; i++) {
+                if (!obj.hasOwnProperty(args[i])) {
+                    return false;
+                }
+                obj = obj[args[i]];
+            }
+            return true;
         }
+
     };
 
     FOM.env.freshUniqId = FOM.tools.generateUniqId();
@@ -165,9 +195,12 @@
     };
 
     $.fn.centerHorizontal = function () {
-        var theParent = this.parent();
+        var theParent = this.parent(),
+            $parent = $(theParent),
+            left = ($parent.width() - this.outerWidth()) / 2 +
+                $parent.scrollLeft();
         this.css("position","absolute");
-        this.css("left", (($(theParent).width() - this.outerWidth()) / 2) + $(theParent).scrollLeft() + "px");
+        this.css("left", left + "px");
         return this;
     };
 

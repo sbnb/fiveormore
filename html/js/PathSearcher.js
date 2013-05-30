@@ -12,13 +12,14 @@
 
     // Return the list of cells from startCell to targetCell (include both ends)
     FOM.PathSearcher.prototype.search = function (startCell, targetCell) {
-        var openList = [new FOM.PathNode(startCell, 0, getEstimatedCostToEnd(startCell, targetCell))],
+        var firstNode = buildPathNode(startCell, targetCell),
+            openList = [firstNode],
             closedList = [],
             currentNode,
             neighbourCells,
             neighbour,
             tentativeCostSoFar,
-            estimatedCostToEnd,
+            estimatedCost,
             safety = 200,
             loops = 0,
             that = this;
@@ -35,26 +36,26 @@
 
             openList = removeNodeFromList(openList, currentNode);
             addNodeToList(closedList, currentNode);
-            neighbourCells = this._logicalBoard.getNeighbours({x: currentNode.x,
-                y: currentNode.y}, true);
+            neighbourCells = this._logicalBoard.getNeighbours(
+                {x: currentNode.x, y: currentNode.y}, true);
 
             for (var idx = 0; idx < neighbourCells.length; idx += 1) {
                 neighbour = neighbourCells[idx];
                 tentativeCostSoFar = currentNode.costSoFar + 1;
-                estimatedCostToEnd = getEstimatedCostToEnd(neighbour, targetCell);
+                estimatedCost = getEstimatedCostToEnd(neighbour, targetCell);
 
                 if (nodeInList(closedList, neighbour)) {
-                    if (tentativeCostSoFar >= estimatedCostToEnd) {
+                    if (tentativeCostSoFar >= estimatedCost) {
                         continue;
                     }
                 }
 
                 if (!nodeInList(openList, neighbour) ||
-                    tentativeCostSoFar < estimatedCostToEnd) {
+                    tentativeCostSoFar < estimatedCost) {
 
                     neighbour.cameFrom = currentNode;
                     neighbour.costSoFar = tentativeCostSoFar;
-                    neighbour.costToEnd = neighbour.costSoFar + estimatedCostToEnd;
+                    neighbour.costToEnd = neighbour.costSoFar + estimatedCost;
 
                     if (!nodeInList(openList, neighbour)) {
                         addNodeToList(openList, neighbour);
@@ -69,6 +70,11 @@
         }
         return [];
     };
+
+    function buildPathNode(startCell, targetCell) {
+        var estimatedCost = getEstimatedCostToEnd(startCell, targetCell);
+        return new FOM.PathNode(startCell, 0, estimatedCost);
+    }
 
     function reconstructPath(targetCell) {
         if (!targetCell.cameFrom) {

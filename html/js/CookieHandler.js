@@ -6,11 +6,12 @@
         var allData = {},
             COOKIE_NAME = 'fiveormore',
             LOCAL_HS_DEFAULT = [],
-            USERNAME_DEFAULT = '';
+            USERNAME_DEFAULT = '',
+            t = FOM.tools;
 
         this.readPreferences = function() {
             var cookieData = getCookie(COOKIE_NAME);
-            if (cookieData && cookieData.preferences && cookieData.preferences.boardSize) {
+            if (t.checkNested(cookieData, 'preferences', 'boardSize')) {
                 if (typeof cookieData.preferences.shapesOn  === "undefined") {
                     cookieData.preferences.shapesOn = false;
                 }
@@ -82,10 +83,14 @@
         }
 
         function writeAllData() {
-            FOM.tools.assert(allData.preferences, "CookieHandler: writeAllData: preferences not set!");
-            FOM.tools.assert(allData.localHighScores, "CookieHandler: writeAllData: localHighScores not set!");
-            FOM.tools.assert(allData.uniqId, "CookieHandler: writeAllData: uniqId not set!");
-            FOM.tools.assert(allData.username, "CookieHandler: writeAllData: username not set!");
+            t.assert(allData.preferences,
+                "CookieHandler: writeAllData: preferences not set!");
+            t.assert(allData.localHighScores,
+                "CookieHandler: writeAllData: localHighScores not set!");
+            t.assert(allData.uniqId,
+                "CookieHandler: writeAllData: uniqId not set!");
+            t.assert(allData.username,
+                "CookieHandler: writeAllData: username not set!");
             var encodedData = JSON.stringify(allData, null, 4);
             $.cookie(COOKIE_NAME, encodedData, {path: '/', expires: 365});
         }
