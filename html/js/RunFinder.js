@@ -37,13 +37,14 @@
     };
 
     function findRun(boardArray, width, startIdx, increment, limit) {
+        /*jshint maxdepth:3*/
         var idx,
             run = [];
 
         if (boardArray[startIdx] !== '') {
             var color =  boardArray[startIdx];
             idx = startIdx;
-            while (boardArray[idx] === color ) {
+            while (boardArray[idx] === color) {
                 run.push(idx);
                 idx += increment;
                 if (idx >= limit || idx > boardArray.length) {

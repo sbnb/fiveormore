@@ -170,7 +170,7 @@
             min = {x: position.left, y: position.top},
             max = {x: position.left, y: position.top};
 
-        this.each(function (idx) {
+        this.each(function () {
             var position = $(this).position(),
                 topLeft,
                 bottomRight;

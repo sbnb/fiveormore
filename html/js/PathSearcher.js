@@ -4,6 +4,8 @@
 
     /*
         Search for valid paths on a board.
+
+        This is an implementation of the A* search.
     */
 
     FOM.PathSearcher = function (logicalBoard) {
@@ -12,6 +14,7 @@
 
     // Return the list of cells from startCell to targetCell (include both ends)
     FOM.PathSearcher.prototype.search = function (startCell, targetCell) {
+        /*jshint maxdepth:4*/
         var firstNode = buildPathNode(startCell, targetCell),
             openList = [firstNode],
             closedList = [],
@@ -21,8 +24,7 @@
             tentativeCostSoFar,
             estimatedCost,
             safety = 200,
-            loops = 0,
-            that = this;
+            loops = 0;
 
         while (openList.length !== 0) {
 

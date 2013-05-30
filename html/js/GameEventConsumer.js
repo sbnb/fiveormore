@@ -137,8 +137,6 @@
 
         _scheduleNextConsume:
             function (interval) {
-                var that = this,
-                    period = 0;
                 if (this._gameEvents.length > 0) {
                     setTimeout(_.bind(this.consume, this,
                         {schedulingOk: true, interval: interval}), interval);

@@ -13,8 +13,7 @@
     FOM.Game2.prototype.onGameOver = function () {
         var that = this,
             username = this.cookieHandler.readUsername(),
-            score = this.score.get(),
-            uniqId = this.cookieHandler.readUniqId();
+            score = this.score.get();
 
         $('#finalScore span').text(score);
 

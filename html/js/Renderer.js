@@ -19,7 +19,7 @@
         var that = this;
 
         // register as a subscriber to changes in LogicalBoard
-        this._logicalBoard.subscribe(function (msg, data) {
+        this._logicalBoard.subscribe(function () {
             that.render();
         });
     };

@@ -120,7 +120,6 @@
 
         /* For each arg, set states[arg] to true (variable arg length) */
         function turnOn() {
-            var fun = states.hasOwnProperty;
             _.forEach(arguments, function (state) {
                 t.assert(states.hasOwnProperty(state),
                     'PopupController.turnOn(): no such state: ' + state);

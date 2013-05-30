@@ -86,7 +86,7 @@
 
     function setUpTdClickListener(boardSelector, game) {
         // setup a jQuery click listener (replace any existing one)
-        $(boardSelector).off('click').on('click', 'td', function (event) {
+        $(boardSelector).off('click').on('click', 'td', function () {
             var colIndex = $(this).prevAll().length,
                 rowIndex = $(this).parent('tr').prevAll().length,
                 cell = {x: colIndex, y: rowIndex};

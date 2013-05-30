@@ -13,9 +13,7 @@
     // returns an object {recent: hsListObj, allTime: hsListObj} where values
     // are HighScoreList objects
     FOM.ServerHighScoreReader.prototype.read = function (callback) {
-        var recentScoresList = new FOM.HighScoreList(this._limit),
-            allTimeScoresList = new FOM.HighScoreList(this._limit),
-            that = this;
+        var that = this;
 
         // results looks like:
         //     {allTime:[[name,score]...[]], recent:[[name,score]...[]]}

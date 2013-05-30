@@ -12,7 +12,7 @@
         getRandom:
             function (len) {
                 var randColors = [];
-                _.forEach(_.range(len), function (val) {
+                _.forEach(_.range(len), function () {
                     randColors.push(_.shuffle(this.COLORS)[0]);
                 }, this);
 
