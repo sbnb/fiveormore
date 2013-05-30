@@ -27,7 +27,8 @@
                 sendMsg(buttonIdToMessageId[buttonId], uniqId);
                 popups.closeAll();
 
-                FOM.game = new FOM.GameBuilder(that._container).build(FOM.constants.BOARD_SELECTOR);
+                FOM.game = new FOM.GameBuilder(that._container).
+                    build(FOM.constants.BOARD_SELECTOR);
                 FOM.game.start();
             }
 
@@ -71,7 +72,7 @@
             });
 
 
-            // handler for viewing simple popups of information, with no processing
+            // handles 'rules', 'preferences' and 'about' button clicks
             $('.show').off('click').click(function (e) {
                 var m = msgId,
                     buttonIdMappings = {
@@ -84,8 +85,8 @@
             });
 
 
-            // handler for closing popup windows (only one popup is open at a time)
-            $('div.closeWindowX span, span.closeWindowText').off('click').click(function () {
+            // for closing popup windows (only one popup is open at a time)
+            $('.closeWindowX span, .closeWindowText').off('click').click(function () {
                 popups.closeAll();
             });
 

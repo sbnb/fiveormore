@@ -67,12 +67,12 @@
             setVisibilityFromState('playAgain');
 
             if (states.showCloseWindow) {
-                $('#gameOverPopup p.closeText').show();
-                $('#gameOverPopup div.closeWindowX').show();
+                $('#gameOverPopup .closeText').show();
+                $('#gameOverPopup .closeWindowX').show();
             }
             else {
-                $('#gameOverPopup p.closeText').hide();
-                $('#gameOverPopup div.closeWindowX').hide();
+                $('#gameOverPopup .closeText').hide();
+                $('#gameOverPopup .closeWindowX').hide();
             }
 
             setVisibilityFromState('gameOverPopup', {center: true, fadeIn: true});

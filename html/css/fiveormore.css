@@ -28,14 +28,14 @@ h1 {
 }
 
 table#fiveormore, div#highScoresWrap, div#gameOverPopup, div#enterHighScore, div.popup,
-div.closeWindowX span {
+.closeWindowX span {
 	-moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, .8);
 	-webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, .8);
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, .8);
 }
 
 h1, table#fiveormore, div#messages span, div#gameOverPopup, div#enterHighScore, div#playAgain,
-div#highScoresWrap, div.closeWindowX span, div.popup, #loading {
+div#highScoresWrap, .closeWindowX span, div.popup, #loading {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -477,14 +477,14 @@ div.popup strong {
 	font-weight: bold;
 }
 
-div.closeWindowX {
+.closeWindowX {
 	position: absolute;
 	right: 0;
 	top: 0;
 	margin: -12px -16px;
 }
 
-div.closeWindowX span, span.closeWindowText {
+.closeWindowX span, .closeWindowText {
 	font-size: 1em;
 	padding: 3px 8px;
 	background-color: #666;
@@ -492,12 +492,12 @@ div.closeWindowX span, span.closeWindowText {
 	border: 2px solid #999;
 }
 
-div.closeWindowX span:hover, span.closeWindowText:hover {
+.closeWindowX span:hover, .closeWindowText:hover {
 	background-color: #AAA;
 	color: #FFF;
 }
 
-span.closeWindowText {
+.closeWindowText {
 	font-size: .8em;
 	padding: .1em .5em;
 }
