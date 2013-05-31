@@ -19,7 +19,7 @@
             SCORE = 1;
 
         // add each of them to a high score list object
-        _.forEach(localArray , function (item) {
+        _.forEach(localArray, function (item) {
             localScoresList.maybeAdd(item[NAME], item[SCORE]);
         });
 

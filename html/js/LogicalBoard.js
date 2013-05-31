@@ -91,32 +91,47 @@
 
         // retrieve the neighbours of cell as an array of cells
         // a neighbour is a vertically or horizontally adjacent cell
-        // if onlyEmpty is given as true, ignore filled neighbours
+        // if onlyEmpty is true, ignore filled neighbours
         getNeighbours:
             function (cell, onlyEmpty) {
-                onlyEmpty = FOM.tools.setIfUndefined(onlyEmpty, false);
                 var neighbours = [];
-
-                if (cell.y > 0) {
-                    neighbours.push({x: cell.x, y: cell.y - 1});
-                }
-
-                if (cell.y + 1 < this._height) {
-                    neighbours.push({x: cell.x, y: cell.y + 1});
-                }
-
-                if (cell.x > 0) {
-                    neighbours.push({x: cell.x - 1, y: cell.y});
-                }
-
-                if (cell.x + 1 < this._width) {
-                    neighbours.push({x: cell.x + 1, y: cell.y});
-                }
+                this._maybeAddNeighbourAbove(cell, neighbours);
+                this._maybeAddNeighbourBelow(cell, neighbours);
+                this._maybeAddLeftNeighbour(cell, neighbours);
+                this._maybeAddRightNeighbour(cell, neighbours);
 
                 if (onlyEmpty) {
                     neighbours = this._removeFilledNeighbours(neighbours);
                 }
                 return neighbours;
+            },
+
+        _maybeAddNeighbourAbove:
+            function (cell, neighbours) {
+                if (cell.y > 0) {
+                    neighbours.push({x: cell.x, y: cell.y - 1});
+                }
+            },
+
+        _maybeAddNeighbourBelow:
+            function (cell, neighbours) {
+                if (cell.y + 1 < this._height) {
+                    neighbours.push({x: cell.x, y: cell.y + 1});
+                }
+            },
+
+        _maybeAddLeftNeighbour:
+            function (cell, neighbours) {
+                if (cell.x > 0) {
+                    neighbours.push({x: cell.x - 1, y: cell.y});
+                }
+            },
+
+        _maybeAddRightNeighbour:
+            function (cell, neighbours) {
+                if (cell.x + 1 < this._width) {
+                    neighbours.push({x: cell.x + 1, y: cell.y});
+                }
             },
 
         // return only the empty neighbours
