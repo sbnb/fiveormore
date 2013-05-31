@@ -31,6 +31,7 @@
 
         consume:
             function (opts) {
+                /*jshint white:false, indent:false*/
                 // guard clause: if gameEvents empty nothing to process
                 if (this._gameEvents.length === 0) {
                     return;
@@ -42,7 +43,7 @@
                 });
 
                 var event = this._gameEvents.shift();
-                switch(event.event) {
+                switch (event.event) {
                     case c.SEEK_MOVE:
                         this.processSeekMove(event.target);
                         break;

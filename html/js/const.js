@@ -57,7 +57,7 @@
             return variable;
         },
 
-        centerAbsoluteOnElement: function($container, $over, $under) {
+        centerAbsoluteOnElement: function ($container, $over, $under) {
             var RULES_TOP_OFFSET = 20,
                 pos = $under.position(),
                 left = ($container.width() - $over.outerWidth()) / 2,
@@ -67,12 +67,14 @@
             top = top < RULES_TOP_OFFSET ? RULES_TOP_OFFSET : top;
             $over.css({
                 position: "absolute",
-                top: top + "px", left: left + "px"
+                top: top + "px",
+                left: left + "px"
             });
         },
 
         changePointsPopupTextSize: function (size) {
-            switch(size) {
+            /*jshint white:false, indent:false*/
+            switch (size) {
                 case FOM.constants.SIZE.SMALL:
                     $('#pointsPopup p').css('fontSize', '2em');
                     break;
@@ -90,11 +92,11 @@
 
         // send message to server, and push event to Google Analytics
         messageServer: function (messageId, uniqId) {
-            var eventText = FOM.constants.MSG_TXT[messageId-1];
+            var eventText = FOM.constants.MSG_TXT[messageId - 1];
             $.ajax({
                 url: 'server.php',
                 type: 'POST',
-                data: 'q=message&uniqId='+uniqId+'&messageId='+messageId
+                data: 'q=message&uniqId=' + uniqId + '&messageId=' + messageId
             });
             _gaq.push(['_trackEvent', 'Interaction', eventText, uniqId]);
         },
@@ -110,10 +112,10 @@
         // rfc: http://www.ietf.org/rfc/rfc4122.txt
         // src: http://stackoverflow.com/a/2117523/1175459
         generateUniqId: function () {
-            /* jshint eqeqeq: false */
+            /*jshint eqeqeq:false,maxlen:90*/
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-                function(c) {
-                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                function (c) {
+                    var r = Math.random() * 16|0, v = c == 'x' ? r : (r&0x3|0x8);
                     return v.toString(16);
                 });
         },
@@ -166,7 +168,6 @@
 
     // find center point of this element(s) relative to offset parent
     $.fn.getCenter = function () {
-
         var position = this.position(),
             min = {x: position.left, y: position.top},
             max = {x: position.left, y: position.top};
@@ -190,7 +191,7 @@
 
     // like eq() but give an array of indexes instead of just one
     $.fn.eqAnyOf = function (arrayOfIndexes) {
-        return this.filter(function(i) {
+        return this.filter(function (i) {
             return $.inArray(i, arrayOfIndexes) > -1;
         });
     };
@@ -200,7 +201,7 @@
             $parent = $(theParent),
             left = ($parent.width() - this.outerWidth()) / 2 +
                 $parent.scrollLeft();
-        this.css("position","absolute");
+        this.css("position", "absolute");
         this.css("left", left + "px");
         return this;
     };

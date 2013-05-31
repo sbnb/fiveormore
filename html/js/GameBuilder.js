@@ -9,7 +9,7 @@
         Wires together a new Game object.
     */
 
-    FOM.GameBuilder = function(container) {
+    FOM.GameBuilder = function (container) {
         this._container = container;
     };
 

@@ -11,7 +11,7 @@
             tableSelector = FOM.constants.TABLE_SELECTOR,
             bottomOffset = FOM.constants.MSG_BOTTOM_OFFSET;
 
-        this.display = function(message) {
+        this.display = function (message) {
             var $messageDiv = $(messageDivSelector),
                 $table = $(tableSelector),
                 tablePos = $table.position(),
@@ -23,7 +23,7 @@
             $messageDiv.fadeIn('fast');
         };
 
-        this.hide = function() {
+        this.hide = function () {
             $(messageDivSelector + ':visible').fadeOut('fast');
         };
     };

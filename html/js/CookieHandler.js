@@ -9,7 +9,7 @@
             USERNAME_DEFAULT = '',
             t = FOM.tools;
 
-        this.readPreferences = function() {
+        this.readPreferences = function () {
             var cookieData = getCookie(COOKIE_NAME);
             if (t.checkNested(cookieData, 'preferences', 'boardSize')) {
                 if (typeof cookieData.preferences.shapesOn  === "undefined") {
@@ -20,13 +20,13 @@
             return FOM.constants.PREFS_DEFAULT;
         };
 
-        this.savePreferences = function(preferences) {
+        this.savePreferences = function (preferences) {
             readAllData(this);
             allData.preferences = preferences;
             writeAllData();
         };
 
-        this.readLocalHighScores = function() {
+        this.readLocalHighScores = function () {
             var cookieData = getCookie(COOKIE_NAME);
             if (cookieData && cookieData.localHighScores) {
                 return cookieData.localHighScores;
@@ -34,13 +34,13 @@
             return LOCAL_HS_DEFAULT;
         };
 
-        this.saveLocalHighScores = function(localHighScores) {
+        this.saveLocalHighScores = function (localHighScores) {
             readAllData(this);
             allData.localHighScores = localHighScores;
             writeAllData();
         };
 
-        this.readUniqId = function() {
+        this.readUniqId = function () {
             var cookieData = getCookie(COOKIE_NAME);
             if (cookieData && cookieData.uniqId) {
                 return cookieData.uniqId;
@@ -48,13 +48,13 @@
             return FOM.constants.UNIQ_ID_DEFAULT;
         };
 
-        this.saveUniqId = function(uniqId) {
+        this.saveUniqId = function (uniqId) {
             readAllData(this);
             allData.uniqId = uniqId;
             writeAllData();
         };
 
-        this.readUsername = function() {
+        this.readUsername = function () {
             var cookieData = getCookie(COOKIE_NAME);
             if (cookieData && cookieData.username) {
                 return cookieData.username;
@@ -62,7 +62,7 @@
             return USERNAME_DEFAULT;
         };
 
-        this.saveUsername = function(username) {
+        this.saveUsername = function (username) {
             readAllData(this);
             allData.username = username;
             writeAllData();

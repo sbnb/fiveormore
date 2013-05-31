@@ -5,9 +5,9 @@
  * By Sebastian Nitu - Copyright 2012 - All rights reserved
  * Author URL: http://sebnitu.com
  */
-(function($) {
+(function ($) {
 
-    $.fn.horizontalNav = function(options) {
+    $.fn.horizontalNav = function (options) {
 
         // Extend our default options with those provided.
         var opts = $.extend({}, $.fn.horizontalNav.defaults, options);
@@ -82,9 +82,9 @@
                 delay = delay || 100;
                 // Call function on resize
                 var resizeTimer;
-                $(window).resize(function() {
+                $(window).resize(function () {
                     clearTimeout(resizeTimer);
-                    resizeTimer = setTimeout(function() {
+                    resizeTimer = setTimeout(function () {
                         callback();
                     }, delay);
                 });
@@ -114,7 +114,7 @@
                         li_padding = Math.floor( extra_width / li_count );
 
                     // Cycle through the list items and give them widths
-                    li.each(function(index) {
+                    li.each(function (index) {
                         var li_width = trueInnerWidth( $(this) );
                         $(this).css({ 'width' : (li_width + li_padding) + 'px' });
                     });

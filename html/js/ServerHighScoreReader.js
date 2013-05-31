@@ -44,7 +44,7 @@
             url: 'server.php',
             type: 'POST',
             data: 'q=getHighScores',
-            success: function(result) {
+            success: function (result) {
                 $("#loading").hide();
                 successFunction(JSON.parse(result));
             }

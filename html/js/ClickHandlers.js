@@ -2,20 +2,24 @@
 
     "use strict";
 
+    var c = FOM.constants,
+        t = FOM.tools;
+
+
     // TODO: length: 155 lines - reduced to 126
     FOM.ClickHandlers = function (container) {
 
         this._container = container;
         var that = this;
 
-        this.setUp = function(game, cookieHandler) {
+        this.setUp = function (game, cookieHandler) {
             var uniqId = cookieHandler.readUniqId(),
                 highScoreAccessor = game.highScoreAccessor,
                 popups = game.popups,
-                msgId = FOM.constants.MESSAGE_ID,
-                sendMsg = FOM.tools.messageServer;
+                msgId = c.MESSAGE_ID,
+                sendMsg = t.messageServer;
 
-            $('.newGame').off('click').click(function(e) {
+            $('.newGame').off('click').click(function (e) {
                 startNewGame(e.target.id);
             });
 
@@ -27,12 +31,13 @@
                 sendMsg(buttonIdToMessageId[buttonId], uniqId);
                 popups.closeAll();
 
-                FOM.game = new FOM.GameBuilder(that._container).
-                    build(FOM.constants.BOARD_SELECTOR);
+                // TODO: can save builder at start in FOM
+                var builder = new FOM.GameBuilder(that._container);
+                FOM.game = builder.build(c.BOARD_SELECTOR);
                 FOM.game.start();
             }
 
-            $('#highScoresButton').off('click').click(function() {
+            $('#highScoresButton').off('click').click(function () {
                 sendMsg(msgId.VIEW_HIGH_SCORES, uniqId);
                 highScoreAccessor.read(function (hsGroup) {
                     hsGroup.writeHighScoresToDom();
@@ -41,18 +46,18 @@
             });
 
 
-            $('#submitHighScore').off('click').click(function() {
+            $('#submitHighScore').off('click').click(function () {
                 submitHighScore();
             });
 
-            $('#highScoreName').off('keypress').bind('keypress', function(e){
-                if ( e.keyCode === 13 ) {
+            $('#highScoreName').off('keypress').bind('keypress', function (e) {
+                if (e.keyCode === 13) {
                     submitHighScore();
                 }
             });
 
             function submitHighScore() {
-                FOM.tools.assert(typeof game.highScoreGroup !== 'undefined',
+                t.assert(typeof game.highScoreGroup !== 'undefined',
                     'ClickHandlers.submitHighScore: no game.highScoreGroup');
 
                 var name = $('#highScoreName').val(),
@@ -65,7 +70,7 @@
                 sendMsg(msgId.ENTERED_HIGH_SCORE, uniqId);
             }
 
-            $('#highScoresWrap').off('click').on('click', 'em', function(e) {
+            $('#highScoresWrap').off('click').on('click', 'em', function (e) {
                 $('.subScore').hide();
                 var hsSubtypeSelector = '#' + e.target.className + 'Scores';
                 $(hsSubtypeSelector).show();
@@ -92,25 +97,25 @@
                 popups.closeAll();
             });
 
-            $('input[name=boardSize]').off('change').change(function(){
+            $('input[name=boardSize]').off('change').change(function () {
                 sendMsg(msgId.BOARD_SIZE_CHANGE, uniqId);
                 changeBoardSize(this.id);
             });
 
             $('#endGame').off('click').click(function () {
-                FOM.constants.GAME_OVER_DEV = true;
+                c.GAME_OVER_DEV = true;
             });
 
             function changeBoardSize(size) {
                 var prefs = cookieHandler.readPreferences();
                 prefs.boardSize = size;
                 cookieHandler.savePreferences(prefs);
-                $(FOM.constants.TABLE_SELECTOR).removeClass().addClass(size);
-                FOM.tools.changePointsPopupTextSize(size);
+                $(c.TABLE_SELECTOR).removeClass().addClass(size);
+                t.changePointsPopupTextSize(size);
             }
 
             // TODO: this shapes on needs to go to new shapes handler
-            $('input[name=shapesOn]').off('change').change(function() {
+            $('input[name=shapesOn]').off('change').change(function () {
                 if ("on" === this.id) {
                     //~ boardGame.turnShapesOn();
                 }
@@ -123,30 +128,30 @@
             function saveShapesSetting(shapesSetting) {
                 var prefs = cookieHandler.readPreferences();
                 prefs.shapesOn = shapesSetting === "on" ? true : false;
-                FOM.constants.SHAPES_ON = prefs.shapesOn;
+                c.SHAPES_ON = prefs.shapesOn;
                 cookieHandler.savePreferences(prefs);
             }
 
             // TODO: hey, this is not in a function!
             var shapesRadioInput = 'input:radio[name=shapesOn]';
 
-            if (FOM.constants.SHAPES_ON) {
+            if (c.SHAPES_ON) {
                 $(shapesRadioInput + '[value=on]').attr('checked', 'checked');
             }
             else {
                 $(shapesRadioInput + '[value=off]').attr('checked', 'checked');
             }
 
-            FOM.tools.centerAbsoluteOnElement($(this._container),
-                $("#loading"), $(FOM.constants.TABLE_SELECTOR));
+            t.centerAbsoluteOnElement($(this._container),
+                $("#loading"), $(c.TABLE_SELECTOR));
 
             // safety: hide loading gif on ajax stop, in case success func in
             // getHighScoresFromServer doesn't fire
-            $("#loading").ajaxStart(function(){
-                    //$(this).show();
-                }).ajaxStop(function(){
-                    $(this).hide();
-                });
+            $("#loading").ajaxStart(function () {
+                //$(this).show();
+            }).ajaxStop(function () {
+                $(this).hide();
+            });
 
         };
     };

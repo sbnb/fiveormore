@@ -18,7 +18,7 @@
             about: false
         };
 
-        this.playAgain = function() {
+        this.playAgain = function () {
             allOff();
             turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
                 'showCloseWindow');
@@ -27,14 +27,14 @@
             callJqueryShowAndHides();
         };
 
-        this.namePromptForHighScore = function(username) {
+        this.namePromptForHighScore = function (username) {
             allOff();
             turnOn('gameOverPopup', 'gameOver', 'enterHighScore');
             $('#highScoreName').val(username);
             callJqueryShowAndHides();
         };
 
-        this.submittedNameForHighScore = function() {
+        this.submittedNameForHighScore = function () {
             allOff();
             turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
                 'showCloseWindow');
@@ -43,7 +43,7 @@
             callJqueryShowAndHides();
         };
 
-        this.requestedHighScores = function() {
+        this.requestedHighScores = function () {
             allOff();
             turnOn('gameOverPopup', 'highScoresWrap', 'showCloseWindow');
             $('#recentScores').show();
@@ -51,12 +51,12 @@
             callJqueryShowAndHides();
         };
 
-        this.closeAll = function() {
+        this.closeAll = function () {
             allOff();
             callJqueryShowAndHides();
         };
 
-        this.showPopup = function(popupId) {
+        this.showPopup = function (popupId) {
             allOff();
             turnOn(popupId);
             callJqueryShowAndHides();

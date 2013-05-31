@@ -29,7 +29,7 @@
                     top: '-=30'
                 },
                 this._fadeTime,
-                function() {
+                function () {
                     $popupDiv.hide();
                 });
         };
