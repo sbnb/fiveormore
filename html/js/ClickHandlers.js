@@ -90,57 +90,15 @@
                 popups.showPopup(buttonIdMappings[e.target.id].popup);
             });
 
-
             // for closing popup windows (only one popup is open at a time)
             var windowClosers = '.closeWindowX span, .closeWindowText';
             $(windowClosers).off('click').click(function () {
                 popups.closeAll();
             });
 
-            $('input[name=boardSize]').off('change').change(function () {
-                sendMsg(msgId.BOARD_SIZE_CHANGE, uniqId);
-                changeBoardSize(this.id);
-            });
-
             $('#endGame').off('click').click(function () {
                 c.GAME_OVER_DEV = true;
             });
-
-            function changeBoardSize(size) {
-                var prefs = cookieHandler.readPreferences();
-                prefs.boardSize = size;
-                cookieHandler.savePreferences(prefs);
-                $(c.TABLE_SELECTOR).removeClass().addClass(size);
-                t.changePointsPopupTextSize(size);
-            }
-
-            // TODO: this shapes on needs to go to new shapes handler
-            $('input[name=shapesOn]').off('change').change(function () {
-                if ("on" === this.id) {
-                    //~ boardGame.turnShapesOn();
-                }
-                else {
-                    //~ boardGame.turnShapesOff();
-                }
-                saveShapesSetting(this.id);
-            });
-
-            function saveShapesSetting(shapesSetting) {
-                var prefs = cookieHandler.readPreferences();
-                prefs.shapesOn = shapesSetting === "on" ? true : false;
-                c.SHAPES_ON = prefs.shapesOn;
-                cookieHandler.savePreferences(prefs);
-            }
-
-            // TODO: hey, this is not in a function!
-            var shapesRadioInput = 'input:radio[name=shapesOn]';
-
-            if (c.SHAPES_ON) {
-                $(shapesRadioInput + '[value=on]').attr('checked', 'checked');
-            }
-            else {
-                $(shapesRadioInput + '[value=off]').attr('checked', 'checked');
-            }
 
             t.centerAbsoluteOnElement($(this._container),
                 $("#loading"), $(c.TABLE_SELECTOR));

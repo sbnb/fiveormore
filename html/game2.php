@@ -250,6 +250,7 @@
 
   <script type="text/javascript" src="js/const.js"></script>
   <script type="text/javascript" src="js/CookieHandler.js"></script>
+  <script type="text/javascript" src="js/SettingsChanger.js"></script>
   <script type="text/javascript" src="js/PopupController.js"></script>
   <script type="text/javascript" src="js/ClickHandlers.js"></script>
   <script type="text/javascript" src="js/HighScoreList.js"></script>

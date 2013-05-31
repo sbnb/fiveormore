@@ -1,7 +1,9 @@
 {
   "undef": true,
   "unused": true,
-  "globals": { "_": false, "jQuery": false, "$": false, "FOM": false, "setTimeout": false },
+  "browser": true,
+  "jquery": true,
+  "globals": {"_": false, "FOM": false},
   "white": true,
   "camelcase": true,
   "eqeqeq": true,

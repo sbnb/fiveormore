@@ -148,8 +148,6 @@
     };
 
     FOM.env.freshUniqId = FOM.tools.generateUniqId();
-    FOM.env.isIe = false;
-    // TODO: check for IE now
 
     // jQuery extensions
 

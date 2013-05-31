@@ -94,7 +94,8 @@
 
     // return lowest cost-to-end node in nodeList, or undefined if list empty
     function getLowestCostNode(nodeList) {
-        var lowest = _.min(nodeList, function (node) { return node.costToEnd; });
+        var lowest =
+            _.min(nodeList, function (node) { return node.costToEnd; });
         return typeof lowest === 'object' ? lowest : 'undefined';
     }
 

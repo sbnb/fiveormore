@@ -27,6 +27,7 @@
 
         game.popups = popups;
         game.cookieHandler = cookieHandler;
+        game.settingsChanger = new FOM.SettingsChanger(cookieHandler);
         game.highScoreAccessor = buildHighScoreAccessor(cookieHandler);
         game.logicalBoard = logicalBoard;
         game.score = score;
@@ -44,8 +45,12 @@
         clickHandlers = new FOM.ClickHandlers(this._container);
         clickHandlers.setUp(game, cookieHandler);
 
-        setBoardSize(cookieHandler);
+        game.settingsChanger.setInitialBoardSize();
+        game.settingsChanger.registerShapesInputChangeListener();
+        game.settingsChanger.registerBoardSizeInputChangeListener();
+
         positionPopupWindows(popups);
+        // TODO: message on page refresh: send one
         //~ messageServer(MESSAGE_ID.PAGE_REFRESHED,
             //~ cookieHandler.readUniqId());
 
@@ -93,37 +98,6 @@
             game.gameEventProducer.processClick(cell);
             game.gameEventConsumer.consume();
         });
-    }
-
-    // TODO: board size editing should be own object
-    function setBoardSize(cookieHandler) {
-        var preferences, viewportHeightInPx, size;
-
-        // first check if a board size preference has been set
-        preferences = cookieHandler.readPreferences();
-        if (preferences.boardSize !== c.PREFS_DEFAULT.boardSize) {
-            updateToNewBoardSize(preferences.boardSize);
-            return;
-        }
-
-        // no board size preference, so use best fit size
-        viewportHeightInPx = $(window).height();
-
-        if (viewportHeightInPx < c.VIEWPORT_CUTOFFS.SMALL) {
-            size = c.SIZE.SMALL;
-        }
-        else if (viewportHeightInPx < c.VIEWPORT_CUTOFFS.MEDIUM) {
-            size = c.SIZE.MEDIUM;
-        }
-        else {
-            size = c.SIZE.LARGE;
-        }
-        updateToNewBoardSize(size);
-    }
-
-    function updateToNewBoardSize(size) {
-        $(c.TABLE_SELECTOR).removeClass().addClass(size);
-        FOM.tools.changePointsPopupTextSize(size);
     }
 
     function positionPopupWindows(popups) {

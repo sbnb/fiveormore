@@ -63,25 +63,18 @@
         };
 
         function callJqueryShowAndHides() {
-            setVisibilityFromState('gameOver');
-            setVisibilityFromState('enterHighScore');
-            setVisibilityFromState('highScoresWrap');
-            setVisibilityFromState('playAgain');
+            showOrHideGroup(['gameOver', 'enterHighScore', 'highScoresWrap',
+                'playAgain']);
+            showOrHideFromState('gameOverPopup', {center: true, fadeIn: true});
+            showOrHideGroup(['rules', 'preferences', 'about'], {center: true});
+            showOrHideCloseWindowWidgets(states.showCloseWindow);
+        }
 
-            if (states.showCloseWindow) {
-                $('#gameOverPopup .closeText').show();
-                $('#gameOverPopup .closeWindowX').show();
-            }
-            else {
-                $('#gameOverPopup .closeText').hide();
-                $('#gameOverPopup .closeWindowX').hide();
-            }
-
-            setVisibilityFromState('gameOverPopup',
-                {center: true, fadeIn: true});
-            setVisibilityFromState('rules', {center: true});
-            setVisibilityFromState('preferences', {center: true});
-            setVisibilityFromState('about', {center: true});
+        // show or hide a group of divs based on state; options applies to all
+        function showOrHideGroup(props, options) {
+            _.forEach(props, function (property) {
+                showOrHideFromState(property, options);
+            });
         }
 
         /*
@@ -89,17 +82,13 @@
             Otherwise hide the corresponding div.
             Options allow 'fadeIn' and 'center'ing of the div when showing.
         */
-        function setVisibilityFromState(property, options) {
-            options = t.setIfUndefined(options, {});
-            options.center = t.setIfUndefined(options.center, false);
-            options.fadeIn = t.setIfUndefined(options.fadeIn, false);
-
+        function showOrHideFromState(property, options) {
             if (states[property]) {
-                if (options.center) {
+                if (t.checkNested(options, 'center')) {
                     t.centerAbsoluteOnElement($('#container'),
                         $('#' + property), $(FOM.constants.TABLE_SELECTOR));
                 }
-                if (options.fadeIn) {
+                if (t.checkNested(options, 'fadeIn')) {
                     $('#' + property).fadeIn('fast');
                 }
                 else {
@@ -110,6 +99,20 @@
                 $('#' + property).hide();
             }
         }
+
+        // display or hide the buttons for closing windows
+        function showOrHideCloseWindowWidgets(show) {
+            if (show) {
+                $('#gameOverPopup .closeText').show();
+                $('#gameOverPopup .closeWindowX').show();
+            }
+            else {
+                $('#gameOverPopup .closeText').hide();
+                $('#gameOverPopup .closeWindowX').hide();
+            }
+        }
+
+
 
         /* Set all members of states to false. */
         function allOff() {
