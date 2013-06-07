@@ -32,7 +32,19 @@
             'viewedHighScores', 'enteredHighScore', 'viewedRules',
             'viewedAbout', 'hitPlayAgain', 'viewedPreferences',
             'changedBoardSize'],
+
+        // TODO: CELL_CONTENT must be changed in IE flavours, make sure of that
+        CELL_CONTENT: '',
         EMPTY: '',
+        STONE_SHAPES: {
+            green: "circle.png",
+            red: "star.png",
+            blue: "triangle.png",
+            orange: "square.png",
+            purple: "splat.png",
+            yellow: "diamond.png"
+        },
+
         // interval between animation frames
         INTERVAL: 50,
 
@@ -49,6 +61,8 @@
         // number of high scores to display in each highscore list
         HIGH_SCORE_LENGTH: 10
     };
+
+    var c = FOM.constants;
 
     FOM.tools = {
         setIfUndefined: function (variable, defaultVal) {
@@ -71,6 +85,11 @@
                 left: left + "px"
             });
         },
+
+        imgSrcFromColor: function (color) {
+            return c.STONE_SHAPES[color] ? "imgs/" + c.STONE_SHAPES[color] : '';
+        },
+
 
         changePointsPopupTextSize: function (size) {
             /*jshint white:false, indent:false*/

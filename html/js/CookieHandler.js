@@ -26,6 +26,10 @@
             writeAllData();
         };
 
+        this.shapesOn = function () {
+            return this.readPreferences().shapesOn;
+        };
+
         this.readLocalHighScores = function () {
             var cookieData = getCookie(COOKIE_NAME);
             if (cookieData && cookieData.localHighScores) {

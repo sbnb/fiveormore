@@ -2,6 +2,9 @@
 
     "use strict";
 
+    var c = FOM.constants,
+        t = FOM.tools;
+
     /*
         Renderer
 
@@ -28,18 +31,22 @@
 
         render:
             function () {
-                var changed = this._logicalBoard.getChangedCells(this.snapshot);
-                _.forEach(changed, function (cell) {
-                    var color = this._logicalBoard.get(cell) ||
-                        FOM.constants.EMPTY;
-                    this._getJqueryCell(cell).removeClass().addClass(color);
-                }, this);
-
+                this._renderChangedStones();
                 this._renderPreviewStones();
                 this._renderSelectedCell();
                 this._renderScore();
                 this.snapshot = this._logicalBoard.takeSnapshot();
             },
+
+        _renderChangedStones: function () {
+            var changed = this._logicalBoard.getChangedCells(this.snapshot);
+            _.forEach(changed, function (cell) {
+                var color = this._logicalBoard.get(cell) || c.EMPTY,
+                    $cell = this._getJqueryCell(cell);
+                this._maybeRenderShape($cell, color);
+                $cell.removeClass().addClass(color);
+            }, this);
+        },
 
         _renderPreviewStones:
             function () {
@@ -47,8 +54,22 @@
                 _.forEach(stones, function (color, idx) {
                     var selector = this._previewSel + ' li:eq(' + idx + ')',
                         $previewLi = $(selector);
+                    this._maybeRenderShape($previewLi, color);
                     $previewLi.removeClass().addClass(color);
                 }, this);
+            },
+
+        _maybeRenderShape:
+            function ($element, color) {
+                if (c.SHAPES_ON) {
+                    var imgSrc = t.imgSrcFromColor(color);
+                    if (imgSrc) {
+                        $element.html('<img src=' + imgSrc + ' />');
+                    }
+                    else {
+                        $element.html(c.CELL_CONTENT);
+                    }
+                }
             },
 
         _renderSelectedCell:

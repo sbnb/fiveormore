@@ -1,7 +1,6 @@
 (function () {
 
     "use strict";
-    /*global window*/
 
     var c = FOM.constants;
 
@@ -56,7 +55,6 @@
 
         // TODO: special shortcut to finish a game (dev only)
         c.GAME_OVER_DEV = false;
-
         return game;
     };
 

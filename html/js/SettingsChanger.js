@@ -16,6 +16,8 @@
     FOM.SettingsChanger = function (cookieHandler) {
         this._cookieHandler = cookieHandler;
         this._uniqId = cookieHandler.readUniqId();
+        c.SHAPES_ON = cookieHandler.shapesOn();
+        // TODO: should other settings from cookie be saved as consts?
     };
 
     FOM.SettingsChanger.prototype = {
@@ -49,10 +51,14 @@
 
         turnShapesOn: function () {
             this._saveShapesSetting('on');
+            this._turnOnShapesForBoardStones();
+            this._turnOnShapesForPreviewStones();
         },
 
         turnShapesOff: function () {
             this._saveShapesSetting('off');
+            this._turnOffShapesForBoardStones();
+            this._turnOffShapesForPreviewStones();
         },
 
         _saveShapesSetting: function (shapesSetting) {
@@ -60,6 +66,37 @@
             prefs.shapesOn = shapesSetting === 'on' ? true : false;
             c.SHAPES_ON = prefs.shapesOn;
             this._cookieHandler.savePreferences(prefs);
+        },
+
+        _turnOnShapesForBoardStones: function () {
+            var that = this;
+            $(c.BOARD_SELECTOR).find('td').each(function () {
+                $(this).removeClass('selected');
+                if (!$(this).hasClass(c.EMPTY)) {
+                    that._addImgTagForShapeImages($(this));
+                }
+            });
+        },
+
+        _turnOnShapesForPreviewStones: function () {
+            var that = this;
+            $('#preview').find('li').each(function () {
+                that._addImgTagForShapeImages($(this));
+            });
+        },
+
+        _addImgTagForShapeImages: function ($element) {
+            var color = $element.attr('class'),
+                imgSrc = t.imgSrcFromColor(color);
+            $element.html('<img src=' + imgSrc + ' />');
+        },
+
+        _turnOffShapesForBoardStones: function () {
+            $(c.BOARD_SELECTOR).find('td').html(c.CELL_CONTENT);
+        },
+
+        _turnOffShapesForPreviewStones: function () {
+            $('#preview').find('li').html("");
         },
 
         registerBoardSizeInputChangeListener: function () {
@@ -87,7 +124,6 @@
         },
 
         _setRadioButtons: function () {
-            // TODO: check cookie for last setting
             var shapesRadioInput = 'input:radio[name=shapesOn]';
             if (c.SHAPES_ON) {
                 $(shapesRadioInput + '[value=on]').attr('checked', 'checked');
@@ -96,8 +132,6 @@
                 $(shapesRadioInput + '[value=off]').attr('checked', 'checked');
             }
         }
-
-
     };
 
     // choose a best fit board size given window vertical size
