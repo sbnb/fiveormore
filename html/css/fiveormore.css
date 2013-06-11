@@ -24,28 +24,24 @@ h1 {
 	text-align: center;
 	margin: 2px auto .2em auto;
 	padding: 0;
-	x-moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
-	x-webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
-	xbox-shadow: 0px 0px 10px rgba(0, 0, 0, .2);
-	xborder: 5px solid rgba(255, 255, 255, 0.2);
 	text-shadow: 0px 1px 1px rgba(255, 255, 255, .8);
 }
 
 table#fiveormore, div#highScoresWrap, div#gameOverPopup, div#enterHighScore, div.popup,
-div.closeWindowX span {
+.closeWindowX span {
 	-moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, .8);
 	-webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, .8);
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, .8);
 }
 
 h1, table#fiveormore, div#messages span, div#gameOverPopup, div#enterHighScore, div#playAgain,
-div#highScoresWrap, div.closeWindowX span, div.popup, #loading {
+div#highScoresWrap, .closeWindowX span, div.popup, #loading {
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 }
 
-ul#preview li, span#submitHighScore, table#fiveormore td, ul#controlBar li,
+ul#preview li, span#submitHighScore, td, ul#controlBar li, #endGame,
 div#highScoresWrap p.toggleHighScores em, div#highScoresWrap h3 span   {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -97,9 +93,8 @@ table#fiveormore {
 	border-collapse: separate;
 }
 
-/* different size boards */
-
-table#fiveormore.small td {
+/* different size boards. invariant: one will always apply */
+.small td {
 	width: 26px;
 	height: 26px;
 	border-width: 1px;
@@ -107,8 +102,7 @@ table#fiveormore.small td {
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-
-table#fiveormore.medium td {
+.medium td {
 	width: 33px;
 	height: 33px;
 	border-width: 2px;
@@ -116,8 +110,7 @@ table#fiveormore.medium td {
 	-moz-border-radius: 8px;
 	border-radius: 8px;
 }
-
-table#fiveormore.large td {
+.large td {
 	width: 55px;
 	height: 55px;
 	border-width: 3px;
@@ -126,32 +119,38 @@ table#fiveormore.large td {
 	border-radius: 12px;
 }
 
-table#fiveormore td {
-	width: 50px;
-	height: 50px;
-	border: 2px ridge #AAA;
-	border-width: 3px;
-	background-color: #CCC;
-}
-
-table#fiveormore td:hover {
-	border-color: #FFF;
-	border-style: ridge;
-}
-
-table#fiveormore td, table#fiveormore td.empty:hover {
+/* generic info for empty squares, all sizes. */
+td {
+	background-color: #444;
+	border-color: #333;
+	border-style: solid;
 	-moz-box-shadow: 1px 1px 1px rgba(255, 255, 255, .2);
 	-webkit-box-shadow: 1px 1px 1px rgba(255, 255, 255, .2);
 	box-shadow: 1px 1px 1px rgba(255,255,255,.2);
 }
 
-table#fiveormore td:hover, table#fiveormore td.selected {
+td.selected {
 	-moz-box-shadow: 0px 0px 10px rgba(255, 255, 255, .8);
 	-webkit-box-shadow: 0px 0px 10px rgba(255, 255, 255, .8);
 	box-shadow: 0px 0px 10px rgba(255,255,255,.8);
 }
 
-table#fiveormore td.green, #preview li.green {
+td.green, td.red, td.blue, td.orange, td.purple, td.yellow {
+	border-color: #AAA;
+	border-style: ridge;
+
+}
+
+td.green:hover, td.red:hover, td.blue:hover, td.orange:hover, td.purple:hover, td.yellow:hover {
+	border-color: #FFF;
+	border-style: ridge;
+	-moz-box-shadow: 0px 0px 10px rgba(255, 255, 255, .8);
+	-webkit-box-shadow: 0px 0px 10px rgba(255, 255, 255, .8);
+	box-shadow: 0px 0px 10px rgba(255,255,255,.8);
+}
+
+
+td.green, #preview li.green {
 background: rgb(0,204,0); /* Old browsers */
 background: -moz-linear-gradient(-45deg, rgba(0,204,0,1) 0%, rgba(51,204,51,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(0,204,0,1)), color-stop(100%,rgba(51,204,51,1))); /* Chrome,Safari4+ */
@@ -162,7 +161,7 @@ background: linear-gradient(135deg, rgba(0,204,0,1) 0%,rgba(51,204,51,1) 100%); 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00cc00', endColorstr='#33cc33',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-table#fiveormore td.red, #preview li.red {
+td.red, #preview li.red {
 background: rgb(255,34,34); /* Old browsers */
 background: -moz-linear-gradient(-45deg, rgba(255,34,34,1) 0%, rgba(255,45,45,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(255,34,34,1)), color-stop(100%,rgba(255,45,45,1))); /* Chrome,Safari4+ */
@@ -173,7 +172,7 @@ background: linear-gradient(135deg, rgba(255,34,34,1) 0%,rgba(255,45,45,1) 100%)
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff2222', endColorstr='#ff2d2d',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-table#fiveormore td.blue, #preview li.blue {
+td.blue, #preview li.blue {
 background: rgb(51,153,255); /* Old browsers */
 background: -moz-linear-gradient(-45deg, rgba(51,153,255,1) 0%, rgba(76,165,255,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(51,153,255,1)), color-stop(100%,rgba(76,165,255,1))); /* Chrome,Safari4+ */
@@ -184,7 +183,7 @@ background: linear-gradient(135deg, rgba(51,153,255,1) 0%,rgba(76,165,255,1) 100
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3399ff', endColorstr='#4ca5ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-table#fiveormore td.orange, #preview li.orange {
+td.orange, #preview li.orange {
 background: rgb(206,206,206); /* Old browsers */
 background: -moz-linear-gradient(-45deg, rgba(206,206,206,1) 0%, rgba(221,221,221,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(206,206,206,1)), color-stop(100%,rgba(221,221,221,1))); /* Chrome,Safari4+ */
@@ -195,7 +194,7 @@ background: linear-gradient(135deg, rgba(206,206,206,1) 0%,rgba(221,221,221,1) 1
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cecece', endColorstr='#dddddd',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-table#fiveormore td.purple, #preview li.purple {
+td.purple, #preview li.purple {
 background: rgb(170,0,255); /* Old browsers */
 background: -moz-linear-gradient(-45deg, rgba(170,0,255,1) 0%, rgba(187,53,255,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(170,0,255,1)), color-stop(100%,rgba(187,53,255,1))); /* Chrome,Safari4+ */
@@ -206,7 +205,7 @@ background: linear-gradient(135deg, rgba(170,0,255,1) 0%,rgba(187,53,255,1) 100%
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aa00ff', endColorstr='#bb35ff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
-table#fiveormore td.yellow, #preview li.yellow {
+td.yellow, #preview li.yellow {
 background: rgb(255,255,0); /* Old browsers */
 background: -moz-linear-gradient(-45deg, rgba(255,255,0,1) 0%, rgba(255,255,51,1) 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,rgba(255,255,0,1)), color-stop(100%,rgba(255,255,51,1))); /* Chrome,Safari4+ */
@@ -215,19 +214,6 @@ background: -o-linear-gradient(-45deg, rgba(255,255,0,1) 0%,rgba(255,255,51,1) 1
 background: -ms-linear-gradient(-45deg, rgba(255,255,0,1) 0%,rgba(255,255,51,1) 100%); /* IE10+ */
 background: linear-gradient(135deg, rgba(255,255,0,1) 0%,rgba(255,255,51,1) 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffff00', endColorstr='#ffff33',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-}
-
-table#fiveormore td.empty, table#fiveormore td.empty:hover {
-	background-color: #333;
-	border-color: #333;
-	background-color: #444;
-	border-color: #333;
-	border-style: solid;
-}
-
-.selected, .selected:hover {
-	border-style: solid;
-	border-color: #FFF;
 }
 
 div#messages {
@@ -245,16 +231,14 @@ div#messages span {
 
 div#buttonsWrap {
 	margin: 0 auto;
-	xbackground-color: #999;
 	width: 500px;
 }
 
 ul#controlBar {
 	text-align: center;
-	xbackground-color: #090;
 }
 
-ul#controlBar li {
+ul#controlBar li, #endGame {
 	margin: 0 1em;
 	padding: 0 .5em;
 	border: 1px solid #666;
@@ -268,7 +252,7 @@ ul#controlBar li {
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
 }
 
-ul#controlBar li:hover {
+ul#controlBar li:hover, #endGame:hover {
 	background-color: #CCC;
 	color: #333;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9);
@@ -280,9 +264,7 @@ ul#controlBar li:hover {
 #sharePanel {
 	margin: 0 auto;
 	width: 300px;
-	xtext-align: center;
 	margin-top: 1.5em;
-	xbackground-color: #009;
 }
 
 p.pageText {
@@ -495,14 +477,14 @@ div.popup strong {
 	font-weight: bold;
 }
 
-div.closeWindowX {
+.closeWindowX {
 	position: absolute;
 	right: 0;
 	top: 0;
 	margin: -12px -16px;
 }
 
-div.closeWindowX span, span.closeWindowText {
+.closeWindowX span, .closeWindowText {
 	font-size: 1em;
 	padding: 3px 8px;
 	background-color: #666;
@@ -510,12 +492,12 @@ div.closeWindowX span, span.closeWindowText {
 	border: 2px solid #999;
 }
 
-div.closeWindowX span:hover, span.closeWindowText:hover {
+.closeWindowX span:hover, .closeWindowText:hover {
 	background-color: #AAA;
 	color: #FFF;
 }
 
-span.closeWindowText {
+.closeWindowText {
 	font-size: .8em;
 	padding: .1em .5em;
 }
@@ -583,24 +565,18 @@ ul#preview li img {
 // but here is what is being used to style this demo
 */
 .horizontal-nav {
-    xbackground: #efefef;
     border-radius: 6px;
 }
 .horizontal-nav ul {
-    xbackground: #128F9A;
-    xbackground: #1E7DDB;
     background: #227;
     background: rgba(0, 0, 0, 0.2);
     float: left;
     text-align: center;
     border-radius: 6px;
-    xborder: 1px solid #0e7079;
-    xborder: 1px solid #0e7079;
 	padding-bottom: 0;
 }
 .horizontal-nav ul li {
     float: left;
-    xborder-left: 1px solid #0e7079;
 }
 .horizontal-nav ul li:first-child {
     border-left: 0 none;
@@ -617,7 +593,6 @@ ul#preview li img {
     border-left: 0 none;
 }
 .horizontal-nav ul li a:hover {
-    xbackground: #12808a;
     background: #227;
     background: rgba(0, 0, 0, 0.3);
 }

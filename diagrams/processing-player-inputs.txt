@@ -1,0 +1,13 @@
+Title: Processing Player Inputs
+jQuery->GEP: cell clicked
+GEP->GameEvents: add event
+GameEvents->GEC: consume event
+GEC->GameEvents: add transition events
+GEC->LogicalBoard: update cells
+GEC->GEC: schedule consume\nafter delay if\ntransition events\npending
+LogicalBoard->Renderer: notify subscribers
+Renderer->LogicalBoard: get changed cells
+LogicalBoard-->Renderer: changes
+Renderer->DOM: render game
+Renderer->LogicalBoard: request snapshot
+LogicalBoard-->Renderer: deliver snapshot

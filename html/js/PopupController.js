@@ -1,175 +1,135 @@
-function PopupController() {
-    var states = {
-        gameOverPopup: false,
-        gameOver: false,
-        enterHighScore: false,
-        highScoresWrap: false,
-        playAgain: false,
-        showCloseWindow: false,
-        howToPlayPopup: false,
-        preferencesPopup: false,
-        aboutPopup: false
-    }
-        
-    this.gameOverNoHighScore = function() {
-        allOff();
-        states.gameOverPopup = true;
-        states.gameOver = true;
-        states.highScoresWrap = true;
-        states.playAgain = true;
-        states.showCloseWindow = true;
-        callJqueryShowAndHides();
-    }
-    
-    this.gameOverGotHighScore = function(username) {
-        allOff();
-        states.gameOverPopup = true;
-        states.gameOver = true;
-        states.enterHighScore = true;
-        $('#highScoreName').val(username);
-        callJqueryShowAndHides();
-    }
-    
-    this.submittedNameForHighScore = function() {
-        allOff();
-        states.gameOverPopup = true;
-        states.gameOver = true;
-        states.highScoresWrap = true;
-        states.playAgain = true;
-        states.showCloseWindow = true;
-        callJqueryShowAndHides();
-    }
-    
-    this.requestedHighScores = function() {
-        allOff();
-        states.gameOverPopup = true;
-        states.highScoresWrap = true;
-        states.showCloseWindow = true;
-        callJqueryShowAndHides();
-    }
-    
-    this.closeGameOverPopup = function() {
-        allOff();
-        callJqueryShowAndHides();
-    }
-    
-    this.pressedPlayAgainButton = function() {
-        allOff();
-        callJqueryShowAndHides();
-    }
-    
-    this.pressedNewGameButton = function() {
-        allOff();
-        callJqueryShowAndHides();
-    }
-    
-    this.openHowToPlayPopup = function() {
-        allOff();
-        states.howToPlayPopup = true;
-        callJqueryShowAndHides();
-    }
-    
-    this.closeHowToPlayPopup = function() {
-        allOff();
-        callJqueryShowAndHides();
-    }
-        
-    this.openPreferencesPopup = function() {
-        allOff();
-        states.preferencesPopup = true;
-        callJqueryShowAndHides();
-    }
-    
-    this.closePreferencesPopup = function() {
-        allOff();
-        callJqueryShowAndHides();
-    }
-    
-    this.openAboutPopup = function() {
-        allOff();
-        states.aboutPopup = true;
-        callJqueryShowAndHides();
-    }
-    
-    this.closeAboutPopup = function() {
-        allOff();
-        callJqueryShowAndHides();
-    }
-    
-    function callJqueryShowAndHides() {
-        if (states.gameOver) {
-            $('#gameOver').show();
-        }
-        else {
-            $('#gameOver').hide();
-        }
-        
-        if (states.enterHighScore) {
-            $('#enterHighScore').show();
-        }
-        else {
-            $('#enterHighScore').hide();
-        }
-        
-        if (states.highScoresWrap) {
-            $('#highScoresWrap').show();
-        }
-        else {
-            $('#highScoresWrap').hide();
-        }
-        
-        if (states.playAgain) {
-            $('#playAgain').show();
-        }
-        else {
-            $('#playAgain').hide();
-        }
-        
-        if (states.showCloseWindow) {
-            $('#gameOverPopup p.closeText').show();
-            $('#gameOverPopup div.closeWindowX').show();
-        }
-        else {
-            $('#gameOverPopup p.closeText').hide();
-            $('#gameOverPopup div.closeWindowX').hide();
-        }
-        
-        if (states.gameOverPopup) {
-            centerAbsoluteOnElement($('#container'), $(GAME_OVER_PU), $(TABLE));
-            $('#gameOverPopup').fadeIn('fast');
-        }
-        else {
-            $('#gameOverPopup').hide();
-        }
-        
-        if (states.howToPlayPopup) {
-            centerAbsoluteOnElement($('#container'), $(HOW_TO_PLAY_PU), $(TABLE));
-            $(HOW_TO_PLAY_PU).show();
-        }
-        else {
-            $(HOW_TO_PLAY_PU).hide();
-        }
-        
-        if (states.preferencesPopup) {
-            centerAbsoluteOnElement($('#container'), $('#preferencesPopup'), $(TABLE));
-            $('#preferencesPopup').show();            
-        }
-        else {
-            $('#preferencesPopup').hide();
-        }
-        
-        if (states.aboutPopup) {
-            centerAbsoluteOnElement($('#container'), $('#aboutPopup'), $(TABLE));
-            $('#aboutPopup').show();
-        }
-        else {
-            $('#aboutPopup').hide();
-        }
-    }
+(function () {
 
-    function allOff() {
-        for (var prop in states) {
-            states[prop] = false;
+    "use strict";
+
+    var t = FOM.tools;
+
+    // line length 180 - reduce it
+    FOM.PopupController = function () {
+        var states = {
+            gameOverPopup: false,
+            gameOver: false,
+            enterHighScore: false,
+            highScoresWrap: false,
+            playAgain: false,
+            showCloseWindow: false,
+            rules: false,
+            preferences: false,
+            about: false
+        };
+
+        this.playAgain = function () {
+            allOff();
+            turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
+                'showCloseWindow');
+            $('#recentScores').show();
+            $('#localScores, #allTimeScores').hide();
+            callJqueryShowAndHides();
+        };
+
+        this.namePromptForHighScore = function (username) {
+            allOff();
+            turnOn('gameOverPopup', 'gameOver', 'enterHighScore');
+            $('#highScoreName').val(username);
+            callJqueryShowAndHides();
+        };
+
+        this.submittedNameForHighScore = function () {
+            allOff();
+            turnOn('gameOverPopup', 'gameOver', 'highScoresWrap', 'playAgain',
+                'showCloseWindow');
+            $('#recentScores').show();
+            $('#localScores, #allTimeScores').hide();
+            callJqueryShowAndHides();
+        };
+
+        this.requestedHighScores = function () {
+            allOff();
+            turnOn('gameOverPopup', 'highScoresWrap', 'showCloseWindow');
+            $('#recentScores').show();
+            $('#localScores, #allTimeScores').hide();
+            callJqueryShowAndHides();
+        };
+
+        this.closeAll = function () {
+            allOff();
+            callJqueryShowAndHides();
+        };
+
+        this.showPopup = function (popupId) {
+            allOff();
+            turnOn(popupId);
+            callJqueryShowAndHides();
+        };
+
+        function callJqueryShowAndHides() {
+            showOrHideGroup(['gameOver', 'enterHighScore', 'highScoresWrap',
+                'playAgain']);
+            showOrHideFromState('gameOverPopup', {center: true, fadeIn: true});
+            showOrHideGroup(['rules', 'preferences', 'about'], {center: true});
+            showOrHideCloseWindowWidgets(states.showCloseWindow);
         }
-    }
-};
+
+        // show or hide a group of divs based on state; options applies to all
+        function showOrHideGroup(props, options) {
+            _.forEach(props, function (property) {
+                showOrHideFromState(property, options);
+            });
+        }
+
+        /*
+            If states.property is true, show the div '#property'.
+            Otherwise hide the corresponding div.
+            Options allow 'fadeIn' and 'center'ing of the div when showing.
+        */
+        function showOrHideFromState(property, options) {
+            if (states[property]) {
+                if (t.checkNested(options, 'center')) {
+                    t.centerAbsoluteOnElement($('#container'),
+                        $('#' + property), $(FOM.constants.TABLE_SELECTOR));
+                }
+                if (t.checkNested(options, 'fadeIn')) {
+                    $('#' + property).fadeIn('fast');
+                }
+                else {
+                    $('#' + property).show();
+                }
+            }
+            else {
+                $('#' + property).hide();
+            }
+        }
+
+        // display or hide the buttons for closing windows
+        function showOrHideCloseWindowWidgets(show) {
+            if (show) {
+                $('#gameOverPopup .closeText').show();
+                $('#gameOverPopup .closeWindowX').show();
+            }
+            else {
+                $('#gameOverPopup .closeText').hide();
+                $('#gameOverPopup .closeWindowX').hide();
+            }
+        }
+
+
+
+        /* Set all members of states to false. */
+        function allOff() {
+            /* jshint forin: false */
+            for (var prop in states) {
+                states[prop] = false;
+            }
+        }
+
+        /* For each arg, set states[arg] to true (variable arg length) */
+        function turnOn() {
+            _.forEach(arguments, function (state) {
+                t.assert(states.hasOwnProperty(state),
+                    'PopupController.turnOn(): no such state: ' + state);
+                states[state] = true;
+            });
+        }
+    };
+
+})();

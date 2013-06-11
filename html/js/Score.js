@@ -1,69 +1,37 @@
-function Score() {
-    var score = 0;
-    $('#score').text(score);
+(function () {
 
-    this.getScore = function() {
-        return score;
-    }
+    "use strict";
 
-    this.clearedChainOfLength = function(chainHolder) {
-    //~ this.clearedChainOfLength = function(chainLength) {
-        var chainLength = chainHolder.chain.size;
-        assert(POINTS_FOR_CHAINS[chainLength] > 0, "Score: unknown chain length: " + chainLength);
-        score += POINTS_FOR_CHAINS[chainLength];
-        $('#score').text(score);
+    var t = FOM.tools;
+    var c = FOM.constants;
 
-        animatePointsForClearance(chainHolder, POINTS_FOR_CHAINS[chainLength]);
-    }
+    FOM.Score = function (pointsPopup) {
+        // TODO: revert initial score to 0 when finished
+        this.score = 0;
+        this._pointsPopup = pointsPopup;
+    };
 
-    //chainHolder: {cell: startCell, chain: chain, type: cellListType}
-    function animatePointsForClearance(chainHolder, points) {
-        var middleCell = getMiddleCell(chainHolder.type, chainHolder.cell, chainHolder.chain),
-            $middleCell = $(BOARD + ' tr').eq(middleCell.rowIdx).find('td').eq(middleCell.colIdx),
-            position = $middleCell.position(),
-            middleCellWidth = $middleCell.outerWidth(),
-            pointsWidth;
+    FOM.Score.prototype = {
 
+        POINTS_FOR_LENGTH: {5: 10, 6: 12, 7: 18, 8: 28, 9: 42},
 
-        $('#points').text(points);
-        pointsWidth = $('#points').outerWidth();
-        $('#pointsPopup').css({
-                top: position.top + 'px',
-                left: position.left + 'px',
-                opacity: 1.0
-            });
-        $('#pointsPopup').show();
+        // add points for the given runs, return the number of points added.
+        add: function (runs) {
+            var preScore = this.score;
+            _.forEach(runs, function (run) {
+                t.assert(run.length >= c.RUN_LENGTH,
+                    'Score.add: run not long enough: ' + run.length);
 
-        $('#pointsPopup').animate({
-                opacity: 0.4,
-                top: '-=30'
-                }, 500, function() {
-                $('#pointsPopup').hide();
-            });
-    }
+                var points = this.POINTS_FOR_LENGTH[run.length];
+                this.score += points;
+                this._pointsPopup.display(points, run);
+            }, this);
+            return this.score - preScore;
+        },
 
-    function getMiddleCell(cellListType, baseCell, chain) {
-        var middleCell = {};
-        switch(cellListType) {
-            case COLUMNS:
-                middleCell.colIdx = baseCell.colIdx;
-                middleCell.rowIdx = chain.index + Math.floor(chain.size / 2);
-                break;
-            case ROWS:
-                middleCell.colIdx = chain.index + chain.size / 2;
-                middleCell.rowIdx = baseCell.rowIdx;
-                break;
-            case DIAGONAL_RIGHT:
-                middleCell.colIdx = baseCell.colIdx + chain.index + Math.floor(chain.size / 2);
-                middleCell.rowIdx = baseCell.rowIdx + chain.index + Math.floor(chain.size / 2);
-                break;
-            case DIAGONAL_LEFT:
-                middleCell.colIdx = baseCell.colIdx - chain.index - Math.floor(chain.size / 2);
-                middleCell.rowIdx = baseCell.rowIdx + chain.index + Math.floor(chain.size / 2);
-                break;
-            default:
-                assert(false, 'Score.getMiddleCell: bad type: ' + cellListType);
+        get: function () {
+            return this.score;
         }
-        return middleCell;
-    }
-};
+    };
+
+})();

@@ -10,27 +10,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
-  <script type="text/javascript">var freshUniqId = '<?php echo md5(uniqid(rand(), true)); ?>';</script>
-<!--replace_start-->
-  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
-  <script type="text/javascript" src="js/json2.js"></script>
-  <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
-  <script type="text/javascript" src="js/jquery.cookie.js"></script>
-  <script type="text/javascript" src="js/constants.js"></script>
-  <script type="text/javascript" src="js/CookieHandler.js"></script>
-  <script type="text/javascript" src="js/PopupController.js"></script>
-  <script type="text/javascript" src="js/Score.js"></script>
-  <script type="text/javascript" src="js/BoardIndex.js"></script>
-  <script type="text/javascript" src="js/Node.js"></script>
-  <script type="text/javascript" src="js/StoneMatcher.js"></script>
-  <script type="text/javascript" src="js/StoneMaker.js"></script>
-  <script type="text/javascript" src="js/PathAnimator.js"></script>
-  <script type="text/javascript" src="js/PathFinder.js"></script>
-  <script type="text/javascript" src="js/ClickHandlers.js"></script>
-  <script type="text/javascript" src="js/BoardGame.js"></script>
-  <script type="text/javascript" src="js/HighScores.js"></script>
-  <script type="text/javascript" src="js/fiveormore.js"></script>
-<!--replace_end-->
+
   <!--combined_js_insert-->
 
   <!--[if lte IE 7]>
@@ -38,11 +18,11 @@
   <![endif]-->
 
   <script type="text/javascript">
-    var isIe = false;
+    var FOM = {env: {isIe: false}};
   </script>
   <!--[if ie]>
     <script type="text/javascript">
-      isIe = true;
+      FOM.env.isIe = true;
     </script>
   <![endif]-->
 
@@ -63,7 +43,7 @@
 
     <h1>Five or More</h1>
 
-    <table id="fiveormore" class="">
+    <table id="fiveormore">
     <thead>
     <tr>
       <th colspan=5>
@@ -120,11 +100,11 @@
 
     <div id="buttonsWrap">
       <ul id="controlBar" class="plain">
-        <li id="newGame">New Game</li>
+        <li id="newGameButton" class="newGame">New Game</li>
         <li id="highScoresButton">High Scores</li>
-        <li id="showHowToPlay">Rules</li>
-        <li id="showPreferences">Preferences</li>
-        <li id="showAbout">About</li>
+        <li id="showRules" class="show">Rules</li>
+        <li id="showPreferences" class="show">Preferences</li>
+        <li id="showAbout" class="show">About</li>
       </ul>
     </div>
 
@@ -143,18 +123,39 @@
         </div>
       </div>
 
+<!-- BEGIN highScoresWrap -->
       <div id="highScoresWrap">
-        <h3>High Scores</h3>
-        <dl><dt></dt><dd></dd></dl>
-      </div>
+        <div id="allTimeScores" class="subScore">
+          <h3><span>All Time Best</span></h3>
+          <dl>
+          </dl>
+          <p class='toggleHighScores'><em class='recent'>Daily Best</em><em class='local'>Local Best</em></p>
+        </div>
 
-      <div id="playAgain"><span>Play again?</span></div>
+        <div id="recentScores" class="subScore">
+          <h3><span>Daily Best</span></h3>
+          <dl>
+          </dl>
+          <p class='toggleHighScores'><em class='allTime'>All Time Best</em><em class='local'>Local Best</em></p>
+        </div>
+
+        <div id="localScores" class="subScore">
+          <h3><span>Local Best</span></h3>
+          <dl>
+          </dl>
+          <p class='toggleHighScores'><em class='allTime'>All Time Best</em><em class='recent'>Daily Best</em></p>
+        </div>
+
+      </div>
+<!-- END highScoresWrap -->
+
+      <div id="playAgain" class="newGame"><span>Play again?</span></div>
 
       <p class="closeText"><span class="closeWindowText">Close this Window</span></p>
 
     </div>
 
-    <div id="howToPlay" class="popup">
+    <div id="rules" class="popup">
       <div class="closeWindowX"><span>X</span></div>
 
       <h2>How to Play Five or More</h2>
@@ -190,7 +191,7 @@
       <p class="closeText"><span class="closeWindowText">Close this Window</span></p>
     </div>
 
-    <div id="preferencesPopup" class="popup">
+    <div id="preferences" class="popup">
       <div class="closeWindowX"><span>X</span></div>
 
       <h2>Preferences</h2>
@@ -209,7 +210,7 @@
       <p class="closeText"><span class="closeWindowText">Close this Window</span></p>
     </div>
 
-    <div id="aboutPopup" class="popup">
+    <div id="about" class="popup">
       <div class="closeWindowX"><span>X</span></div>
 
       <h2>About</h2>
@@ -231,10 +232,58 @@
     </div>
 
     <div id="pointsPopup">
-      <p id="points"></p>
+      <p id="pointsText"></p>
+    </div>
+
+    <div id="endGame" style="border: 2px solid #AAA; width: 70px">
+      <p>End Game</p>
     </div>
 
   </div>
+
+<!--replace_start-->
+  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
+  <script type="text/javascript" src="js/json2.js"></script>
+  <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
+
+  <script type="text/javascript" src="js/const.js"></script>
+  <script type="text/javascript" src="js/CookieHandler.js"></script>
+  <script type="text/javascript" src="js/SettingsChanger.js"></script>
+  <script type="text/javascript" src="js/PopupController.js"></script>
+  <script type="text/javascript" src="js/ClickHandlers.js"></script>
+  <script type="text/javascript" src="js/HighScoreList.js"></script>
+  <script type="text/javascript" src="js/LocalHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/LocalHighScoreWriter.js"></script>
+  <script type="text/javascript" src="js/ServerHighScoreReader.js"></script>
+  <script type="text/javascript" src="js/ServerHighScoreWriter.js"></script>
+  <script type="text/javascript" src="js/HighScoreGroup.js"></script>
+  <script type="text/javascript" src="js/HighScoreAccessor.js"></script>
+  <script type="text/javascript" src="js/MessageDisplayer.js"></script>
+  <script type="text/javascript" src="js/PointsPopup.js"></script>
+  <script type="text/javascript" src="js/LogicalBoard.js"></script>
+  <script type="text/javascript" src="js/GameEventProducer.js"></script>
+  <script type="text/javascript" src="js/GameEventConsumer.js"></script>
+  <script type="text/javascript" src="js/Renderer.js"></script>
+  <script type="text/javascript" src="js/RunFinder.js"></script>
+  <script type="text/javascript" src="js/PathSearcher.js"></script>
+  <script type="text/javascript" src="js/Score.js"></script>
+  <script type="text/javascript" src="js/Colors.js"></script>
+  <script type="text/javascript" src="js/PreviewStones.js"></script>
+  <script type="text/javascript" src="js/GameBuilder.js"></script>
+  <script type="text/javascript" src="js/Game2.js"></script>
+
+<!--replace_end-->
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.full-width').horizontalNav({});
+      $(FOM.constants.BOARD_SELECTOR + ' td.selected').removeClass('selected');
+      FOM.game = new FOM.GameBuilder('#container').build(FOM.constants.BOARD_SELECTOR);
+      FOM.game.start();
+    });
+  </script>
 
   <script type="text/javascript">
     var _gaq = _gaq || [];
