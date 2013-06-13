@@ -2,3 +2,6 @@ html/db/fiveormore.db
 *.uploaded
 combined*
 *d8_history
+html/sass/stylesheets
+.sass-cache
+
