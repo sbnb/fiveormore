@@ -6,7 +6,7 @@ describe('PointsPopup', function() {
         opacity = {upper: 1.0, lower: 0.4},
         points = 5,
         someRefToDomLocationOfMiddleOfRun = null,
-        fadeOut = 1;
+        fadeOut = 10;
 
     beforeEach(function() {
         popup = new FOM.PointsPopup(popupDiv, textDiv, fadeOut, opacity);
@@ -17,20 +17,12 @@ describe('PointsPopup', function() {
         expect($(textDiv).text()).toBe(points.toString());
     });
 
-
-    // check the div is in right place
-
-
     // check it goes opaque after delay
     it('fades out after delay', function() {
-        waitsFor(function() {
-            var actualOpacity = parseFloat($(popupDiv).css('opacity'));
-            return actualOpacity.toFixed(1) === (opacity.lower).toFixed(1);
-        }, "cond", 100);
-
+        waits(10);
         runs(function() {
             var actualOpacity = parseFloat($(popupDiv).css('opacity'));
-            expect(actualOpacity.toFixed(1)).toBe((opacity.lower).toFixed(1));
+            expect(actualOpacity.toFixed(1)).not.toBe((opacity.upper).toFixed(1));
         });
 
     });

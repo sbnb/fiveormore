@@ -2,6 +2,13 @@
 
     "use strict";
 
+    /*
+        RunFinder
+
+        Searches the board for completed runs, vertically, horizontally and
+        diagonally upward and downward.
+    */
+
     FOM.RunFinder = function (logicalBoard) {
         this.logicalBoard = logicalBoard;
         this.boardArray = logicalBoard._board;
@@ -106,6 +113,7 @@
         return limit;
     }
 
+    // count the max cells between this cell and any board edge diagonally down
     function getDownDiagonalLimit(idx, width, height) {
         var rightEdge = width - (idx % width) - 1,
             min = Math.min(rightEdge, getBottomEdge(idx, height)),
@@ -113,6 +121,7 @@
         return limit;
     }
 
+    // count the max cells between this cell and any board edge diagonally up
     function getLeftDiagonalLimit(idx, width, height) {
         var leftEdge = idx % width,
             min = Math.min(leftEdge, getBottomEdge(idx, height)),

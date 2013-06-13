@@ -29,7 +29,5 @@
                 that.popups.playAgain();
             }
         });
-
     };
-
 })();

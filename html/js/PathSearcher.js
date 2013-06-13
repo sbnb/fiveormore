@@ -3,7 +3,7 @@
     "use strict";
 
     /*
-        Search for valid paths on a board.
+        Search for the shortest valid path between two cells on a board.
 
         This is an implementation of the A* search.
     */
@@ -122,6 +122,7 @@
         });
     }
 
+    // true if every item in keys is a property of both objects A and B
     function sharesKeys(keys, objA, objB) {
         if (_.isUndefined(objA) || _.isUndefined(objB)) {
             return false;
@@ -136,6 +137,7 @@
             cellA.x === cellB.x && cellA.y === cellB.y;
     }
 
+    // a node representation for A* search
     FOM.PathNode = function (cell, costSoFar, costToEnd) {
         this.cell = cell;
         this.x = cell.x;

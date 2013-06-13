@@ -4,7 +4,8 @@
 
     /*
         Control a small div that appears and fades to black above a matched run,
-        showing the points awarded for that run.
+        showing the points awarded. Display centered over run regardless of
+        run direction.
     */
 
     FOM.PointsPopup = function (popupDiv, textDiv, fadeTime, opacity) {
@@ -15,6 +16,7 @@
         this._fadeTime = define(fadeTime, 300);
         this._opacity = define(opacity, {upper: 1.0, lower: 0.4});
 
+        // popup the points
         this.display = function (points, run) {
             var $popupDiv = $(this._popupDiv);
             $(this._textDiv).text(points);
@@ -22,6 +24,7 @@
             this._fadeToBlack($popupDiv);
         };
 
+        // apply a short fade out before hiding the score popup
         this._fadeToBlack = function ($popupDiv) {
             $popupDiv.show();
             $popupDiv.animate({
@@ -34,5 +37,4 @@
                 });
         };
     };
-
 })();

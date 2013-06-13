@@ -4,8 +4,11 @@
     /*global PubSub*/
 
     /*
-        A model of the board. This object contains NO jQuery or controllers.
+        The main model of the board.
+
+        Provides the means to add, remove, and select stones.
     */
+
     FOM.LogicalBoard = function (width, height) {
         this._board = [];
         this._width = width;
@@ -174,11 +177,13 @@
                 return PubSub.subscribe(FOM.constants.UPDATES, subscriber);
             },
 
+        // a snapshot of the board at this instant
         takeSnapshot:
             function () {
                 return this._board.slice();
             },
 
+        // determine which cells have changed from the snapshot to now
         getChangedCells:
             function (snapshot) {
                 var changed = [];
@@ -190,6 +195,7 @@
                 return changed;
             },
 
+        // return cell {x,y} given an index into the board array
         _cellFromIndex:
             function (index) {
                 var x = (index % this._width),
@@ -211,7 +217,7 @@
             }
     };
 
-
+    // pad numbers with 0s to left, size sets how far to pad
     function pad(num, size) {
         var s = "000000000" + num;
         return s.substr(s.length - size);

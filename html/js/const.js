@@ -3,6 +3,7 @@
     "use strict";
     /*global _gaq*/
 
+    // shared constants for use by game
     FOM.constants = {
         DIMENSIONS: {WIDTH: 9, HEIGHT: 9},
         RUN_LENGTH: 5,
@@ -33,7 +34,6 @@
             'viewedAbout', 'hitPlayAgain', 'viewedPreferences',
             'changedBoardSize'],
 
-        // TODO: CELL_CONTENT must be changed in IE flavours, make sure of that
         CELL_CONTENT: '',
         EMPTY: '',
         STONE_SHAPES: {
@@ -64,13 +64,16 @@
 
     var c = FOM.constants;
 
+    // generic tools for use by all code
     FOM.tools = {
+        // assign default value to variable if not defined
         setIfUndefined: function (variable, defaultVal) {
             var isUndef = typeof variable === "undefined";
             variable = isUndef ? defaultVal : variable;
             return variable;
         },
 
+        // center jquery elem $over on $under
         centerAbsoluteOnElement: function ($container, $over, $under) {
             var RULES_TOP_OFFSET = 20,
                 pos = $under.position(),
@@ -90,7 +93,7 @@
             return c.STONE_SHAPES[color] ? "imgs/" + c.STONE_SHAPES[color] : '';
         },
 
-
+        // keep points font size proportional to current board size
         changePointsPopupTextSize: function (size) {
             /*jshint white:false, indent:false*/
             switch (size) {
@@ -127,7 +130,7 @@
             }
         },
 
-        // generates a rfc4122 comliant Universally Unique IDentifier (UUID)
+        // generates a rfc4122 compliant Universally Unique IDentifier (UUID)
         // rfc: http://www.ietf.org/rfc/rfc4122.txt
         // src: http://stackoverflow.com/a/2117523/1175459
         generateUniqId: function () {
@@ -222,6 +225,4 @@
         this.css("left", left + "px");
         return this;
     };
-
-
 })();

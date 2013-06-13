@@ -19,6 +19,7 @@
 
         Calls gameOverCallback when game complete.
     */
+
     FOM.GameEventConsumer = function (logicalBoard, gameEvents, score) {
         this._logicalBoard = logicalBoard;
         this._gameEvents = gameEvents;
@@ -29,6 +30,7 @@
 
     FOM.GameEventConsumer.prototype = {
 
+        // consume and process the next game event
         consume:
             function (opts) {
                 /*jshint white:false, indent:false*/
@@ -71,12 +73,13 @@
                             'GameEventConsumer.consume: Unknown event: ' +
                             event.event);
                 }
-                // schedule this.consume in x millis if pending transitions
+
                 if (opts.schedulingOk) {
                     this._scheduleNextConsume(opts.interval);
                 }
             },
 
+        // decide if valid move, trigger move if it is
         processSeekMove:
             function (targetCell) {
                 var startCell = this._logicalBoard.getSelectedCell();
@@ -94,6 +97,7 @@
                 }
             },
 
+        // setup transitions to animate stone to target
         _createTransitions:
             function (path, startCell) {
                 var color = this._logicalBoard.get(startCell);
@@ -104,6 +108,7 @@
                 }, this);
             },
 
+        // move the stone to next transition, cleaning up the last transition
         _processTransition:
             function (transition) {
                 this._messageDisplayer.hide();
@@ -131,11 +136,13 @@
                 return _.flatten(runs).length > 0;
             },
 
+        // the game finishes when the board is full
         _isGameOver:
             function () {
                 return this._logicalBoard.isFull() || c.GAME_OVER_DEV;
             },
 
+        // if pending events, schedule a consume to process the next one
         _scheduleNextConsume:
             function (interval) {
                 if (this._gameEvents.length > 0) {

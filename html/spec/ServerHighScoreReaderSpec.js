@@ -19,7 +19,7 @@ describe('ServerHighScoreReader', function() {
 
         waitsFor(function() {
             return callBackMade;
-        }, "call back never made", 1);
+        }, "call back never made", 30);
 
         runs(function() {
             expect(callBackMade).toBe(true);

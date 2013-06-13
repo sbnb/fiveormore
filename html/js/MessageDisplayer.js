@@ -5,6 +5,7 @@
     /*
         Used to display messages to the user on the page.
     */
+
     FOM.MessageDisplayer = function () {
         var messageDivSelector = '#messages',
             messageTextSelector = '#messages span',

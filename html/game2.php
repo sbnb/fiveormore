@@ -7,7 +7,11 @@
   <title>Five or More Game</title>
   <meta name="description" content="Five or More is a fun and addictive puzzle game: align stones in lines of the same color to score points. Compete for your place in the high scores!">
   <link rel="stylesheet" type="text/css" media="screen" href="css/resetdw.css">
+  <!--
   <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
+  -->
+  <link href="sass/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
 

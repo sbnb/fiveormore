@@ -5,14 +5,21 @@
     var t = FOM.tools;
     var c = FOM.constants;
 
+    /*
+        Score
+
+        Maintains the current score, and provides mapping from run lengths
+        to points awarded.
+    */
+
     FOM.Score = function (pointsPopup) {
-        // TODO: revert initial score to 0 when finished
         this.score = 0;
         this._pointsPopup = pointsPopup;
     };
 
     FOM.Score.prototype = {
 
+        // points awarded for runs of given length
         POINTS_FOR_LENGTH: {5: 10, 6: 12, 7: 18, 8: 28, 9: 42},
 
         // add points for the given runs, return the number of points added.
