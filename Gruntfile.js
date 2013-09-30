@@ -24,7 +24,7 @@ module.exports = function (grunt) {
         concat: {
             dist: {
                 src: [
-                    'html/js/*.js',
+                    'html/js/*.js'
                 ],
                 dest: combinedJsFile
             }
@@ -36,7 +36,8 @@ module.exports = function (grunt) {
                 dest: 'html/dist/scrammed.php',
                 replacements: [{
                     from: /^.*includeClasses.html.*$/gm,
-                    to: '  <script type="text/javascript" src="js/' + minJsFile + '"></script>'
+                    to: '  <script type="text/javascript" src="js/' +
+                        minJsFile + '"></script>'
                 }, {
                     from: /.*resetdw.css.*/g,
                     to: ''
@@ -45,7 +46,8 @@ module.exports = function (grunt) {
                     to: 'scrammed-' + unique + '.min.css'
                 }, {
                     from: /<script.*jquery-1.8.3.min.js.*/g,
-                    to: '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>'
+                    to: '<script src="//ajax.googleapis.com/ajax/libs/' +
+                        'jquery/1.8.3/jquery.min.js"></script>'
                 }, {
                     from: /.*console.*/g,
                     to: 'xxxxxxxx'
@@ -85,7 +87,8 @@ module.exports = function (grunt) {
                 report: 'min'
             },
             minify: {
-                src: ['/home/sean/projects/css/resetdw.css', 'html/css/main.css'],
+                src: ['/home/sean/projects/css/resetdw.css',
+                    'html/css/main.css'],
                 dest: 'html/dist/css/scrammed-' + unique + '.min.css'
             }
         },
@@ -118,16 +121,14 @@ module.exports = function (grunt) {
             options: {
                 jshintrc: '/home/sean/.jshintrc',
                 ignores: ['html/js/seedrandom.js', 'html/js/json2.js',
-                    'html/js/jquery.horizontalNav.js', 'html/js/jquery.cookie.js']
+                    'html/js/jquery.horizontalNav.js',
+                    'html/js/jquery.cookie.js']
             },
             gruntfile: {
                 src: 'Gruntfile.js'
             },
             source: {
                 src: ['html/js/*.js']
-            },
-            tests: {
-                src: ['html/tests/**/*.js', 'html/tests/sharedHelpers.js']
             },
             dist: {
                 src: 'html/dist/js/' + minJsFile
@@ -157,5 +158,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Default task.
-    grunt.registerTask('default', ['clean', 'concat', 'replace', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask('default', ['clean', 'concat', 'replace', 'uglify',
+        'cssmin', 'copy']);
 };
