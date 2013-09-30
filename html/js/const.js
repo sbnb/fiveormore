@@ -154,7 +154,7 @@
             var args = Array.prototype.slice.call(arguments),
                 obj = args.shift();
 
-            if ('undefined' === typeof obj) {
+            if ('undefined' === typeof obj || obj === null) {
                 return false;
             }
 
