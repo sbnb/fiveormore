@@ -1,6 +1,6 @@
 {
   "name": "fiveormore",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Five or More online game",
   "main": "index.js",
   "scripts": {
