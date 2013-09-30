@@ -1,6 +1,7 @@
 (function () {
 
     "use strict";
+    /* jshint -W071 */
 
     /*
         Search for the shortest valid path between two cells on a board.
@@ -14,6 +15,7 @@
 
     // Return the list of cells from startCell to targetCell (include both ends)
     FOM.PathSearcher.prototype.search = function (startCell, targetCell) {
+        /* jshint -W074 */
         /*jshint maxdepth:4*/
         var firstNode = buildPathNode(startCell, targetCell),
             openList = [firstNode],

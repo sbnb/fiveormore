@@ -46,6 +46,7 @@
 
     FOM.RunFinder.prototype.findRun = function (startIdx, increment, limit) {
         /*jshint maxdepth:3*/
+        /* jshint -W074 */
         var idx,
             run = [];
 

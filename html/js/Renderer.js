@@ -12,6 +12,7 @@
         Subscribes to changes in LogicalBoard, receiving updates.
     */
 
+    /* jshint -W072 */
     FOM.Renderer = function (logicalBoard, boardSelector, previewSel, score) {
         this._logicalBoard = logicalBoard;
         this._boardSelector = boardSelector;
@@ -26,6 +27,7 @@
             that.render();
         });
     };
+    /* jshint +W072 */
 
     FOM.Renderer.prototype = {
 

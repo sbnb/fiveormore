@@ -8,7 +8,9 @@
         run direction.
     */
 
+    /* jshint -W072 */
     FOM.PointsPopup = function (popupDiv, textDiv, fadeTime, opacity) {
+    /* jshint +W072 */
 
         var define = FOM.tools.setIfUndefined;
         this._popupDiv = define(popupDiv, '#pointsPopup');

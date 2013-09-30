@@ -1,6 +1,7 @@
 (function () {
 
     'use strict';
+    /*global window:false */
 
     /*
         Handle settings changes, and save them to cookie:

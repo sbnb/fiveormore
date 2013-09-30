@@ -1,6 +1,7 @@
 (function () {
 
     "use strict";
+    /* jshint -W071 */
 
     var c = FOM.constants,
         t = FOM.tools;

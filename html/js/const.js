@@ -1,6 +1,7 @@
 (function () {
 
     "use strict";
+    /* jshint -W074 */
     /*global _gaq*/
 
     // shared constants for use by game

@@ -1,6 +1,7 @@
 (function () {
 
     "use strict";
+    /* jshint -W071 */
 
     FOM.CookieHandler = function () {
         var allData = {},

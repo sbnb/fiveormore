@@ -24,9 +24,7 @@ module.exports = function (grunt) {
         concat: {
             dist: {
                 src: [
-                    'templates/intro.js',
                     'html/js/*.js',
-                    'templates/outro.js'
                 ],
                 dest: combinedJsFile
             }
@@ -119,7 +117,8 @@ module.exports = function (grunt) {
         jshint: {
             options: {
                 jshintrc: '/home/sean/.jshintrc',
-                ignores: ['html/js/seedrandom.js', 'html/js/json2.js']
+                ignores: ['html/js/seedrandom.js', 'html/js/json2.js',
+                    'html/js/jquery.horizontalNav.js', 'html/js/jquery.cookie.js']
             },
             gruntfile: {
                 src: 'Gruntfile.js'
