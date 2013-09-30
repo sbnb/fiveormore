@@ -6,3 +6,5 @@ html/sass/stylesheets
 .sass-cache
 html/css/fiveormore.css
 node_modules
+tmp/
+html/dist/

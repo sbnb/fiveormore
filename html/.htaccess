@@ -1,11 +1,5 @@
-# put this is /fiveormore/ directory
-DirectoryIndex fiveormore.php fiveormore.html
-
-#<IfModule mod_rewrite.c>
-#   Options +FollowSymLinks
-#   Options +Indexes
-#   RewriteEngine On
-#   RewriteBase /gridgame/
-#   RewriteRule ^index.html$ local.php [R=301,L]
-#</IfModule>
-
+Options +FollowSymLinks
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php

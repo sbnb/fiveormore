@@ -4,16 +4,13 @@
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
   <title>Five or More Game</title>
+
   <meta name="description" content="Five or More is a fun and addictive puzzle game: align stones in lines of the same color to score points. Compete for your place in the high scores!">
   <link rel="stylesheet" type="text/css" media="screen" href="css/resetdw.css">
-  <!--
-  <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
-  -->
   <link href="sass/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-
-  <!--combined_js_insert-->
 
   <!--[if lte IE 7]>
     <link rel="stylesheet" type="text/css" href="css/ie7-and-down.css">
@@ -22,12 +19,12 @@
   <script type="text/javascript">
     var FOM = {env: {isIe: false}};
   </script>
+
   <!--[if ie]>
     <script type="text/javascript">
       FOM.env.isIe = true;
     </script>
   <![endif]-->
-
 </head>
 
 <body>
@@ -141,8 +138,8 @@
         </div>
       </div>
 
-<!-- BEGIN highScoresWrap -->
       <div id="highScoresWrap">
+
         <div id="allTimeScores" class="subScore">
           <h3><span>All Time Best</span></h3>
           <dl>
@@ -165,7 +162,6 @@
         </div>
 
       </div>
-<!-- END highScoresWrap -->
 
       <div id="playAgain" class="newGame"><span>Play again?</span></div>
 
@@ -253,19 +249,17 @@
       <p id="pointsText"></p>
     </div>
 
-    <div id="endGame" style="border: 2px solid #AAA; width: 70px">
-      <p>End Game</p>
-    </div>
+    <div id="endGame" style="border: 2px solid #AAA; width: 70px"><p>End Game</p></div>
 
   </div>
 
-  <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
-<!--replace_start-->
-  <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
-  <script type="text/javascript" src="js/json2.js"></script>
-  <script type="text/javascript" src="/lib/js/lodash.compat.min.js"></script>
-  <script type="text/javascript" src="js/jquery.cookie.js"></script>
-  <script type="text/javascript" src="/lib/js/pubsub.min.js"></script>
+  <script type="text/javascript" src="/lib/jq/jquery-1.8.3.min.js"></script>
+
+  <script type="text/javascript" src="lib/jquery.horizontalNav.js"></script>
+  <script type="text/javascript" src="lib/json2.js"></script>
+  <script type="text/javascript" src="lib/lodash.compat.min.js"></script>
+  <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+  <script type="text/javascript" src="lib/pubsub.min.js"></script>
 
   <script type="text/javascript" src="js/const.js"></script>
   <script type="text/javascript" src="js/CookieHandler.js"></script>
@@ -292,8 +286,6 @@
   <script type="text/javascript" src="js/PreviewStones.js"></script>
   <script type="text/javascript" src="js/GameBuilder.js"></script>
   <script type="text/javascript" src="js/Game2.js"></script>
-
-<!--replace_end-->
 
   <script type="text/javascript">
     $(document).ready(function() {

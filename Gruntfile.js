@@ -1,10 +1,13 @@
 /*global module:false*/
 module.exports = function (grunt) {
     'use strict';
+    /* jshint -W003 */
 
     var unique = Math.round(new Date().getTime() / 1000),
         minJsFile = '<%= pkg.name %>-' + unique + '.min.js',
-        combinedJsFile = 'tmp/all.js';
+        mainFile = 'html/game2.php',
+        combinedJsFile = 'tmp/all.js',
+        concatSrcArray = getScriptPaths(mainFile);
 
     // Project configuration.
     grunt.initConfig({
@@ -23,39 +26,33 @@ module.exports = function (grunt) {
 
         concat: {
             dist: {
-                src: [
-                    'html/js/*.js'
-                ],
+                src: concatSrcArray,
                 dest: combinedJsFile
             }
         },
 
         replace: {
             main: {
-                src: ['html/qwirkle.php'],
-                dest: 'html/dist/scrammed.php',
+                src: ['html/game2.php'],
+                dest: 'tmp/fiveormore.html',
                 replacements: [{
-                    from: /^.*includeClasses.html.*$/gm,
-                    to: '  <script type="text/javascript" src="js/' +
-                        minJsFile + '"></script>'
+                    from: /^.*src=.(js|lib).*$/gm,
+                    to: ''
                 }, {
                     from: /.*resetdw.css.*/g,
                     to: ''
                 }, {
-                    from: /main.css/g,
-                    to: 'scrammed-' + unique + '.min.css'
+                    from: /sass\/stylesheets\/screen.css/g,
+                    to: 'css/fiveormore-' + unique + '.min.css'
                 }, {
                     from: /<script.*jquery-1.8.3.min.js.*/g,
                     to: '<script src="//ajax.googleapis.com/ajax/libs/' +
-                        'jquery/1.8.3/jquery.min.js"></script>'
+                        'jquery/1.8.3/jquery.min.js"></script>\n' +
+                        '  <script src="js/fiveormore-' + unique +
+                        '.min.js"></script>'
                 }, {
-                    from: /.*console.*/g,
-                    to: 'xxxxxxxx'
-                }, {
-                    from: 'Foo',
-                    to: function (matchedWord) { // callback replacement
-                        return matchedWord + ' Bar';
-                    }
+                    from: /.*div id=.endGame.*/g,
+                    to: ''
                 }]
             },
             debugsOff: {
@@ -68,6 +65,17 @@ module.exports = function (grunt) {
                     from: /throw .* Error.*ASSERTION FAIL.*/g,
                     to: ""
                 }]
+            }
+        },
+
+        lineremover: {
+            blanks: {
+                options: {
+                    exclusionPattern: /^$/g
+                },
+                files: {
+                    'html/dist/fiveormore.php': 'tmp/fiveormore.html'
+                }
             }
         },
 
@@ -87,62 +95,42 @@ module.exports = function (grunt) {
                 report: 'min'
             },
             minify: {
-                src: ['/home/sean/projects/css/resetdw.css',
-                    'html/css/main.css'],
-                dest: 'html/dist/css/scrammed-' + unique + '.min.css'
+                src: ['html/css/resetdw.css',
+                    'html/sass/stylesheets/screen.css'],
+                dest: 'html/dist/css/fiveormore-' + unique + '.min.css'
             }
         },
 
         copy: {
             images: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'html/imgs/',
-                        src: ['heading.png', 'mountains.jpg', 'background.jpg',
-                            'sprite-sheet.png', 'bgBrown.png', 'bgGreen.png'],
-                        dest: 'html/dist/imgs/'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    cwd: 'html/imgs/',
+                    src: ['mountains.jpg', 'loading.gif', 'diamond.png',
+                    'circle.png', 'splat.png', 'triangle.png', 'square.png',
+                    'star.png'],
+                    dest: 'html/dist/imgs/'
+                }]
             },
-            frags: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: 'html/frags/',
-                        src: ['*.html'],
-                        dest: 'html/dist/frags/'
-                    }
-                ]
+            server: {
+                src: 'html/server.php',
+                dest: 'html/dist/server.php'
+            },
+            database: {
+                src: 'html/db/fiveormore.db',
+                dest: 'html/dist/db/fiveormore.db'
             }
         },
 
         jshint: {
             options: {
-                jshintrc: '/home/sean/.jshintrc',
-                ignores: ['html/js/seedrandom.js', 'html/js/json2.js',
-                    'html/js/jquery.horizontalNav.js',
-                    'html/js/jquery.cookie.js']
+                jshintrc: '/home/sean/.jshintrc'
             },
             gruntfile: {
                 src: 'Gruntfile.js'
             },
             source: {
                 src: ['html/js/*.js']
-            },
-            dist: {
-                src: 'html/dist/js/' + minJsFile
-            }
-        },
-
-        watch: {
-            gruntfile: {
-                files: '<%= jshint.gruntfile.src %>',
-                tasks: ['jshint:gruntfile']
-            },
-            tests: {
-                files: '<%= jshint.lib_test.src %>',
-                tasks: ['jshint:lib_test', 'qunit']
             }
         }
     });
@@ -156,8 +144,31 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-line-remover');
 
     // Default task.
-    grunt.registerTask('default', ['clean', 'concat', 'replace', 'uglify',
-        'cssmin', 'copy']);
+    grunt.registerTask('default', ['clean', 'jshint', 'concat', 'replace',
+        'lineremover', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask('dev', ['clean', 'jshint', 'concat', 'replace',
+        'lineremover', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask('staging', ['clean', 'jshint', 'concat', 'replace',
+        'lineremover', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask('production', ['clean', 'jshint', 'concat', 'replace',
+        'lineremover', 'uglify', 'cssmin', 'copy']);
+
+    function getScriptPaths(htmlFile) {
+        var contents = grunt.file.read(htmlFile),
+            lines = contents.split('\n'),
+            scripts = [];
+        // match my script tags, extract the path
+        for (var idx = 0; idx < lines.length; idx += 1) {
+            //~ <script type="text/javascript" src="js/const.js"></script>
+            var m = lines[idx].match(/src=.((?:lib|js)\/.+\.js)/);
+            if (m && m.length > 1) {
+                scripts.push('html/' + m[1]);
+            }
+        }
+        return scripts;
+    }
+
 };
