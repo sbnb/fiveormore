@@ -7,8 +7,7 @@
     };
 
     FOM.LocalHighScoreWriter.prototype.write = function (name, localScores) {
-        var sanitisedName = name === "" ? "anonymous" : name;
-        this._cookieHandler.saveUsername(sanitisedName);
+        this._cookieHandler.saveUsername(name);
         this._cookieHandler.saveLocalHighScores(localScores.toArray());
     };
 

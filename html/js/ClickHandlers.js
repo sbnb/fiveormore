@@ -63,10 +63,10 @@
                 var name = $('#highScoreName').val(),
                     score = game.score.get();
 
+                name = name === '' ? 'anonymous' : name;
                 game.highScoreGroup.update(name, score, uniqId);
                 game.highScoreGroup.writeHighScoresToDom();
                 popups.submittedNameForHighScore();
-                game.cookieHandler.saveUsername(name);
                 sendMsg(msgId.ENTERED_HIGH_SCORE, uniqId);
             }
 
