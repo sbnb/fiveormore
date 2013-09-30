@@ -19,7 +19,6 @@
   if ( "sendHighScore" === $queryType ) {
     $username = $_POST['username'];
     $score = $_POST['score'];
-    error_log('attempting to store a high score');
     storeHighScore($uniqId, $remoteAddress, $username, $score);
   }
 
@@ -57,11 +56,7 @@
     $combinedServerHighscores = array("allTime" => $allTimeHighScores,
       "recent" => $recentHighScores);
 
-    //error_log('combined: ' . json_encode($combinedServerHighscores));
-
     print(json_encode($combinedServerHighscores));
-    //print(json_encode($recentHighScores));
-    //print(json_encode($allTimeHighScores));
   }
 
   function getAllTimeHighScores() {
