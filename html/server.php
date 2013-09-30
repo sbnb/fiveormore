@@ -11,8 +11,9 @@
   $remoteAddress = safeRetrieve($_SERVER, 'REMOTE_ADDR', 'unknown');
 
   if ( "message" === $queryType ) {
-    $messageId = $_POST['messageId'];
-    storeMessageInDatabase($uniqId, $remoteAddress, $messageId);
+    // do nothing, not storing messages anymore
+    //~ $messageId = $_POST['messageId'];
+    //~ storeMessageInDatabase($uniqId, $remoteAddress, $messageId);
   }
 
   if ( "sendHighScore" === $queryType ) {
