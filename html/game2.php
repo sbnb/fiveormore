@@ -11,9 +11,7 @@
   <link rel="stylesheet" type="text/css" media="screen" href="css/fiveormore.css">
   -->
   <link href="sass/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-
   <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-  <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
 
   <!--combined_js_insert-->
 
@@ -261,6 +259,7 @@
 
   </div>
 
+  <script type="text/javascript" src="/lib/jq/jquery-1.7.1.min.js"></script>
 <!--replace_start-->
   <script type="text/javascript" src="js/jquery.horizontalNav.js"></script>
   <script type="text/javascript" src="js/json2.js"></script>
