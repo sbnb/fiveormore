@@ -112,14 +112,9 @@
             }
         },
 
-        // send message to server, and push event to Google Analytics
+        // send msg as an event to Google Analytics
         messageServer: function (messageId, uniqId) {
             var eventText = FOM.constants.MSG_TXT[messageId - 1];
-            $.ajax({
-                url: 'server.php',
-                type: 'POST',
-                data: 'q=message&uniqId=' + uniqId + '&messageId=' + messageId
-            });
             _gaq.push(['_trackEvent', 'Interaction', eventText, uniqId]);
         },
 
