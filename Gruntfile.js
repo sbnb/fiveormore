@@ -199,7 +199,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-ssh');
     grunt.loadNpmTasks('grunt-shell');
 
-    grunt.registerTask('aftermsg', 'Post-install instructions.', function() {
+    grunt.registerTask('afterdev', 'Post-dev instructions.', function() {
+        var newFolder = 'fiveormore-' + unique;
+        grunt.log.writeln('Now test dev version at this URL:');
+        grunt.log.ok('localhost/' + newFolder);
+        grunt.log.writeln('Run grunt prod when happy.');
+
+    });
+
+    grunt.registerTask('afterprod', 'Post-install instructions.', function() {
         var newFolder = 'fiveormore-' + unique;
         grunt.log.writeln('Now test at this URL:');
         grunt.log.ok('www.webplay.in/' + newFolder);
@@ -214,12 +222,13 @@ module.exports = function (grunt) {
 
     // dev task
     grunt.registerTask('dev', ['clean', 'jshint', 'concat', 'replace',
-        'lineremover', 'uglify', 'cssmin', 'copy', 'rsync:dev', 'shell:dev']);
+        'lineremover', 'uglify', 'cssmin', 'copy', 'rsync:dev', 'shell:dev',
+        'afterdev']);
 
     // prod task
     grunt.registerTask('prod', ['clean', 'jshint', 'concat', 'replace',
-        'lineremover', 'uglify', 'cssmin', 'copy', 'rsync:dev', 'rsync:prod',
-        'sshexec:prod', 'aftermsg']);
+        'lineremover', 'uglify', 'cssmin', 'copy', 'rsync:prod',
+        'sshexec:prod', 'afterprod']);
 
     function getScriptPaths(htmlFile) {
         var contents = grunt.file.read(htmlFile),
