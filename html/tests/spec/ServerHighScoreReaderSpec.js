@@ -15,7 +15,7 @@ describe('ServerHighScoreReader', function() {
         var callBackMade = false,
             highScoresList = serverReader.read(function (highScores) {
             callBackMade = true;
-        });
+        }, '/fiveormore/server.php');
 
         waitsFor(function() {
             return callBackMade;
