@@ -19,6 +19,7 @@
         this._previewSel = previewSel;
         this._score = score;
         this.snapshot = [];
+        this.lastPreviewStones = [];
 
         var that = this;
 
@@ -53,12 +54,16 @@
         _renderPreviewStones:
             function () {
                 var stones = this._logicalBoard.previewStones.stones;
-                _.forEach(stones, function (color, idx) {
+                if (stones === this.lastPreviewStones) {
+                    return; // no render if stones have not changed
+                }
+                for (var idx = 0; idx < stones.length; idx += 1) {
                     var selector = this._previewSel + ' li:eq(' + idx + ')',
                         $previewLi = $(selector);
-                    this._maybeRenderShape($previewLi, color);
-                    $previewLi.removeClass().addClass(color);
-                }, this);
+                    this._maybeRenderShape($previewLi, stones[idx]);
+                    $previewLi.removeClass().addClass(stones[idx]);
+                }
+                this.lastPreviewStones = stones;
             },
 
         _maybeRenderShape:
