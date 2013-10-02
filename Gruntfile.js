@@ -22,7 +22,11 @@ module.exports = function (grunt) {
 
         // Task configuration.
         clean: {
-            clean: [dist, '.tmp/']
+            options: {
+                nowrite: true,
+                force: true
+            },
+            clean: [dist, '.tmp/', '/var/www/fiveormore-1*']
         },
 
         concat: {
@@ -35,7 +39,7 @@ module.exports = function (grunt) {
         replace: {
             main: {
                 src: [mainFile],
-                dest: '.tmp/fiveormore.php',
+                dest: '.tmp/index.html',
                 replacements: [{
                     from: /^.*src=.(js|lib).*$/gm,
                     to: ''
@@ -74,8 +78,8 @@ module.exports = function (grunt) {
                 options: {
                     exclusionPattern: /^$/g
                 },
-                src: '.tmp/fiveormore.php',
-                dest: dist + 'fiveormore.php'
+                src: '.tmp/index.html',
+                dest: dist + 'index.html'
             }
         },
 
@@ -95,8 +99,7 @@ module.exports = function (grunt) {
                 report: 'min'
             },
             minify: {
-                src: ['html/css/resetdw.css',
-                    'html/css/screen.css'],
+                src: ['html/css/resetdw.css', 'html/css/screen.css'],
                 dest: dist + 'css/fiveormore-' + unique + '.min.css'
             }
         },
@@ -119,6 +122,53 @@ module.exports = function (grunt) {
             database: {
                 src: 'html/db/fiveormore.db',
                 dest: dist + 'db/fiveormore.db'
+            }
+        },
+
+        rsync: {
+            options: {
+                //~ args: ["--dry-run", "--verbose"],
+                args: ["--verbose"],
+                exclude: ["fiveormore.db"],
+                recursive: true
+            },
+            dev: {
+                options: {
+                    src: dist,
+                    dest: "/var/www/fiveormore-" + unique,
+                    syncDest: true
+                }
+            },
+            prod: {
+                options: {
+                    src: dist,
+                    dest: "fiveormore-" + unique,
+                    host: "sbn_ggm@ssh.phx.nearlyfreespeech.net",
+                    syncDest: true
+                }
+            }
+        },
+
+        sshexec: {
+            options: {
+                host: 'ssh.phx.nearlyfreespeech.net',
+                username: 'sbn_ggm',
+                privateKey: grunt.file.read("/home/sean/.ssh/id_rsa")
+            },
+            prod: { // create symink to database on server
+                command: 'cd fiveormore-' + unique + '/db/ && ' +
+                    'ln -s ../../../protected/fiveormore.db fiveormore.db'
+            }
+        },
+
+        shell: {
+            dev: {
+                options: {
+                    stdout: true
+                },
+                command: 'ln -s ' +
+                    '/home/sean/local/fiveormore/html/db/fiveormore.db' +
+                    ' /var/www/fiveormore-' + unique + '/db/fiveormore.db'
             }
         },
 
@@ -145,16 +195,31 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-line-remover');
+    grunt.loadNpmTasks('grunt-rsync');
+    grunt.loadNpmTasks('grunt-ssh');
+    grunt.loadNpmTasks('grunt-shell');
+
+    grunt.registerTask('aftermsg', 'Post-install instructions.', function() {
+        var newFolder = 'fiveormore-' + unique;
+        grunt.log.writeln('Now test at this URL:');
+        grunt.log.ok('www.webplay.in/' + newFolder);
+        grunt.log.writeln('When all verified OK, switch over:');
+        grunt.log.ok('ssh sbn_ggm@ssh.phx.nearlyfreespeech.net ' +
+            '"rm fiveormore && ln -s ' + newFolder + ' fiveormore"');
+    });
 
     // Default task.
     grunt.registerTask('default', ['clean', 'jshint', 'concat', 'replace',
         'lineremover', 'uglify', 'cssmin', 'copy']);
+
+    // dev task
     grunt.registerTask('dev', ['clean', 'jshint', 'concat', 'replace',
-        'lineremover', 'uglify', 'cssmin', 'copy']);
-    grunt.registerTask('staging', ['clean', 'jshint', 'concat', 'replace',
-        'lineremover', 'uglify', 'cssmin', 'copy']);
-    grunt.registerTask('production', ['clean', 'jshint', 'concat', 'replace',
-        'lineremover', 'uglify', 'cssmin', 'copy']);
+        'lineremover', 'uglify', 'cssmin', 'copy', 'rsync:dev', 'shell:dev']);
+
+    // prod task
+    grunt.registerTask('prod', ['clean', 'jshint', 'concat', 'replace',
+        'lineremover', 'uglify', 'cssmin', 'copy', 'rsync:dev', 'rsync:prod',
+        'sshexec:prod', 'aftermsg']);
 
     function getScriptPaths(htmlFile) {
         var contents = grunt.file.read(htmlFile),
