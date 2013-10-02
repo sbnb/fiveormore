@@ -6,7 +6,8 @@ module.exports = function (grunt) {
     var unique = Math.round(new Date().getTime() / 1000),
         minJsFile = '<%= pkg.name %>-' + unique + '.min.js',
         mainFile = 'html/game2.php',
-        combinedJsFile = 'tmp/all.js',
+        dist = 'dist/',
+        combinedJsFile = '.tmp/all.js',
         concatSrcArray = getScriptPaths(mainFile);
 
     // Project configuration.
@@ -21,7 +22,7 @@ module.exports = function (grunt) {
 
         // Task configuration.
         clean: {
-            clean: ['html/dist/', 'tmp/']
+            clean: [dist, '.tmp/']
         },
 
         concat: {
@@ -33,8 +34,8 @@ module.exports = function (grunt) {
 
         replace: {
             main: {
-                src: ['html/game2.php'],
-                dest: 'tmp/fiveormore.html',
+                src: [mainFile],
+                dest: '.tmp/fiveormore.php',
                 replacements: [{
                     from: /^.*src=.(js|lib).*$/gm,
                     to: ''
@@ -42,7 +43,7 @@ module.exports = function (grunt) {
                     from: /.*resetdw.css.*/g,
                     to: ''
                 }, {
-                    from: /sass\/stylesheets\/screen.css/g,
+                    from: /css\/screen.css/g,
                     to: 'css/fiveormore-' + unique + '.min.css'
                 }, {
                     from: /<script.*jquery-1.8.3.min.js.*/g,
@@ -73,9 +74,8 @@ module.exports = function (grunt) {
                 options: {
                     exclusionPattern: /^$/g
                 },
-                files: {
-                    'html/dist/fiveormore.php': 'tmp/fiveormore.html'
-                }
+                src: '.tmp/fiveormore.php',
+                dest: dist + 'fiveormore.php'
             }
         },
 
@@ -86,7 +86,7 @@ module.exports = function (grunt) {
                     banner: '<%= banner %>'
                 },
                 src: combinedJsFile,
-                dest: 'html/dist/js/' + minJsFile
+                dest: dist + 'js/' + minJsFile
             }
         },
 
@@ -96,8 +96,8 @@ module.exports = function (grunt) {
             },
             minify: {
                 src: ['html/css/resetdw.css',
-                    'html/sass/stylesheets/screen.css'],
-                dest: 'html/dist/css/fiveormore-' + unique + '.min.css'
+                    'html/css/screen.css'],
+                dest: dist + 'css/fiveormore-' + unique + '.min.css'
             }
         },
 
@@ -109,16 +109,16 @@ module.exports = function (grunt) {
                     src: ['mountains.jpg', 'loading.gif', 'diamond.png',
                     'circle.png', 'splat.png', 'triangle.png', 'square.png',
                     'star.png'],
-                    dest: 'html/dist/imgs/'
+                    dest: dist + 'imgs/'
                 }]
             },
             server: {
                 src: 'html/server.php',
-                dest: 'html/dist/server.php'
+                dest: dist + 'server.php'
             },
             database: {
                 src: 'html/db/fiveormore.db',
-                dest: 'html/dist/db/fiveormore.db'
+                dest: dist + 'db/fiveormore.db'
             }
         },
 

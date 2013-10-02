@@ -2,9 +2,11 @@ html/db/fiveormore.db
 *.uploaded
 combined*
 *d8_history
-html/sass/stylesheets
 .sass-cache
+html/css/screen.css
+html/css/print.css
+html/css/ie.css
 html/css/fiveormore.css
 node_modules
-tmp/
-html/dist/
+.tmp/
+dist/
