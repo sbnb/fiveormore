@@ -12,7 +12,7 @@
 
     // returns an object {recent: hsListObj, allTime: hsListObj} where values
     // are HighScoreList objects
-    FOM.ServerHighScoreReader.prototype.read = function (callback) {
+    FOM.ServerHighScoreReader.prototype.read = function (callback, url) {
         var that = this;
 
         // results looks like:
@@ -22,7 +22,7 @@
             highScores.recent = that._buildHighScoreObj(results.recent);
             highScores.allTime = that._buildHighScoreObj(results.allTime);
             callback(highScores);
-        });
+        }, url);
     };
 
     FOM.ServerHighScoreReader.prototype._buildHighScoreObj =
@@ -38,10 +38,11 @@
             return highScoreList;
         };
 
-    function getHighScoresFromServer(successFunction) {
+    function getHighScoresFromServer(successFunction, url) {
+        url = FOM.tools.setIfUndefined(url, 'server.php');
         $("#loading").show();
         $.ajax({
-            url: 'server.php',
+            url: url,
             type: 'POST',
             data: 'q=getHighScores',
             success: function (result) {
