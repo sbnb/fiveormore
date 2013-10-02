@@ -1,7 +1,8 @@
 {
+  "manifest_version": 2,
   "name": "Five or More",
   "description": "A fun and addictive puzzle game. Align stones in lines of the same color to score points.",
-  "version": "1.4",
+  "version": "1.5",
   "icons": {
     "128": "icon_128.png"
   },
