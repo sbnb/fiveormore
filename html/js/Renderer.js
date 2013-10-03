@@ -20,6 +20,8 @@
         this._score = score;
         this.snapshot = [];
         this.lastPreviewStones = [];
+        this.cellCache = {};
+        this.$allCells = $(this._boardSelector + ' td');
 
         var that = this;
 
@@ -43,12 +45,12 @@
 
         _renderChangedStones: function () {
             var changed = this._logicalBoard.getChangedCells(this.snapshot);
-            _.forEach(changed, function (cell) {
-                var color = this._logicalBoard.get(cell) || c.EMPTY,
-                    $cell = this._getJqueryCell(cell);
+            for (var idx = 0; idx < changed.length; idx += 1) {
+                var color = this._logicalBoard.get(changed[idx]) || c.EMPTY,
+                    $cell = this._getJqueryCell(changed[idx]);
                 this._maybeRenderShape($cell, color);
                 $cell.removeClass().addClass(color);
-            }, this);
+            }
         },
 
         _renderPreviewStones:
@@ -82,7 +84,7 @@
         _renderSelectedCell:
             function () {
                 // make sure no TD is selected
-                $(this._boardSelector + ' td').removeClass('selected');
+                this.$allCells.removeClass('selected');
 
                 // add 'selected' class to the TD selected in logicalBoard
                 var selectedCell = this._logicalBoard.getSelectedCell();
@@ -93,16 +95,27 @@
 
         _renderScore:
             function () {
-                $('#score').text(this._score.get());
+                // render score if it has changed
+                var score = this._score.get();
+                if (score !== this.renderedScore) {
+                    $('#score').text(score);
+                    this.renderedScore = score;
+                }
             },
 
         _getJqueryCell:
             function (cell) {
-                var $cell = $(this._boardSelector + ' tr')
-                    .eq(cell.y)
-                    .find('td')
-                    .eq(cell.x);
-                return $cell;
+                var key = cell.x + ',' + cell.y,
+                    $cell;
+                if (!this.cellCache[key]) {
+                    $cell = $(this._boardSelector + ' tr')
+                        .eq(cell.y)
+                        .find('td')
+                        .eq(cell.x);
+                    // cache the jQuery object, only do find once
+                    this.cellCache[key] = $cell;
+                }
+                return this.cellCache[key];
             }
     };
 
